@@ -1,0 +1,240 @@
+<resources>
+    <!-- Name for the application [CHAR LIMIT=12] -->
+    <string name="app_name">Okoa Gas</string>
+
+    <!-- Label for overflow menu option that inserts fake pet data into the app [CHAR LIMIT=20] -->
+    <string name="action_insert_dummy_data">Insert Dummy Data</string>
+
+    <!-- Label for overflow menu option that deletes all pet data in the app [CHAR LIMIT=20] -->
+    <string name="action_delete_all_entries">Delete All Brands</string>
+
+    <!-- Title for the activity to add a new pet [CHAR LIMIT=20] -->
+    <string name="editor_activity_title_new_brand">Add a Brand</string>
+
+    <!-- Label for editor menu option to save pet and leave editor [CHAR LIMIT=20] -->
+    <string name="action_save">Save</string>
+
+    <!-- Label for editor overflow menu option that deletes the current pet [CHAR LIMIT=20] -->
+    <string name="action_delete">Delete</string>
+    <!-- Title text for the empty view, which describes the empty dog house image [CHAR LIMIT=50] -->
+    <string name="empty_view_title_text">Cannot find your area vendors?...</string>
+    <string name="empty_view_brand_text">Not yet added brands?...</string>
+
+    <!-- Subtitle text for the empty view that prompts the user to add a pet [CHAR LIMIT=50] -->
+    <string name="empty_view_subtitle_text">Check neighboring town</string>
+    <string name="empty_brand_view_subtitle_text">Add brands to your counter</string>
+
+    <!-- Label for overview category of attributes in the editor [CHAR LIMIT=30] -->
+    <string name="category_overview">Name</string>
+
+    <!-- Label for gender information in the editor [CHAR LIMIT=30] -->
+    <string name="category_name">Price</string>
+
+    <!-- Label for measurement information in the editor [CHAR LIMIT=30] -->
+    <string name="category_town">Town</string>
+
+    <!-- Text hint for name field in the editor [CHAR LIMIT=30] -->
+    <string name="hint_username">Username</string>
+
+    <!-- Text hint for breed field in the editor [CHAR LIMIT=30] -->
+    <string name="hint_password">Password</string>
+
+    <!-- Text hint for name field in the editor [CHAR LIMIT=30] -->
+    <string name="hint_gas_weight">Weight</string>
+
+    <!-- Units for weight of the pet (kilograms) [CHAR LIMIT=5] -->
+    <string name="unit_gas_price">Kes</string>
+
+    <!-- Label for dropdown menu option if the pet's gender is unknown [CHAR LIMIT=20] -->
+    <string name="big_cylinder">13 Kg</string>
+
+    <!-- Label for dropdown menu option if the pet is male [CHAR LIMIT=20] -->
+    <string name="medium_cylinder">6 Kg</string>
+
+    <!-- Label for dropdown menu option if the pet is female [CHAR LIMIT=20] -->
+    <string name="small_cylinder">3 Kg</string>
+    <string name="editor_insert_failed" />
+    <string name="editor_insert_successful" />
+    <string name="hint_gas_size">gas size</string>
+    <string name="hint_outlet_type">outlet type</string>
+    <string name="category_county_name">county name</string>
+    <string name="title_county">County</string>
+    <string name="hint_vendor_county">Choose County</string>
+    <string name="outlet_name">Outlet Name</string>
+    <string name="Shop">Vendor Shop</string>
+    <string name="Supermarket">Supermarket</string>
+    <string name="GasStation">Gas Station</string>
+    <string name="Murangá">Murangá</string>
+    <string name="Kiambu">Kiambu</string>
+    <string name="nakuru">Nakuru</string>
+    <string name="mombasa">Mombasa</string>
+    <string name="kakamega">Kakamega</string>
+    <string name="elgeyo_marakwet">Elgeyo Marakwet</string>
+    <string name="vendor_shop">Retail Shop</string>
+    <string name="veditor_overview">Vendor Name</string>
+    <string name="vendor_county">Vendor County</string>
+    <string name="main_in_stock">main_in_stock</string>
+    <string name="dollar_sign">dollar_sign</string>
+    <string name="action_settings">settings</string>
+    <string name="order">Order</string>
+    <string name="supplier">Vendor</string>
+    <string name="quantity">Quantity</string>
+    <string name="minus">-</string>
+    <string name="picture_gas">Brand Image</string>
+    <string name="product">Product Detail</string>
+    <string name="price">Price</string>
+    <string name="zero">0</string>
+    <string name="plus">+</string>
+    <string name="detail_activity_title_new_gas">Add New Brand</string>
+    <string name="detail_activity_title_edit_gas">Edit Brand</string>
+    <string name="detail_activity_title_order">Product Detail</string>
+    <string name="detail_activity_title_confirm_order">Your Order Detail</string>
+    <string name="category_button">EDIT</string>
+    <string name="vendor_town">Vendor Town</string>
+    <string name="total_price">To Pay</string>
+    <string name="cylinder">Cylinder</string>
+    <!-- TODO: Remove or change this placeholder text -->
+
+    <string name="hello_blank_fragment">Hello blank fragment</string>
+    <string name="swipe_left_for_register">Swipe Left for Register</string>
+    <string name="login">Login</string>
+    <string name="password">Password</string>
+    <string name="e_mail">Email</string>
+    <string name="tag">Let\'s join us and \nBuild your relationship with others</string>
+    <string name="swipe_right_for_login">Swipe Right for Login</string>
+    <string name="register">Register</string>
+    <string name="re_type_password">Re-type Password</string>
+    <string name="your_name">Full Name</string>
+    <string name="empty_gas_refill">Order Gas Refill</string>
+    <string name="empty_new_cylinder">Buy New Cylinder</string>
+    <string name="action_vendor_dashboard">Vendor Dashboard</string>
+    <string name="action_view_vendors">Available Vendors</string>
+    <string name="action_my_profile">My Profile</string>
+    <string name="action_view_brands">Brands</string>
+    <string name="phone">Mobile Number</string>
+    <string name="tagline">Gas chap chap</string>
+    <string name="my_town">My Town</string>
+    <string name="profile_fragment">Home</string>
+    <!-- Message with instructions on how to populate the database-->
+    <string name="empty_view_message">To insert a product into the database, please tap the plus button.</string>
+    <!-- Product Name tools:text -->
+    <string name="product_name_tools">Product Name</string>
+    <!-- Quantity Text of a product -->
+    <string name="quantity_text">Quantity:</string>
+    <!-- Quantity of Product tools:text-->
+    <string name="quantity_tools_value">8</string>
+    <!-- Price Text -->
+    <string name="price_text">Price:&#032;</string>
+    <!-- Price of Product tools:text-->
+    <string name="price_tools_value">145</string>
+    <!-- Local Currency [CHAR LIMIT=3] Now it is euro-->
+    <string name="local_currency">$</string>
+    <!-- Sale Button Text -->
+    <string name="sale_text">Sale</string>
+    <!-- All products deleted message -->
+    <string name="all_products_deleted">All products was successfully deleted!</string>
+    <!-- Failed to delete all products message -->
+    <string name="failed_deleting_all_products">Failed to delete all products!</string>
+    <!-- Delete all product Dialog message -->
+    <string name="delete_all_product_dialog_message">Do you want to delete all products?</string>
+    <!-- Delete button title -->
+    <string name="delete">Delete</string>
+    <!-- Cancel button title -->
+    <string name="cancel">Cancel</string>
+    <!-- Out of stock message for product that has 0 quantity on "Sale" click-->
+    <string name="out_of_stock">This product is out of stock!</string>
+    <!-- Label for detail (editor) menu option to save product and leave editor [CHAR LIMIT=20] -->
+    <!-- Label for detail activity when new product is inserting  -->
+    <string name="detail_activity_title_new_product">New Product</string>
+    <!-- Label for detail activity when existing product is updating  -->
+    <string name="detail_activity_title_edit_product">Edit Product</string>
+    <!-- Label for Product Name [CHAR LIMIT=15]-->
+    <string name="product_name_label">Product Name :</string>
+    <!-- Hint in the EditText for product name -->
+    <string name="enter_product_name_hint">Enter Product Name</string>
+    <!-- Label for Price [CHAR LIMIT=10]-->
+    <string name="price_label">Price :</string>
+    <!-- Hint in the EditText for price [CHAR LIMIT=20]-->
+    <string name="enter_product_price_hint">Enter Price</string>
+    <!-- Label for Available Quantity [CHAR LIMIT=20]-->
+    <string name="available_quantity">Available Quantity</string>
+    <!-- Label for Restock Options -->
+    <string name="restock_options">Restock Options</string>
+    <!-- Label for supplier's name -->
+    <string name="suppliers_name_label">Supplier :</string>
+    <!-- Hint for edit suppliers name -->
+    <string name="suppliers_name_hint">Enter Supplier</string>
+    <!-- Label for supplier's email -->
+    <string name="suppliers_email_label">Supplier\'s E-mail :</string>
+    <!-- Hint for edit suppliers e-mail -->
+    <string name="suppliers_email_hint">Enter e-mail</string>
+    <!-- Label for restock Quantity -->
+    <string name="restock_quantity_label">Restock Quantity :</string>
+    <!-- Hint for edit suppliers e-mail -->
+    <string name="restock_quantity_hint">0</string>
+    <!-- Title for Restock Button -->
+    <string name="restock_button_title">Order Now</string>
+    <!-- Dialog message when user is leaving editor but hasn't saved changes [CHAR LIMIT=NONE] -->
+    <string name="unsaved_changes_dialog_msg">Discard your changes and quit editing?</string>
+    <!-- Dialog button text for the option to discard a user's changes [CHAR LIMIT=20] -->
+    <string name="discard">Discard</string>
+    <!-- Dialog button text for the option to keep editing the current product [CHAR LIMIT=20] -->
+    <string name="keep_editing">Keep Editing</string>
+    <!-- Message displayed on gallery browsing intent -->
+    <string name="select_photo">Select Photo</string>
+    <!-- Message when saving a new product fails -->
+    <string name="save_product_failed">Product saving failed!</string>
+    <!-- Message when saving a new product is successful  -->
+    <string name="save_product_successful">Product saved!</string>+
+    <!-- Message when updating a product fails -->
+    <string name="update_product_failed">Product update failed!</string>
+    <!-- Message when updating a product is successful  -->
+    <string name="update_product_successful">Product updated!</string>
+    <!-- Message for empty product -->
+    <string name="enter_product_name">Please enter product name!</string>
+    <!-- Message for empty price -->
+    <string name="enter_product_price">Please enter the price of the product!</string>
+    <!-- Message for negative price -->
+    <string name="enter_positive_product_price">Please enter a positive value for the price!</string>
+    <!-- Message for empty quantity -->
+    <string name="enter_product_quantity">Please enter the quantity of the product!</string>
+    <!-- Message for negative quantity -->
+    <string name="enter_positive_product_quantity">Please enter positive value for the product\'s quantity!</string>
+    <!-- Message for missing photo of the product -->
+    <string name="enter_product_photo">Please choose a photo for the product!</string>
+    <!-- Dialog message to ask the user to confirm deleting the current product [CHAR LIMIT=NONE] -->
+    <string name="delete_dialog_msg">Delete this product?</string>
+    <!-- Toast message in detail view when current product was successfully deleted [CHAR LIMIT=NONE] -->
+    <string name="detail_delete_product_successful">Product deleted</string>
+    <!-- Toast message in detail view when current product has failed to be deleted [CHAR LIMIT=NONE] -->
+    <string name="detail_delete_product_failed">Error with deleting product</string>
+    <!-- Toast message when restocking a completely new product -->
+    <string name="restocking_new_product">You cannot restock a new product!</string>
+    <!-- Toast message for empty supplier name when restocking product -->
+    <string name="enter_supplier_name">Please enter supplier name</string>
+    <!-- Toast message for empty supplier e-mail when restocking product -->
+    <string name="enter_supplier_email">Please enter supplier\'s e-mail</string>
+    <!-- Toast message for invalid format of supplier's e-mail when restocking product -->
+    <string name="invalid_supplier_email">Supplier\'s e-mail is not a valid format! Please edit that field.</string>
+    <!-- Toast message for empty restock quantity -->
+    <string name="enter_restock_quantity">Please enter restock quantity</string>
+    <!-- Toast message for negative restock quantity -->
+    <string name="enter_positive_restock_quantity">Enter positive value for restock quantity</string>
+    <!-- Ordering -->
+    <string name="ordering">Ordering</string>
+    <!-- Greeting to the supplier in the restock message -->
+    <string name="hello">Hello</string>
+    <!-- "I would like to order" message in the restock message -->
+    <string name="i_would_like_to_order">I would like to order</string>
+    <!-- Units restock quantity is measured in -->
+    <string name="restock_quantity_measurement_units">pieces of</string>
+    <string name="final_price">To Pay</string>
+    <string name="order_summary">Order Summary</string>
+    <string name="order_detail">Order  Detail</string>
+    <string name="thanks">Karibu Tena</string>
+    <string name="checkout">Check Out</string>
+    <string name="navigation_drawer_open">Open</string>
+    <string name="navigation_drawer_close">Close</string>
+
+
+</resources>

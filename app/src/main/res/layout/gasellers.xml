@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:orientation="horizontal"
+    android:id="@+id/gasellers">
+
+
+    <ImageView
+        android:id="@+id/icon_view"
+        android:layout_width="88dp"
+        android:layout_height="176dp"/>
+
+    <LinearLayout
+        android:id="@+id/text_container"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical">
+
+        <TextView
+            android:id="@+id/vendor_name_view"
+            android:layout_width="match_parent"
+            android:layout_height="88dp"/>
+
+        <TextView
+            android:id="@+id/vendor_town_view"
+            android:layout_width="match_parent"
+            android:layout_height="88dp"/>
+    </LinearLayout>
+
+</LinearLayout>

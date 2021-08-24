@@ -1,0 +1,57 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:orientation="horizontal"
+    android:id="@+id/brandlist">
+
+
+    <ImageView
+        android:id="@+id/bicon_view"
+        android:layout_width="88dp"
+        android:layout_height="176dp"/>
+
+    <LinearLayout
+        android:id="@+id/btext_container"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="vertical">
+
+        <TextView
+            android:id="@+id/brand_view"
+            android:layout_width="wrap_content"
+            android:layout_height="44dp"/>
+
+        <TextView
+            android:id="@+id/weight_view"
+            android:layout_width="wrap_content"
+            android:layout_height="44dp" />
+        <TextView
+            android:id="@+id/price_view"
+            android:layout_width="wrap_content"
+            android:layout_height="44dp"/>
+
+        <TextView
+            android:id="@+id/outlet_view"
+            android:layout_width="wrap_content"
+            android:layout_height="44dp"/>
+    </LinearLayout>
+    <LinearLayout
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="vertical">
+
+        <Button
+            android:id="@+id/orderButton"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Order"
+            android:onClick="brandDetail"
+            android:focusable="false"
+            android:textAllCaps="true"/>
+
+
+    </LinearLayout>
+
+</LinearLayout>

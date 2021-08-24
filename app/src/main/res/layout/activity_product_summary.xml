@@ -1,0 +1,53 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    style="@style/ScrollViewStyling">
+    <LinearLayout style="@style/ProductDetailsHolderStyle">
+        <ImageView
+            android:id="@+id/edit_product_photo"
+            style="@style/PhotoOfProduct" />
+        <View style="@style/SeparatorStyling" />
+        <LinearLayout style="@style/LinearLayoutHoldersStyle">
+            <TextView
+                style="@style/LabelsStyling"
+                android:text="@string/product_name_label" />
+            <TextView
+                android:id="@+id/edit_product_name"
+                style="@style/LabelsStyling"
+                android:imeOptions="flagNoExtractUi"/>
+        </LinearLayout>
+        <LinearLayout style="@style/LinearLayoutHoldersStyle">
+            <TextView
+                style="@style/LabelsStyling"
+                android:text="@string/price_label" />
+            <TextView style="@style/LocalCurrencyEditPriceStyling" />
+            <TextView
+                android:id="@+id/edit_product_price"
+                style="@style/LabelsStyling"
+                android:imeOptions="flagNoExtractUi"/>
+        </LinearLayout>
+        <View style="@style/SeparatorStyling" />
+        <LinearLayout style="@style/LinearLayoutHoldersStyle">
+            <TextView
+                style="@style/LabelsStyling"
+                android:text="@string/hint_gas_weight" />
+
+            <TextView
+                android:id="@+id/cylinder_size"
+                style="@style/LabelsStyling" />
+        </LinearLayout>
+        <View style="@style/SeparatorStyling" />
+        <LinearLayout style="@style/LinearLayoutHoldersStyle">
+            <TextView
+                style="@style/LabelsStyling"
+                android:text="@string/suppliers_name_label" />
+
+            <TextView
+                android:id="@+id/edit_suppliers_name"
+                style="@style/LabelsStyling" />
+        </LinearLayout>
+        <Button
+            android:id="@+id/order_restock_button"
+            style="@style/RestockButtonStyling" />
+    </LinearLayout>
+</ScrollView>

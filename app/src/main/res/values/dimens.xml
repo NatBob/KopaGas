@@ -1,0 +1,61 @@
+<!-- Copyright (C) 2016 The Android Open Source Project
+     Licensed under the Apache License, Version 2.0 (the "License");
+     you may not use this file except in compliance with the License.
+     You may obtain a copy of the License at
+          http://www.apache.org/licenses/LICENSE-2.0
+     Unless required by applicable law or agreed to in writing, software
+     distributed under the License is distributed on an "AS IS" BASIS,
+     WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+     See the License for the specific language governing permissions and
+     limitations under the License.
+-->
+<resources>
+    <!-- Margin around the floating action button in CatalogActivity -->
+    <dimen name="fab_margin">16dp</dimen>
+
+    <!-- Common margin value used throughout the app -->
+    <dimen name="activity_margin">16dp</dimen>
+    <dimen name="textSize">32sp</dimen>
+    <dimen name="button">48dp</dimen>
+    <dimen name="marginLeft">16dp</dimen>
+    <dimen name="widthOfImage">56dp</dimen>
+    <dimen name="heightOfImage">56dp</dimen>
+    <dimen name="margin">8dp</dimen>
+
+    <!-- Margin from right of the floating action button in MainActivity -->
+    <dimen name="fab_margin_right">64dp</dimen>
+    <!-- Margin from the bottom of the floating action button in MainActivity -->
+    <dimen name="fab_margin_bottom">16dp</dimen>
+    <!-- Standard Margin -->
+    <dimen name="standard_margin">16dp</dimen>
+    <!-- Standard Padding -->
+    <dimen name="standard_padding">8dp</dimen>
+    <!-- Small Padding -->
+    <dimen name="small_padding">4dp</dimen>
+    <!-- Empty View Text Size -->
+    <dimen name="empty_view_text_size">18sp</dimen>
+    <!-- Preview photo dimensions -->
+    <dimen name="preview_photo_dimen">72dp</dimen>
+    <!-- Product Details Text Size -->
+    <dimen name="product_details_text_size">16sp</dimen>
+    <!-- Sale button width-->
+    <dimen name="sale_width">48dp</dimen>
+    <!-- Sale text size -->
+    <dimen name="sale_text_size">12sp</dimen>
+    <!-- Photo of product dimensions (square) in Detail Activity-->
+    <dimen name="detail_photo_dimen">160dp</dimen>
+    <!-- The height of the separator view (border) -->
+    <dimen name="separator_height">1dp</dimen>
+    <!-- Labels text size -->
+    <dimen name="labels_text_size">18sp</dimen>
+    <!-- EditTexts text size -->
+    <dimen name="edit_texts_size">16sp</dimen>
+    <!-- Available Quantity label size -->
+    <dimen name="available_quantity_size">18sp</dimen>
+    <!-- Increase / Decrease buttons dimensions -->
+    <dimen name="increase_decrease_btn_dimen">42dp</dimen>
+    <!-- Default screen margins, per the Android Design guidelines. -->
+    <dimen name="activity_horizontal_margin">16dp</dimen>
+    <dimen name="activity_vertical_margin">16dp</dimen>
+</resources>
+

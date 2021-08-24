@@ -1,0 +1,131 @@
+<?xml version="1.0" encoding="utf-8"?><!-- Layout for the editor -->
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    android:paddingLeft="@dimen/margin"
+    android:paddingRight="@dimen/margin"
+    tools:context=".BrandDetail">
+
+    <!--android:weightSum="6"-->
+    <!-- Price category -->
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical">
+
+        <ImageView
+            android:id="@+id/imageView"
+            android:layout_width="96dp"
+            android:layout_height="102dp"
+            android:layout_gravity="center_horizontal"
+            android:contentDescription="@string/picture_gas"
+            android:scaleType="fitXY"
+            android:src="@drawable/safegas" />
+    </LinearLayout>
+
+    <!-- Product category -->
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical">
+
+        <!-- Label -->
+        <TextView
+            android:id="@+id/brand_name"
+            android:layout_height="wrap_content"
+            style="@style/CategoryStyle"
+            android:layout_gravity="center_horizontal"
+            android:text="@string/product" />
+
+        <!-- Name field -->
+    </LinearLayout>
+
+    <!-- Price category -->
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical">
+
+        <!-- Label -->
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            style="@style/CategoryStyle"
+            android:text="@string/price"
+            android:id="@+id/price_view"/>
+
+    </LinearLayout>
+    <!-- Quantity category -->
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical">
+
+        <!-- Label -->
+        <TextView
+            android:layout_width="match_parent"
+            style="@style/CategoryStyle"
+            android:text="@string/quantity" />
+
+        <Button
+            android:id="@+id/decreaseButton"
+            android:layout_width="@dimen/button"
+            android:layout_height="@dimen/button"
+            android:onClick="decrement"
+            android:text="@string/minus"
+            android:textSize="@dimen/textSize" />
+
+        <!-- Quantity field -->
+        <EditText
+            android:id="@+id/edit_quantity"
+            style="@style/EditorFieldStyle"
+            android:gravity="center"
+            android:inputType="number"
+            android:text="@string/zero"
+            android:textSize="@dimen/textSize" />
+
+        <Button
+            android:id="@+id/increaseButton"
+            android:layout_width="@dimen/button"
+            android:layout_height="@dimen/button"
+            android:onClick="increment"
+            android:text="@string/plus"
+            android:textSize="@dimen/textSize" />
+    </LinearLayout>
+
+    <!-- Supplier category -->
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:paddingBottom="16dp">
+
+        <!-- Label -->
+        <TextView
+            android:id="@+id/vendor_view"
+            style="@style/CategoryStyle"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:paddingBottom="8dp"
+            android:text="@string/supplier" />
+
+    </LinearLayout>
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:layout_gravity="center_horizontal">
+    <!-- Order -->
+    <Button
+        android:id="@+id/orderButton"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center"
+        android:text="@string/order"
+        android:textColor="@color/colorPrimary"
+        android:textSize="@dimen/textSize"
+        android:textStyle="bold" />
+</LinearLayout>
+</LinearLayout>
