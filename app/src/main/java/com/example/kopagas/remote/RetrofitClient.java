@@ -23,7 +23,7 @@ public class RetrofitClient {
     //private String Authtoken = null;
     //token = SharedPrefManager.fetchToken();
     public static Retrofit getClient(String url){
-        token = SharedPrefManager.fetchToken();
+        //token = SharedPrefManager.fetchToken();
 
 
         if(retrofit == null){
@@ -37,6 +37,7 @@ public class RetrofitClient {
             //OkHttpClient.Builder client = new OkHttpClient.Builder();
                     //.addInterceptor(httpLoggingInterceptor).build();
             OkHttpClient.Builder client = new OkHttpClient.Builder();
+                    client.addInterceptor(httpLoggingInterceptor);
                     client.addInterceptor(new Interceptor() {
                 @Override
                 public Response intercept(Chain chain) throws IOException {
