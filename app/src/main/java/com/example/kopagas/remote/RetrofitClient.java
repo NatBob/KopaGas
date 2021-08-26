@@ -44,7 +44,7 @@ public class RetrofitClient {
                     Request newRequest  = chain.request().newBuilder()
 
                     //String token = SharedPrefManager.fetchToken();
-                            .addHeader("Authorization", "Token "+SharedPrefManager.fetchToken())
+                            .addHeader("Authorization", "Bearer " + token)
                             .build();
                     return chain.proceed(newRequest);
                 }
