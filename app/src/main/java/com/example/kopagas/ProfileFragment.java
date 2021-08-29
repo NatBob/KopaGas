@@ -119,7 +119,7 @@ public class ProfileFragment extends Fragment implements View.OnClickListener {
         com.example.kopagas.model.Vendor vendor = new Vendor(token, shop_name, location, delivery);
 
         Call<RevObj> call = service.createVendor(
-                //"Token " +token,
+                "Token " +token,
                 vendor.getShop_name(),
                 vendor.getLocation(),
                 vendor.getDelivery()

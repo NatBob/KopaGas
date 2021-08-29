@@ -12,6 +12,7 @@ import retrofit2.http.Body;
 import retrofit2.http.Field;
 import retrofit2.http.FormUrlEncoded;
 import retrofit2.http.GET;
+import retrofit2.http.Header;
 import retrofit2.http.POST;
 import retrofit2.http.Path;
 
@@ -46,7 +47,7 @@ public interface UserService {
     @FormUrlEncoded
     @POST("api/account/register-vendor")
     Call<RevObj> createVendor(
-            //@Header("Authorization") String token,
+            @Header("Authorization") String token,
             @Field("shop_name") String shop_name,
             @Field("location") String location,
             @Field("delivery") String delivery);

@@ -20,7 +20,8 @@ public class SharedPrefManager {
     private static final String KEY_SHOP_NAME = "shop_name";
     private static final String KEY_SHOP_LOCATION = "location";
     private static final String KEY_SHOP_DELIVERY = "delivery";
-    private static final String username = "username";
+    private static String username;
+    private static String token;
 
     private SharedPrefManager(Context context) {
         mCtx = context;
@@ -39,7 +40,7 @@ public class SharedPrefManager {
         //editor.putString(KEY_USER_TOKEN, String.valueOf(resObj.getToken()));
         //editor.putString(String.valueOf(USER_TOKEN), String.valueOf(resObj.getToken()));
         //editor.putString(String.valueOf(KEY_USER_PHONE), String.valueOf(resObj.getPhoneNumber()));
-        editor.putString(username, null);
+        editor.putString("", username);
         //editor.putString(KEY_USER_PHONE, user.getPhoneNumber());
         //editor.putString(KEY_USER_GENDER, user.getGender());
         editor.apply();
@@ -112,12 +113,12 @@ public class SharedPrefManager {
     public static String fetchToken() {
         SharedPreferences sharedPreferences = mCtx.getSharedPreferences(SHARED_PREF_NAME, Context.MODE_PRIVATE);
         return
-                sharedPreferences.getString("Token ", null);
+                sharedPreferences.getString("Token ", token);
     }
     public static String fetchUser() {
         SharedPreferences sharedPreferences = mCtx.getSharedPreferences(SHARED_PREF_NAME, Context.MODE_PRIVATE);
         return
-                sharedPreferences.getString(username, null);
+                sharedPreferences.getString("", username);
     }
 
     /**

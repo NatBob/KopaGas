@@ -92,11 +92,11 @@ public class VendorRegister extends AppCompatActivity implements View.OnClickLis
 
         //Vendor vendor = new Vendor("Token "+SharedPrefManager.getInstance(getApplicationContext()).fetchToken(), shop_name, location, delivery);
 
-        com.example.kopagas.model.Vendor vendor = new Vendor(shop_name, location, delivery);
+        com.example.kopagas.model.Vendor vendor = new Vendor(token, shop_name, location, delivery);
 
         Call<RevObj> call = service.createVendor(
                 //vendor.getToken(),
-                //"Token "+token,
+                token,
                 vendor.getShop_name(),
                 vendor.getLocation(),
                 vendor.getDelivery()
@@ -124,7 +124,7 @@ public class VendorRegister extends AppCompatActivity implements View.OnClickLis
                     //Toast.makeText(getApplicationContext(), response.body().getResponse(), Toast.LENGTH_LONG).show();
 
                     //Toast.makeText(getApplicationContext(), response.body().getResponse(), Toast.LENGTH_LONG).show();
-                    Log.e(TAG, "Imeshindwa kutuma API." +token);
+                    Log.e(TAG, "Imeshindwa kutuma API." + token);
                     Log.e(TAG, "response." +response.body());
                     //sharedPrefManager.getInstance(getApplicationContext()).userLogin(response.body().getUser());
                     //startActivity(new Intent(getApplicationContext(), LogonActivity.class));
