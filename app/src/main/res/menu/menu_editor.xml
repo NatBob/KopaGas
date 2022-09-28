@@ -24,7 +24,7 @@
 
     <item
         android:id="@+id/action_buy"
-        android:title="@string/order"
+        android:title="@string/cancel"
         android:text="done"
         app:showAsAction="always" />
 

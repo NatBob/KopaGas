@@ -13,10 +13,19 @@
 <resources>
     <!-- These are the options displayed in the gender drop-down Spinner -->
     <string-array name="array_gender_options">
-        <item>@string/big_cylinder</item>
         <item>@string/medium_cylinder</item>
+        <item>@string/big_cylinder</item>
         <item>@string/small_cylinder</item>
     </string-array>
+    <string-array name="array_prod_cat">
+        <item>@string/medium_refill</item>
+        <item>@string/medium_new</item>
+        <item>@string/big_new</item>
+        <item>@string/big_refill</item>
+        <item>@string/small_new</item>
+        <item>@string/small_refill</item>
+    </string-array>
+
     <string-array name="array_outletType_options">
         <item>@string/Shop</item>
         <item>@string/Supermarket</item>

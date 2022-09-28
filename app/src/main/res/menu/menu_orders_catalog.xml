@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+    <item
+        android:id="@+id/action_cart"
+        android:title="@string/add_shop_cart"
+        android:text="done"
+        app:showAsAction="ifRoom" />
+
+    <item
+        android:id="@+id/action_buy"
+        android:title="@string/buy"
+        android:text="done"
+        app:showAsAction="always" />
+
+    <item
+        android:id="@+id/action_delete"
+        android:title="@string/action_delete"
+        app:showAsAction="never" />
+</menu>

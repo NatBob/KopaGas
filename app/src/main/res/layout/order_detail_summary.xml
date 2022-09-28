@@ -1,0 +1,63 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    style="@style/ScrollViewStyling">
+    <LinearLayout style="@style/ProductDetailsHolderStyle">
+        <LinearLayout style="@style/HorizontalLayoutHoldersStyle">
+            <TextView
+                style="@style/SectionsTitleStyling"
+                android:text="@string/cust_order_details"/>
+
+        </LinearLayout>
+        <!-- Input field -->
+        <LinearLayout style="@style/HorizontalLayoutHoldersStyle">
+            <TextView
+                style="@style/LabelsStyling"
+                android:text="@string/product_cat_label" />
+            <!-- Input field -->
+            <TextView
+                android:id="@+id/view_product_brand"
+                style="@style/LabelsStyling"
+                android:imeOptions="flagNoExtractUi"/>
+        </LinearLayout>
+        <LinearLayout style="@style/HorizontalLayoutHoldersStyle"
+            android:layout_weight="2">
+            <TextView
+                style="@style/LabelsStyling"
+                android:text="@string/product_brand_label" />
+            <!-- Input field -->
+
+            <!-- Gender drop-down spinner -->
+            <TextView
+                android:id="@+id/view_product_name"
+                style="@style/LabelsStyling"
+                android:imeOptions="flagNoExtractUi"/>
+        </LinearLayout>
+        <LinearLayout style="@style/HorizontalLayoutHoldersStyle">
+            <TextView
+                style="@style/LabelsStyling"
+                android:text="@string/product_weight_label" />
+            <!-- Input field -->
+            <TextView
+                android:id="@+id/view_brand_weight"
+                style="@style/LabelsStyling"
+                android:imeOptions="flagNoExtractUi"/>
+        </LinearLayout>
+        <View style="@style/SeparatorStyling" />
+        <LinearLayout style="@style/HorizontalLayoutHoldersStyle">
+            <TextView
+                style="@style/SectionsTitleStyling"
+                android:text="@string/map_image"/>
+
+        </LinearLayout>
+        <!-- Input field -->
+        <View style="@style/SeparatorStyling" />
+        <ImageView
+            android:id="@+id/edit_product_photo"
+            style="@style/PhotoOfMap" />
+        <View style="@style/SeparatorStyling" />
+        <Button
+            android:id="@+id/order_item_button"
+            style="@style/OrderButtonStyling" />
+    </LinearLayout>
+</ScrollView>

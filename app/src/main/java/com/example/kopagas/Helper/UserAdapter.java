@@ -32,22 +32,28 @@ public class UserAdapter extends RecyclerView.Adapter<UserAdapter.ViewHolder> {
 
     private List<User> users;
     private Context mCtx;
+    //private Users user;
 
     public UserAdapter(List<User> users, Context mCtx) {
         this.users = users;
         this.mCtx = mCtx;
     }
 
+    public void setUsers(List<User> user) {
+        this.users=users;
+        notifyDataSetChanged();
+    }
+
     @Override
     public ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
         View v = LayoutInflater.from(parent.getContext())
-                .inflate(R.layout.user_list_view, parent, false);
-        return new ViewHolder(v);
+                .inflate(R.layout.brand_list_view, parent, false);
+        return new ViewHolder(mCtx,v);
     }
 
     @Override
     public void onBindViewHolder(UserAdapter.ViewHolder holder, int position) {
-        final User user = users.get(position);
+        User user = users.get(position);
         holder.textViewName.setText(user.getUsername());
 
         holder.imageButtonMessage.setOnClickListener(new View.OnClickListener() {
@@ -100,18 +106,33 @@ public class UserAdapter extends RecyclerView.Adapter<UserAdapter.ViewHolder> {
     }
 
 
-    public class ViewHolder extends RecyclerView.ViewHolder {
+    public class ViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener {
 
         public TextView textViewName;
         public ImageButton imageButtonMessage;
 
-        public ViewHolder(View itemView) {
+        public ViewHolder(Context mCtx, View itemView) {
             super(itemView);
 
-            textViewName = (TextView) itemView.findViewById(R.id.textViewName);
-            imageButtonMessage = (ImageButton) itemView.findViewById(R.id.imageButtonMessage);
+            textViewName = (TextView) itemView.findViewById(R.id.textViewTitle);
+            imageButtonMessage = (ImageButton) itemView.findViewById(R.id.imageView);
+            //this.context = context;
+            // Attach a click listener to the entire row view
+            itemView.setOnClickListener((View.OnClickListener) this);
+        }
+
+        // Handles the row being being clicked
+        @Override
+        public void onClick(View view) {
+            int position = getAbsoluteAdapterPosition(); // gets item position
+            if (position != RecyclerView.NO_POSITION) { // Check if an item was deleted, but the user clicked it before the UI removed it
+                User user = users.get(position);
+                // We can access the data within the views
+                Toast.makeText(mCtx, textViewName.getText(), Toast.LENGTH_SHORT).show();
+            }
         }
     }
+
 
     private void sendMessage(String username, String title, String message) {
 

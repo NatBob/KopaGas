@@ -10,9 +10,9 @@ public class RevObj {
     @SerializedName("response")
     @Expose
     private String response;
-    @SerializedName("phone_number")
+    @SerializedName("delivery")
     @Expose
-    private String phoneNumber;
+    private String delivery;
     @SerializedName("shop_name")
     @Expose
     private String shop_name;
@@ -33,15 +33,15 @@ public class RevObj {
 
     /**
      *
-     * @param phoneNumber
+     * @param delivery
      * @param response
      * @param shop_name
      * @param location
      */
-    public RevObj(String response, String phoneNumber, String shop_name, String location, Vendor vendor) {
+    public RevObj(String response, String delivery, String shop_name, String location, Vendor vendor) {
         super();
         this.response = response;
-        this.phoneNumber = phoneNumber;
+        this.delivery = delivery;
         this.shop_name = shop_name;
         this.location = location;
         this.vendor = vendor;
@@ -56,12 +56,12 @@ public class RevObj {
         this.token = token;
     }
 
-    public String getPhoneNumber() {
-        return phoneNumber;
+    public String getDelivery() {
+        return delivery;
     }
 
-    public void setPhoneNumber(String phoneNumber) {
-        this.phoneNumber = phoneNumber;
+    public void setDelivery(String delivery) {
+        this.delivery = delivery;
     }
 
     public String getResponse() {

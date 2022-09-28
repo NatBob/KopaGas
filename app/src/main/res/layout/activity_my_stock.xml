@@ -1,62 +1,113 @@
 <?xml version="1.0" encoding="utf-8"?>
-<RelativeLayout
-    xmlns:android="http://schemas.android.com/apk/res/android"
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".MyStock">
-
+    android:background="@color/colorAccent"
+    android:padding="20dp"
+    tools:context=".AddProductActivity">
 
     <TextView
-        android:id="@+id/text_view_pet"
-        android:layout_width="match_parent"
-        android:layout_height="match_parent" />
-    <ListView
-        android:id="@+id/list"
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:padding="@dimen/activity_margin"/>
-    <!-- Empty view for the list -->
-    <RelativeLayout
-        android:id="@+id/empty_view"
+        android:id="@+id/tvSubitle"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_centerInParent="true">
+        android:layout_marginTop="24dp"
+        android:text="ADD PRODUCT"
+        android:textColor="@color/colorPrimaryDark"
+        android:textSize="30sp"
+        android:textStyle="bold"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
 
-        <ImageView
-            android:id="@+id/empty_shelter_image"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_centerHorizontal="true"
-            android:src="@drawable/emptyshelvelogo"/>
-
-        <TextView
-            android:id="@+id/empty_title_text"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_below="@+id/empty_shelter_image"
-            android:layout_centerHorizontal="true"
-            android:fontFamily="sans-serif-medium"
-            android:paddingTop="16dp"
-            android:text="@string/empty_view_title_text"
-            android:textAppearance="?android:textAppearanceMedium"/>
-
-        <TextView
-            android:id="@+id/empty_subtitle_text"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_below="@+id/empty_title_text"
-            android:layout_centerHorizontal="true"
-            android:fontFamily="sans-serif"
-            android:paddingTop="8dp"
-            android:text="@string/empty_view_subtitle_text"
-            android:textAppearance="?android:textAppearanceSmall"
-            android:textColor="#A2AAB0"/>
-    </RelativeLayout>
-    <com.google.android.material.floatingactionbutton.FloatingActionButton        android:id="@+id/fab"
-        android:layout_width="wrap_content"
+    <EditText
+        android:id="@+id/etId1"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_alignParentBottom="true"
-        android:layout_alignParentRight="true"
-        android:layout_margin="@dimen/fab_margin" />
-</RelativeLayout>
+        android:layout_marginTop="64dp"
+        android:hint="6Kg Refill"
+        android:inputType="text"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.5"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/tvSubitle" />
+
+    <EditText
+        android:id="@+id/etName1"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:hint="Ke-Gas"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.5"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/etId1" />
+
+    <EditText
+        android:id="@+id/etWeight"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:hint="6Kg"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.5"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/etId1" />
+
+    <EditText
+        android:id="@+id/etImageURL1"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:hint="Image URL"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.5"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/etName1" />
+
+    <ImageView
+        android:id="@+id/edit_product_photo"
+        style="@style/PhotoOfProduct" />
+    <View style="@style/SeparatorStyling" />
+
+    <EditText
+        android:id="@+id/etPrice1"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:hint="Price"
+        android:inputType="numberDecimal"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.5"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/etImageURL1" />
+
+    <EditText
+        android:id="@+id/etDescription1"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:hint="Description"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.5"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/etPrice1" />
+
+    <EditText
+        android:id="@+id/units_available"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:hint="Units Available"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.5"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/etId1" />
+
+    <Button
+        android:id="@+id/btnAddProduct"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@color/colorPrimary"
+        android:text="ADD"
+        android:textColor="#000"
+        android:textSize="16sp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        tools:layout_editor_absoluteX="20dp" />
+
+</androidx.constraintlayout.widget.ConstraintLayout>

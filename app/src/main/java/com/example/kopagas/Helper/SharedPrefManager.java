@@ -14,14 +14,18 @@ public class SharedPrefManager {
 
     private static final String SHARED_PREF_NAME = "okoagas";
 
-    private static final String USER_TOKEN = "token";
+    private static final String TOKEN = "token";
     public static final String KEY_USER_NAME = "username";
     private static final String KEY_USER_PHONE = "phone-number";
     private static final String KEY_SHOP_NAME = "shop_name";
     private static final String KEY_SHOP_LOCATION = "location";
     private static final String KEY_SHOP_DELIVERY = "delivery";
-    private static String username;
-    private static String token;
+    private static String username="username";
+    private static String token="token";
+    private static String shop_name ="shop_name";
+    private static String image = "image";
+    private static String location = "location";
+    private static String delivery="Yes";
 
     private SharedPrefManager(Context context) {
         mCtx = context;
@@ -40,7 +44,22 @@ public class SharedPrefManager {
         //editor.putString(KEY_USER_TOKEN, String.valueOf(resObj.getToken()));
         //editor.putString(String.valueOf(USER_TOKEN), String.valueOf(resObj.getToken()));
         //editor.putString(String.valueOf(KEY_USER_PHONE), String.valueOf(resObj.getPhoneNumber()));
-        editor.putString("", username);
+        editor.putString(KEY_USER_NAME, username);
+        //editor.putString(KEY_USER_PHONE, user.getPhoneNumber());
+        //editor.putString(KEY_USER_GENDER, user.getGender());
+        editor.apply();
+        //return sharedPreferences.getString(KEY_USER_NAME, null);
+    }
+    public static void saveVendor(String shop_name, String location, String delivery) {
+        SharedPreferences sharedPreferences = mCtx.getSharedPreferences(SHARED_PREF_NAME, Context.MODE_PRIVATE);
+        SharedPreferences.Editor editor = sharedPreferences.edit();
+        //editor.putString(KEY_USER_TOKEN, String.valueOf(resObj.getToken()));
+        //editor.putString(String.valueOf(USER_TOKEN), String.valueOf(resObj.getToken()));
+        //editor.putString(String.valueOf(KEY_USER_PHONE), String.valueOf(resObj.getPhoneNumber()));
+        //editor.putString(KEY_USER_NAME, username);
+        editor.putString(KEY_SHOP_NAME, shop_name);
+        editor.putString(KEY_SHOP_LOCATION, location);
+        editor.putString(KEY_SHOP_DELIVERY, delivery);
         //editor.putString(KEY_USER_PHONE, user.getPhoneNumber());
         //editor.putString(KEY_USER_GENDER, user.getGender());
         editor.apply();
@@ -53,7 +72,7 @@ public class SharedPrefManager {
         //editor.putString(KEY_USER_TOKEN, String.valueOf(resObj.getToken()));
         //editor.putString(String.valueOf(USER_TOKEN), String.valueOf(resObj.getToken()));
         //editor.putString(String.valueOf(KEY_USER_PHONE), String.valueOf(resObj.getPhoneNumber()));
-        editor.putString(KEY_USER_NAME, vendor.getUsername());
+        //editor.putString(KEY_USER_NAME, vendor.getUsername());
         editor.putString(KEY_SHOP_NAME, vendor.getShop_name());
         editor.putString(KEY_SHOP_LOCATION, vendor.getLocation());
         editor.putString(KEY_SHOP_DELIVERY, vendor.getDelivery());
@@ -61,10 +80,23 @@ public class SharedPrefManager {
         return true;
     }
 
+    public boolean isRegistered() {
+        SharedPreferences sharedPreferences = mCtx.getSharedPreferences(SHARED_PREF_NAME, Context.MODE_PRIVATE);
+        if (sharedPreferences.getString(token, null) != null)
+            return true;
+        return false;
+    }
+
+    public boolean isVendor() {
+        SharedPreferences sharedPreferences = mCtx.getSharedPreferences(SHARED_PREF_NAME, Context.MODE_PRIVATE);
+        if (sharedPreferences.getString(shop_name, null) != null)
+            return true;
+        return false;
+    }
 
     public boolean isLoggedIn() {
         SharedPreferences sharedPreferences = mCtx.getSharedPreferences(SHARED_PREF_NAME, Context.MODE_PRIVATE);
-            if (sharedPreferences.getString(username, null) != null)
+            if (sharedPreferences.getString(token, null) != null)
             return true;
         return false;
     }
@@ -72,7 +104,7 @@ public class SharedPrefManager {
     public Vendor getVendor() {
         SharedPreferences sharedPreferences = mCtx.getSharedPreferences(SHARED_PREF_NAME, Context.MODE_PRIVATE);
         return new Vendor(
-                sharedPreferences.getString(USER_TOKEN, null),
+                sharedPreferences.getString(TOKEN, null),
                 sharedPreferences.getString(KEY_USER_NAME, null),
                 sharedPreferences.getString(String.format(KEY_SHOP_NAME), null),
                 sharedPreferences.getString(String.format(KEY_SHOP_LOCATION), null),
@@ -84,7 +116,7 @@ public class SharedPrefManager {
         SharedPreferences sharedPreferences = mCtx.getSharedPreferences(SHARED_PREF_NAME, Context.MODE_PRIVATE);
         return new User(
                 sharedPreferences.getString(KEY_USER_NAME, null),
-                sharedPreferences.getString(String.format(USER_TOKEN), null),
+                sharedPreferences.getString(String.format(TOKEN), null),
                 sharedPreferences.getString(String.format(KEY_USER_PHONE),null)
                 //sharedPreferences.getString(KEY_USER_GENDER, null)
         );
@@ -92,7 +124,7 @@ public class SharedPrefManager {
     public void saveAuthToken(ResObj resObj) {
         SharedPreferences sharedPreferences = mCtx.getSharedPreferences(SHARED_PREF_NAME, Context.MODE_PRIVATE);
         SharedPreferences.Editor editor = sharedPreferences.edit();
-        editor.putString(String.valueOf(USER_TOKEN), String.valueOf(resObj.getToken()));
+        editor.putString(String.valueOf(TOKEN), String.valueOf(resObj.getToken()));
         editor.putString(String.valueOf(KEY_USER_PHONE), String.valueOf(resObj.getPhoneNumber()));
         //editor.putString(KEY_USER_GENDER, user.getGender());
         editor.apply();
@@ -103,7 +135,27 @@ public class SharedPrefManager {
     public static void saveToken(String token) {
         SharedPreferences sharedPreferences = mCtx.getSharedPreferences(SHARED_PREF_NAME, Context.MODE_PRIVATE);
         SharedPreferences.Editor editor = sharedPreferences.edit();
-        editor.putString("Token ", token);
+        editor.putString(TOKEN, token);
+        //editor.putString(String.valueOf(KEY_USER_PHONE), String.valueOf(resObj.getPhoneNumber()));
+        //editor.putString(KEY_USER_GENDER, user.getGender());
+        editor.apply();
+        //editor.putString(USER_TOKEN, token);
+        //editor.apply();
+    }
+    public static void storeToken(String token) {
+        SharedPreferences sharedPreferences = mCtx.getSharedPreferences(SHARED_PREF_NAME, Context.MODE_PRIVATE);
+        SharedPreferences.Editor editor = sharedPreferences.edit();
+        editor.putString("", token);
+        //editor.putString(String.valueOf(KEY_USER_PHONE), String.valueOf(resObj.getPhoneNumber()));
+        //editor.putString(KEY_USER_GENDER, user.getGender());
+        editor.apply();
+        //editor.putString(USER_TOKEN, token);
+        //editor.apply();
+    }
+    public static void storeImage(String image) {
+        SharedPreferences sharedPreferences = mCtx.getSharedPreferences(SHARED_PREF_NAME, Context.MODE_PRIVATE);
+        SharedPreferences.Editor editor = sharedPreferences.edit();
+        editor.putString("", image);
         //editor.putString(String.valueOf(KEY_USER_PHONE), String.valueOf(resObj.getPhoneNumber()));
         //editor.putString(KEY_USER_GENDER, user.getGender());
         editor.apply();
@@ -113,12 +165,27 @@ public class SharedPrefManager {
     public static String fetchToken() {
         SharedPreferences sharedPreferences = mCtx.getSharedPreferences(SHARED_PREF_NAME, Context.MODE_PRIVATE);
         return
-                sharedPreferences.getString("Token ", token);
+                sharedPreferences.getString(TOKEN, token);
+    }
+    public static String fetchImage() {
+        SharedPreferences sharedPreferences = mCtx.getSharedPreferences(SHARED_PREF_NAME, Context.MODE_PRIVATE);
+        return
+                sharedPreferences.getString("", image);
+    }
+    public static String accessToken() {
+        SharedPreferences sharedPreferences = mCtx.getSharedPreferences(SHARED_PREF_NAME, Context.MODE_PRIVATE);
+        return
+                sharedPreferences.getString("", token);
     }
     public static String fetchUser() {
         SharedPreferences sharedPreferences = mCtx.getSharedPreferences(SHARED_PREF_NAME, Context.MODE_PRIVATE);
         return
-                sharedPreferences.getString("", username);
+                sharedPreferences.getString(KEY_USER_NAME, username);
+    }
+    public static String fetchVendor() {
+        SharedPreferences sharedPreferences = mCtx.getSharedPreferences(SHARED_PREF_NAME, Context.MODE_PRIVATE);
+        return
+                sharedPreferences.getString(KEY_SHOP_NAME, shop_name);
     }
 
     /**
@@ -127,7 +194,7 @@ public class SharedPrefManager {
     public ResObj getToken() {
         SharedPreferences sharedPreferences = mCtx.getSharedPreferences(SHARED_PREF_NAME, Context.MODE_PRIVATE);
         return new ResObj(
-                sharedPreferences.getString(USER_TOKEN, null));
+                sharedPreferences.getString(TOKEN, null));
     }
 
     public boolean logout() {

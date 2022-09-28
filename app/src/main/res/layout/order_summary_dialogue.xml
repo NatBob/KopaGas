@@ -1,0 +1,67 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    style="@style/ScrollViewStyling">
+    <LinearLayout style="@style/ProductDetailsHolderStyle">
+        <LinearLayout style="@style/HorizontalLayoutHoldersStyle">
+            <TextView
+                style="@style/SectionsTitleStyling"
+                android:text="@string/cust_order_details"/>
+
+        </LinearLayout>
+        <!-- Input field -->
+        <LinearLayout style="@style/LinearLayoutHoldersStyle"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical">
+            <LinearLayout style="@style/LinearLayoutHoldersStyle">
+                <TextView
+                    style="@style/LabelsStyling"
+                    android:text="@string/product_cat_label" />
+                <TextView
+                    style="@style/LabelsStyling"
+                    android:id="@+id/title_label"
+                    android:text="@string/product_cat_label" />
+                <!-- Input field -->
+
+            </LinearLayout>
+            <!-- Input field -->
+            <LinearLayout style="@style/LinearLayoutHoldersStyle">
+                <TextView
+                    style="@style/LabelsStyling"
+                    android:text="@string/brand_name_label" />
+                <TextView
+                    style="@style/LabelsStyling"
+                    android:id="@+id/brand_name_label"
+                    android:text="@string/product_cat_label" />
+            </LinearLayout>
+            <LinearLayout style="@style/LinearLayoutHoldersStyle">
+                <TextView
+                    style="@style/LabelsStyling"
+                    android:text="@string/product_weight_label" />
+                <TextView
+                    style="@style/LabelsStyling"
+                    android:id="@+id/weight_label"
+                    android:text="@string/product_cat_label" />
+                <!-- Input field -->
+
+            </LinearLayout>
+        </LinearLayout>
+        <View style="@style/SeparatorStyling" />
+        <LinearLayout style="@style/HorizontalLayoutHoldersStyle">
+            <TextView
+                style="@style/SectionsTitleStyling"
+                android:text="@string/map_image"/>
+
+        </LinearLayout>
+        <!-- Input field -->
+        <View style="@style/SeparatorStyling" />
+        <ImageView
+            android:id="@+id/edit_product_photo"
+            style="@style/PhotoOfProduct" />
+        <View style="@style/SeparatorStyling" />
+        <Button
+            android:id="@+id/order_item_button"
+            style="@style/OrderButtonStyling" />
+    </LinearLayout>
+</ScrollView>

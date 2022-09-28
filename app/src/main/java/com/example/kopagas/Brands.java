@@ -18,11 +18,21 @@ import androidx.loader.app.LoaderManager;
 import androidx.loader.content.CursorLoader;
 import androidx.loader.content.Loader;
 
-import com.example.kopagas.kopadata.GasAdapter;
+     import com.example.kopagas.Helper.SharedPrefManager;
+     import com.example.kopagas.kopadata.GasAdapter;
 import com.example.kopagas.kopadata.GasDbHelper;
+import com.example.kopagas.model.Item;
+import com.example.kopagas.remote.ApiUtils;
+import com.example.kopagas.remote.UserService;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 
-import java.sql.SQLException;
+import java.util.List;
+
+import retrofit2.Call;
+import retrofit2.Callback;
+import retrofit2.Response;
+import retrofit2.Retrofit;
+import retrofit2.converter.gson.GsonConverterFactory;
 
 import static com.example.kopagas.kopadata.UserContract.brandsEntry;
 
@@ -31,6 +41,10 @@ public class Brands extends AppCompatActivity implements LoaderManager.LoaderCal
     private static final int STOCK_LOADER=0;
     GasAdapter mCursorAdaptor;
     private Uri newUri;
+    private String title;
+    private String weight;
+    private double price;
+    private String token = SharedPrefManager.fetchToken();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -64,6 +78,7 @@ public class Brands extends AppCompatActivity implements LoaderManager.LoaderCal
         View emptyView = findViewById(R.id.empty_view);
         listview.setEmptyView(emptyView);
         //displayDatabaseInfo();
+        /**
         gasDbHelper = new GasDbHelper(this);
         try {
             gasDbHelper.open();
@@ -71,7 +86,37 @@ public class Brands extends AppCompatActivity implements LoaderManager.LoaderCal
             e.printStackTrace();
         }
         mCursorAdaptor = new GasAdapter(this, null);
+         */
+
         listview.setAdapter(mCursorAdaptor);
+        Retrofit retrofit = new Retrofit.Builder()
+                .baseUrl(ApiUtils.BASE_URL)
+                .addConverterFactory(GsonConverterFactory.create())
+                .build();
+
+        UserService service = retrofit.create(UserService.class);
+
+
+        com.example.kopagas.model.Item item = new Item(token, title, weight, price);
+        Call<List<Item>> call = service.getItems(
+                token,
+                item.getTitle(),
+                item.getWeight(),
+                item.getPrice()
+
+        );
+        call.enqueue(new Callback<List<Item>>() {
+            @Override
+            public void onResponse(Call<List<Item>> call, Response<List<Item>> response) {
+                //mCursorAdaptor = new GasAdapter(response.body().getUsers(), getApplicationContext());
+                listview.setAdapter(mCursorAdaptor);
+            }
+
+            @Override
+            public void onFailure(Call<List<Item>> call, Throwable t) {
+
+            }
+        });
 
         listview.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override

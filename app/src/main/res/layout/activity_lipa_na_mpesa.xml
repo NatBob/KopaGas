@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    android:gravity="center_horizontal"
+    android:paddingTop="16dp"
+    tools:context=".LipaNaMpesa">
+
+    <EditText
+        android:id="@+id/mPhone"
+        style="@style/EditPhoneStyling" />
+
+    <EditText
+        android:id="@+id/mAmount"
+        style="@style/LocalCurrencyEditPriceStyling"
+        android:hint="Amount to pay"
+        android:inputType="number"/>
+
+    <Button
+        android:id="@+id/btnPay"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Pay Now"/>
+
+</LinearLayout>

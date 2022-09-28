@@ -47,7 +47,7 @@ public class MenuActivity extends AppCompatActivity
 
         View headerView = navigationView.getHeaderView(0);
         textViewName = (TextView) headerView.findViewById(R.id.textViewName);
-        textViewName.setText(SharedPrefManager.getInstance(this).getUser().getName());
+        textViewName.setText(SharedPrefManager.getInstance(this).getUser().getUsername());
 
         //loading home fragment by default
         displaySelectedScreen(R.id.nav_home);

@@ -26,7 +26,7 @@ public class RetrofitClient {
         //token = SharedPrefManager.fetchToken();
 
 
-        if(retrofit == null){
+        if(retrofit == null||token!=null){
             Gson gson = new GsonBuilder()
                     .setLenient()
                     .create();
@@ -44,7 +44,7 @@ public class RetrofitClient {
                     Request newRequest  = chain.request().newBuilder()
 
                     //String token = SharedPrefManager.fetchToken();
-                            .addHeader("Authorization", "Token "+ token)
+                            .addHeader("Authorization", " "+token)
                             .build();
                     return chain.proceed(newRequest);
                 }

@@ -31,26 +31,43 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
     private TextView tokenView;
     private String token = SharedPrefManager.fetchToken();
     private String username = SharedPrefManager.fetchUser();
+    private SharedPrefManager pref;
 
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_login2);
+        this.setTitle("User Login");
 
         tokenView = (TextView) findViewById(R.id.token);
         userName = (EditText) findViewById(R.id.editTextPhone);
         editTextPassword = (EditText) findViewById(R.id.editTextPassword);
-        tokenView.setText(username);
+        tokenView.setText("Karibu: "+username);
 
         buttonSignIn = (Button) findViewById(R.id.buttonSignIn);
 
         buttonSignIn.setOnClickListener(this);
+
+
+        /**
+        if (pref.getInstance(this).isLoggedIn()) {
+            //finish();
+            userName.setVisibility(View.GONE);
+            editTextPassword.setVisibility(View.GONE);
+            Intent intent = new Intent(this, LandingPage.class);
+            //finish();
+            startActivity(intent);
+            finish();
+
+        }
+         */
+
     }
 
     private void userSignIn() {
         final ProgressDialog progressDialog = new ProgressDialog(this);
-        progressDialog.setMessage("Signing Up...");
+        progressDialog.setMessage("Signing in...");
         progressDialog.show();
 
         String username = userName.getText().toString().trim();
@@ -86,8 +103,9 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
 
                     //if (!resObj.body().getError()) {
                         //finish();
-                        //SharedPrefManager.getInstance(getApplicationContext()).userLogin(response.body().getUser());
-                        startActivity(new Intent(LoginActivity.this, VendorRegister.class));
+                        //SharedPrefManager.isLoggedIn(getApplicationContext(), true);
+                    Toast.makeText(getApplicationContext(), response.body().getResponse(), Toast.LENGTH_LONG).show();
+                        startActivity(new Intent(LoginActivity.this, LandingPage.class));
                     } else {
                         Toast.makeText(getApplicationContext(), response.body().getResponse(), Toast.LENGTH_LONG).show();
                     Log.e(TAG, "Imeshindwa kutuma API.");
@@ -280,4 +298,5 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
             userSignIn();
         }
     }
+
 }

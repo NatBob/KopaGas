@@ -10,9 +10,29 @@
         <LinearLayout style="@style/LinearLayoutHoldersStyle">
             <TextView
                 style="@style/LabelsStyling"
-                android:text="@string/product_name_label" />
+                android:text="@string/product_cat_label" />
+            <!-- Input field -->
+            <LinearLayout
+                android:layout_height="wrap_content"
+                android:layout_width="0dp"
+                android:layout_weight="2"
+                android:orientation="vertical">
+
+                <!-- Gender drop-down spinner -->
+                <Spinner
+                    android:id="@+id/spinner_product_cat"
+                    android:layout_height="48dp"
+                    android:layout_width="match_parent"
+                    android:paddingRight="16dp"
+                    android:spinnerMode="dropdown"/>
+            </LinearLayout>
+        </LinearLayout>
+        <LinearLayout style="@style/LinearLayoutHoldersStyle">
+            <TextView
+                style="@style/LabelsStyling"
+                android:text="@string/brand_name_label" />
             <EditText
-                android:id="@+id/edit_product_name"
+                android:id="@+id/edit_brand_name"
                 style="@style/EditProductNameStyling"
                 android:imeOptions="flagNoExtractUi"/>
         </LinearLayout>
@@ -26,8 +46,44 @@
                 style="@style/EditPriceStyling"
                 android:imeOptions="flagNoExtractUi"/>
         </LinearLayout>
+        <LinearLayout style="@style/LinearLayoutHoldersStyle"
+            android:id="@+id/container_genre">
+
+            <!-- Label -->
+            <TextView
+                android:text="@string/hint_gas_weight"
+                style="@style/LabelsStyling"
+                 />
+
+            <!-- Input field -->
+            <LinearLayout
+                android:layout_height="wrap_content"
+                android:layout_width="0dp"
+                android:layout_weight="2"
+                android:orientation="vertical">
+
+                <!-- Gender drop-down spinner -->
+                <Spinner
+                    android:id="@+id/spinner_gas_size"
+                    android:layout_height="48dp"
+                    android:layout_width="wrap_content"
+                    android:paddingRight="16dp"
+                    android:spinnerMode="dropdown"/>
+            </LinearLayout>
+        </LinearLayout>
+
+        <LinearLayout style="@style/LinearLayoutHoldersStyle">
+            <TextView
+                style="@style/LabelsStyling"
+                android:text="@string/product_desc_label" />
+
+            <EditText
+                android:id="@+id/prod_desc"
+                style="@style/EditProductNameStyling" />
+        </LinearLayout>
         <View style="@style/SeparatorStyling" />
         <TextView style="@style/AvailableQuantityStyling" />
+
         <RelativeLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content">
@@ -46,34 +102,8 @@
                 android:text="+" />
         </RelativeLayout>
         <View style="@style/SeparatorStyling" />
-        <TextView style="@style/RestockTitleStyling" />
-        <LinearLayout style="@style/LinearLayoutHoldersStyle">
-            <TextView
-                style="@style/LabelsStyling"
-                android:text="@string/suppliers_name_label" />
-
-            <EditText
-                android:id="@+id/edit_suppliers_name"
-                style="@style/EditorFieldStyle" />
-        </LinearLayout>
-        <LinearLayout style="@style/LinearLayoutHoldersStyle">
-            <TextView
-                style="@style/CategoryStyle"
-                android:text="@string/suppliers_email_label" />
-            <EditText
-                android:id="@+id/edit_suppliers_email"
-                style="@style/EditorFieldStyle" />
-        </LinearLayout>
-        <LinearLayout style="@style/LinearLayoutHoldersStyle">
-            <TextView
-                style="@style/CategoryStyle"
-                android:text="@string/restock_quantity_label" />
-            <EditText
-                android:id="@+id/edit_restock_quantity"
-                style="@style/EditorFieldStyle" />
-        </LinearLayout>
         <Button
-            android:id="@+id/order_restock_button"
+            android:id="@+id/save_item_button"
             style="@style/RestockButtonStyling" />
     </LinearLayout>
 </ScrollView>

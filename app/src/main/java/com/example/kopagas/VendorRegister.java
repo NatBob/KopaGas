@@ -4,6 +4,8 @@ import android.app.ProgressDialog;
 import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
+import android.view.Menu;
+import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
@@ -13,6 +15,7 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.core.app.NavUtils;
 
 import com.example.kopagas.Helper.SharedPrefManager;
 import com.example.kopagas.model.RevObj;
@@ -32,16 +35,18 @@ public class VendorRegister extends AppCompatActivity implements View.OnClickLis
     private Button buttonUpdate;
     private EditText editTextShopName, editTextLocation;
     private RadioGroup radioDelivery;
-    private SharedPrefManager sharedPreferences;
+    private SharedPrefManager pref;
     private TextView tokenView;
-    private String token = SharedPrefManager.fetchToken();
+    private String mToken=SharedPrefManager.fetchToken();
+    private String token = (SharedPrefManager.fetchUser()+": Register here...");
+    //private String token = String.valueOf(response.body().getToken());
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_vendor_register);
 
-        //getActivity().setTitle("Profile");
+        VendorRegister.this.setTitle("Vendor Register");
 
         buttonUpdate = (Button) findViewById(R.id.buttonUpdate);
 
@@ -55,16 +60,32 @@ public class VendorRegister extends AppCompatActivity implements View.OnClickLis
 
         buttonUpdate.setOnClickListener(this);
 
+
         Vendor vendor = SharedPrefManager.getInstance(getApplicationContext()).getVendor();
 
         editTextShopName.setText(vendor.getShop_name());
         editTextLocation.setText(vendor.getLocation());
+
+        /**
+        if (pref.getInstance(this).isVendor()) {
+            finish();
+            Toast.makeText(VendorRegister.this, "Karibu "+SharedPrefManager.getInstance(this).fetchVendor(), Toast.LENGTH_SHORT).show();
+
+            Intent intent = new Intent(this, ViewVendors.class);
+            startActivity(intent);
+        }else{
+            Toast.makeText(VendorRegister.this, "Register to Transact"+SharedPrefManager.getInstance(this).fetchVendor(), Toast.LENGTH_SHORT).show();
+            Intent intent = new Intent(this, VendorRegister.class);
+            startActivity(intent);
+        }
+         */
+
         //editTextPassword.setText("0000");
 
         //if (vendor.getDelivery().isEmpty()) {
             //radioDelivery.check(R.id.radioYes);
             //} else {
-        //radioDelivery.check(R.id.radioNo);
+        //radioDelivery.check(R.id.radi0oNo);
     //}
 
 
@@ -72,7 +93,7 @@ public class VendorRegister extends AppCompatActivity implements View.OnClickLis
 
     private void createVendor() {
         final ProgressDialog progressDialog = new ProgressDialog(VendorRegister.this);
-        progressDialog.setMessage("Updating...");
+        progressDialog.setMessage("Registering...");
         progressDialog.show();
 
         final RadioButton radioSex = (RadioButton) findViewById(radioDelivery.getCheckedRadioButtonId());
@@ -112,20 +133,23 @@ public class VendorRegister extends AppCompatActivity implements View.OnClickLis
                 try {
                 if (response.isSuccessful()) {
                     Toast.makeText(getApplicationContext(), response.body().getResponse(), Toast.LENGTH_LONG).show();
-
-                    SharedPrefManager.getInstance(getApplicationContext()).createVendor(response.body().getVendor());
+                    SharedPrefManager.getInstance(getApplicationContext());
+                    SharedPrefManager.saveVendor(shop_name,location,delivery);
+                    SharedPrefManager.getInstance(getApplicationContext()).isVendor();
                     Log.i(TAG, "post submitted to API." + response.body());
-                    String token = String.valueOf(response.body().getToken());
-                    SharedPrefManager.getInstance(getApplicationContext()).saveToken("Token " +token);
+                    //String token = String.valueOf(response.body().getToken());
+                    SharedPrefManager.getInstance(getApplicationContext()).saveToken(mToken);
                     //Log.e(TAG, "Imeshindwa kutuma API.");
-                    Log.e(TAG, "Auth Token" +  token);
-                    startActivity(new Intent(VendorRegister.this, LoginActivity.class));
+                    Log.e(TAG, "Auth Token" +  mToken);
+                    startActivity(new Intent(VendorRegister.this, ViewVendors.class));
                 } else {
                     //Toast.makeText(getApplicationContext(), response.body().getResponse(), Toast.LENGTH_LONG).show();
 
                     //Toast.makeText(getApplicationContext(), response.body().getResponse(), Toast.LENGTH_LONG).show();
                     Log.e(TAG, "Imeshindwa kutuma API." + token);
+                    Log.e(TAG, "Not Registered." + mToken);
                     Log.e(TAG, "response." +response.body());
+                    Log.e(TAG, "Already Registered"+SharedPrefManager.getInstance(getApplicationContext()).fetchVendor());
                     //sharedPrefManager.getInstance(getApplicationContext()).userLogin(response.body().getUser());
                     //startActivity(new Intent(getApplicationContext(), LogonActivity.class));
                     switch (response.code()){
@@ -324,8 +348,59 @@ public class VendorRegister extends AppCompatActivity implements View.OnClickLis
         }
     }
 
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        // Inflate the menu options from the res/menu/menu_editor.xml file.
+        // This adds menu items to the app bar.
+        getMenuInflater().inflate(R.menu.menu_catalog, menu);
+        return true;
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        // User clicked on a menu option in the app bar overflow menu
+        switch (item.getItemId()) {
+            // Respond to a click on the "Save" menu option
+            case R.id.action_vendor_dashboard:
+                // Do nothing for now
+                //insertVendor();
+                editBrand();
+                //displayDatabaseInfo();
+                return true;
+            // Respond to a click on the "Delete all entries" menu option
+            case R.id.action_view_vendors:
+                // Do nothing for now
+                vendorLogin();
+                return true;
+            case R.id.action_view_brands:
+                // Do nothing for now
+                //insertVendor();
+                displayBrands();
+                //displayDatabaseInfo();
+                return true;
+            // Respond to a click on the "Up" arrow button in the app bar
+            case android.R.id.home:
+                // Navigate back to parent activity (CatalogActivity)
+                NavUtils.navigateUpFromSameTask(this);
+                return true;
+        }
+        return super.onOptionsItemSelected(item);
+    }
+
+    private void displayBrands(){
+        Intent vendorIntent= new Intent(VendorRegister.this, ViewBrands.class);
+        startActivity(vendorIntent);
+        Log.i("MainActivity","Login to OkoaGas");
+    }
+
+
     public void vendorLogin(){
-        Intent vendorIntent= new Intent(VendorRegister.this, Sellers.class);
+        Intent vendorIntent= new Intent(VendorRegister.this, ViewVendors.class);
+        startActivity(vendorIntent);
+        Log.i("Vendor Register","View to All Vendors");
+    }
+    public void editBrand(){
+        Intent vendorIntent= new Intent(VendorRegister.this, GasDetail.class);
         startActivity(vendorIntent);
         Log.i("Vendor Register","View to All Vendors");
     }

@@ -9,10 +9,12 @@ import androidx.annotation.Nullable;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
-import com.example.kopagas.Helper.UserAdapter;
-import com.example.kopagas.model.Users;
+import com.example.kopagas.Helper.SharedPrefManager;
+import com.example.kopagas.model.Item;
 import com.example.kopagas.remote.ApiUtils;
 import com.example.kopagas.remote.UserService;
+
+import java.util.List;
 
 import retrofit2.Call;
 import retrofit2.Callback;
@@ -25,6 +27,15 @@ public class Vendors extends android.app.Fragment {
 
     private RecyclerView recyclerViewUsers;
     private RecyclerView.Adapter adapter;
+    private String token = SharedPrefManager.fetchToken();
+    private String shop_name;
+    private String location;
+    private String delivery;
+    private List<Item> brands;
+    private String title;
+    private String item_image;
+    private double price;
+
 
     @Nullable
     @Override
@@ -51,19 +62,43 @@ public class Vendors extends android.app.Fragment {
         UserService service = retrofit.create(UserService.class);
 
 
-        Call<Users> call = service.getUsers();
+        /**
+        com.example.kopagas.model.Vendor vendor = new Vendor(token, shop_name, location, delivery);
+        Call<List<Vendor>> call = service.getVendors(
+                token,
+                vendor.getShop_name(),
+                vendor.getLocation(),
+                vendor.getDelivery());
+         */
 
-        call.enqueue(new Callback<Users>() {
+        com.example.kopagas.model.Item item = new Item(token, title, item_image, price);
+        //com.example.kopagas.model.Vendor vendor = new Vendor(token, shop_name, location);
+        Call<List<Item>> call = service.getItems(
+                token,
+                //vendor.getShop_name(),
+                //vendor.getLocation(),
+                //vendor.getDelivery()
+                item.getTitle(),
+                item.getImageUrl(),
+                item.getPrice()
+
+        );
+
+
+
+        call.enqueue(new Callback<List<Item>>() {
             @Override
-            public void onResponse(Call<Users> call, Response<Users> response) {
-                adapter = new UserAdapter(response.body().getUsers(), getActivity());
+            public void onResponse(Call<List<Item>> call, Response<List<Item>> response) {
+                brands = (List<Item>) response.body();
+                //adapter = new VendorAdapter(brands, Vendors);
                 recyclerViewUsers.setAdapter(adapter);
             }
 
             @Override
-            public void onFailure(Call<Users> call, Throwable t) {
+            public void onFailure(Call<List<Item>> call, Throwable t) {
 
             }
         });
     }
+
 }

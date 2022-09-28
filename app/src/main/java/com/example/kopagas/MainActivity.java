@@ -23,6 +23,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     private Uri newUri;
     private Button vendorRoute;
     private Button fab;
+    private Button login;
 
 
     @Override
@@ -50,16 +51,16 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
             }
         });
          */
-        //if user is already logged in openeing the profile activity
-        if (SharedPrefManager.getInstance(this).isLoggedIn()) {
+        //if user is already logged in opening the profile activity
+        if (SharedPrefManager.getInstance(this).isRegistered()) {
             finish();
-            startActivity(new Intent(this, Brands.class));
+            startActivity(new Intent(this, LoginActivity.class));
         }
 
-        //fab = (Button) findViewById(R.id.fab);
+        login = (Button) findViewById(R.id.login_route);
         vendorRoute = (Button) findViewById(R.id.vendor_route);
 
-        //fab.setOnClickListener(this);
+        login.setOnClickListener(this);
         vendorRoute.setOnClickListener(this);
     }
 
@@ -68,11 +69,11 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
 
         if (view == vendorRoute) {
 
-            //startActivity(new Intent(this, LoginActivity.class));
-
-        //} else if (view == vendorRoute) {
-
             startActivity(new Intent(this, SignUp.class));
+
+        } else if (view == login) {
+
+            startActivity(new Intent(this, LoginActivity.class));
 
         }
     }
@@ -105,7 +106,12 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
 
 
     public void vendorLogin(){
-        Intent vendorIntent= new Intent(MainActivity.this, VendorLogin.class);
+        Intent vendorIntent= new Intent(MainActivity.this, VendorRegister.class);
+        startActivity(vendorIntent);
+        Log.i("MainActivity","Login to OkoaGas");
+    }
+    public void vendorDash(){
+        Intent vendorIntent= new Intent(MainActivity.this, MyStock.class);
         startActivity(vendorIntent);
         Log.i("MainActivity","Login to OkoaGas");
     }
@@ -125,7 +131,8 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
             case R.id.action_vendor_dashboard:
                 // Do nothing for now
                 //insertVendor();
-                vendorLogin();
+                vendorDash();
+                //vendorLogin();
                 //displayDatabaseInfo();
                 return true;
             // Respond to a click on the "Delete all entries" menu option
@@ -152,19 +159,19 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     }
 
     private void displayBrands() {
-        Intent brandIntent= new Intent(MainActivity.this, Brands.class);
+        Intent brandIntent= new Intent(MainActivity.this, ViewBrands.class);
         startActivity(brandIntent);
-        Log.i("MainActivity","View Local Vendors");
+        Log.i("MainActivity","View Available Brands");
     }
     private void displayVendors() {
-        Intent vendorIntent= new Intent(MainActivity.this, Sellers.class);
+        Intent vendorIntent= new Intent(MainActivity.this, ViewVendors.class);
         startActivity(vendorIntent);
         Log.i("MainActivity","View Local Vendors");
     }
     private void Signin(){
         Intent vendorIntent= new Intent(MainActivity.this, LoginActivity.class);
         startActivity(vendorIntent);
-        Log.i("MainActivity","View Local Vendors");
+        Log.i("MainActivity","Login to Homepage");
     }
 
 

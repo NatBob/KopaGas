@@ -173,7 +173,7 @@
     <!-- Hint for edit suppliers e-mail -->
     <string name="restock_quantity_hint">0</string>
     <!-- Title for Restock Button -->
-    <string name="restock_button_title">Order Now</string>
+    <string name="restock_button_title">Save Item</string>
     <!-- Dialog message when user is leaving editor but hasn't saved changes [CHAR LIMIT=NONE] -->
     <string name="unsaved_changes_dialog_msg">Discard your changes and quit editing?</string>
     <!-- Dialog button text for the option to discard a user's changes [CHAR LIMIT=20] -->
@@ -235,6 +235,35 @@
     <string name="checkout">Check Out</string>
     <string name="navigation_drawer_open">Open</string>
     <string name="navigation_drawer_close">Close</string>
+    <string name="no_available_orders">You don\'t have orders yet...</string>
+    <string name="update_shelve">Have you updated your shelf?</string>
+    <string name="brand_name_label">Brand Name</string>
+    <string name="product_cat_label">Product Category</string>
+    <string name="product_desc_label">Product Desc</string>
+    <string name="medium_refill">6KG REFILL</string>
+    <string name="medium_new">6KG NEW</string>
+    <string name="big_refill">13KG REFILL</string>
+    <string name="big_new">13KG NEW</string>
+    <string name="small_refill">3KG REFILL</string>
+    <string name="small_new">3KG NEW</string>
+    <string name="dash_stats_label">Today Statistics</string>
+    <string name="dash_fulfilled_orders">Fulfilled Orders</string>
+    <string name="dash_area_orders">Orders in your Area</string>
+    <string name="dash_vendor_Earnings">Vendor Earnings</string>
+    <string name="dash_brand_ordered">Brand Ordered</string>
+    <string name="dash_brand_weight">Weight</string>
+    <string name="dash_brand_price">Price</string>
+    <string name="dash_available_orders">Orders available today</string>
+    <string name="dash_available_stock">Available Stock</string>
+    <string name="product_brand_label">Brand</string>
+    <string name="product_weight_label">Weight</string>
+    <string name="cust_order_details">My Order Details</string>
+    <string name="map_image">My Location</string>
+    <string name="dash_cylinder_stock">Available Cylinders</string>
+    <string name="dash_accessories_stock">Available Accessories</string>
+    <string name="dash_out_of_stock">Out of stock</string>
+    <string name="add_shop_cart">Add Shopping Cart</string>
+    <string name="buy">Order</string>
 
 
 </resources>

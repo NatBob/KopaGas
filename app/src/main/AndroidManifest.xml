@@ -4,6 +4,8 @@
     package="com.example.kopagas">
 
     <uses-permission android:name="android.permission.INTERNET" />
+    <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" />
+    <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
 
     <application
         android:allowBackup="true"
@@ -12,8 +14,14 @@
         android:roundIcon="@mipmap/logo_launcher"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
-        android:usesCleartextTraffic="true">
-        <activity android:name=".SignUp"></activity>
+        <activity android:name=".LipaNaMpesa"></activity>
+        <activity android:name=".Vendor_Stats" />
+        <activity android:name=".Available_Orders" />
+        <activity android:name=".LandingPage" />
+        <activity android:name=".ViewVendors" />
+        <activity android:name=".VendorDash" />
+        <activity android:name=".ViewBrands" />
+        <activity android:name=".SignUp" />
         <activity android:name=".LoginActivity" />
         <activity android:name=".MainActivity" />
         <activity android:name=".MyShoppingCart" />
@@ -26,8 +34,9 @@
         <activity android:name=".VendorRegister" />
         <activity android:name=".Register" />
         <activity android:name=".Login" />
-        <activity android:name=".LogonActivity"
-            android:theme="@style/AppTheme.NoActionBar"/>
+        <activity
+            android:name=".LogonActivity"
+            android:theme="@style/AppTheme.NoActionBar" />
         <activity android:name=".BrandEditor" />
         <activity android:name=".BrandDetail" />
         <activity android:name=".VendorEditor" />

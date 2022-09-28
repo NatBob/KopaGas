@@ -4,7 +4,6 @@ import android.app.Activity;
 import android.app.AlertDialog;
 import android.content.DialogInterface;
 import android.content.Intent;
-import android.database.Cursor;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.net.Uri;
@@ -24,11 +23,6 @@ import android.widget.Toast;
 
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.app.NavUtils;
-import androidx.loader.app.LoaderManager;
-import androidx.loader.content.CursorLoader;
-import androidx.loader.content.Loader;
-
-import com.example.kopagas.kopadata.UserContract.brandsEntry;
 
 import java.io.FileNotFoundException;
 import java.io.IOException;
@@ -36,7 +30,7 @@ import java.io.InputStream;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
-public class ProductSummary extends AppCompatActivity implements LoaderManager.LoaderCallbacks<Cursor> {
+public class ProductSummary extends AppCompatActivity {
 
     public static final String LOG_TAG = ProductSummary.class.getSimpleName();
     private static final String STATE_URI = "STATE_URI";
@@ -51,9 +45,9 @@ public class ProductSummary extends AppCompatActivity implements LoaderManager.L
     private Uri currentProductUri;
     private Uri productPhotoUri;
     private boolean productHasChanged = false;
-    private TextView productNameEditText;
-    private TextView productPriceEditText;
-    private TextView productQuantityEditText;
+    private TextView productName;
+    private TextView productPrice;
+    private TextView productWeight;
     private ImageView productPhotoView;
     private TextView supplierNameEditText;
     private EditText supplierEmailEditText;
@@ -71,56 +65,13 @@ public class ProductSummary extends AppCompatActivity implements LoaderManager.L
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_product_summary);
-        Intent intent = getIntent();
-        currentProductUri = intent.getData();
-        if (currentProductUri == null) {
-            setTitle(getString(R.string.detail_activity_title_new_product));
-            invalidateOptionsMenu();
+        setTitle(getString(R.string.order_summary));
 
-        } else {
-            setTitle(getString(R.string.order_summary));
-            //getLoaderManager().initLoader(EXISTING_PRODUCT_LOADER, null, this);
-            getSupportLoaderManager().initLoader(EXISTING_PRODUCT_LOADER, null, this);
-        }
-        productNameEditText = (TextView) findViewById(R.id.edit_product_name);
-        productPriceEditText = (TextView) findViewById(R.id.edit_product_price);
-        productQuantityEditText = (TextView) findViewById(R.id.cylinder_size);
+        productName = (TextView) findViewById(R.id.edit_product_name);
+        productPrice = (TextView) findViewById(R.id.edit_product_price);
+        productWeight = (TextView) findViewById(R.id.cylinder_size);
         productPhotoView = (ImageView) findViewById(R.id.edit_product_photo);
-        supplierNameEditText = (TextView) findViewById(R.id.edit_suppliers_name);
-        //supplierEmailEditText = (EditText) findViewById(R.id.edit_suppliers_email);
-        //increaseQuantityButton = (Button) findViewById(R.id.increase_button);
-        //decreaseQuantityButton = (Button) findViewById(R.id.decrease_button);
-        //restockQuantityEditText = (EditText) findViewById(R.id.edit_restock_quantity);
-        productNameEditText.setOnTouchListener(mTouchListener);
-        productPriceEditText.setOnTouchListener(mTouchListener);
-        productQuantityEditText.setOnTouchListener(mTouchListener);
-        supplierNameEditText.setOnTouchListener(mTouchListener);
-        //supplierEmailEditText.setOnTouchListener(mTouchListener);
-        //increaseQuantityButton.setOnTouchListener(mTouchListener);
-        //decreaseQuantityButton.setOnTouchListener(mTouchListener);
-        /**
-        increaseQuantityButton.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                increaseQuantityByOne();
-            }
-        });
-        decreaseQuantityButton.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                decreaseQuantityByOne();
-            }
-        });
-         */
-        /**
-        productPhotoView.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                productHasChanged = true;
-                openImageSelector();
-            }
-        });
-         */
+
         Button orderNowButton = (Button) findViewById(R.id.order_restock_button);
         orderNowButton.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -131,84 +82,7 @@ public class ProductSummary extends AppCompatActivity implements LoaderManager.L
         });
 
     }
-    private void increaseQuantityByOne() {
-        String quantityFromInputString = productQuantityEditText.getText().toString();
-        int quantityFromInputInt;
-        if (quantityFromInputString.isEmpty()) {
-            quantityFromInputInt = 0;
-        } else {
-            quantityFromInputInt = Integer.parseInt(quantityFromInputString);
-        }
-        productQuantityEditText.setText(String.valueOf(quantityFromInputInt + 1));
-    }
 
-    private void decreaseQuantityByOne() {
-
-        String quantityFromInputString = productQuantityEditText.getText().toString();
-        int quantityFromInputInt;
-        if (quantityFromInputString.isEmpty()) {
-            quantityFromInputInt = 0;
-
-        } else {
-            quantityFromInputInt = Integer.parseInt(quantityFromInputString);
-            if (quantityFromInputInt == 0) {
-                Toast.makeText(this, getString(R.string.enter_positive_product_quantity), Toast.LENGTH_SHORT).show();
-            } else {
-                productQuantityEditText.setText(String.valueOf(quantityFromInputInt - 1));
-            }
-        }
-    }
-    /**
-    private void orderRestockProduct() {
-        if (productPhotoUri == null) {
-            Toast.makeText(this, getString(R.string.restocking_new_product), Toast.LENGTH_LONG).show();
-            return;
-        }
-        //String productNameString = productNameEditText.getText().toString().trim();
-        //String supplierNameString = supplierNameEditText.getText().toString().trim();
-        String supplierEmailString = supplierEmailEditText.getText().toString().trim();
-        String restockQuantityString = restockQuantityEditText.getText().toString().trim();
-        if (TextUtils.isEmpty(productNameString)) {
-            Toast.makeText(this, getString(R.string.enter_product_name), Toast.LENGTH_SHORT).show();
-            return;
-        }
-        if (TextUtils.isEmpty(supplierNameString)) {
-            Toast.makeText(this, getString(R.string.enter_supplier_name), Toast.LENGTH_SHORT).show();
-            return;
-        }
-        if (TextUtils.isEmpty(supplierEmailString)) {
-            Toast.makeText(this, getString(R.string.enter_supplier_email), Toast.LENGTH_SHORT).show();
-            return;
-
-        }
-        else if (!isEmailValid(supplierEmailString)) {
-            Toast.makeText(this, getString(R.string.invalid_supplier_email), Toast.LENGTH_LONG).show();
-            return;
-        }
-        if (TextUtils.isEmpty(restockQuantityString)) {
-            Toast.makeText(this, getString(R.string.enter_restock_quantity), Toast.LENGTH_LONG).show();
-            return;
-
-        } else {
-            int restockQuantityInt = Integer.parseInt(restockQuantityString);
-            if (restockQuantityInt <= 0) {
-                Toast.makeText(this, getString(R.string.enter_positive_restock_quantity), Toast.LENGTH_LONG).show();
-                return;
-            }
-        }
-        String restockSubject = getString(R.string.ordering) + " " + productNameString;
-        String restockMessage = getString(R.string.hello) + " " + supplierNameString + "\n" +
-                getString(R.string.i_would_like_to_order) + " " +
-                restockQuantityString + " " +
-                getString(R.string.restock_quantity_measurement_units) + " " +
-                productNameString;
-        Intent emailIntent = new Intent(Intent.ACTION_SENDTO);
-        emailIntent.setData(Uri.parse("mailto:" + supplierEmailString));
-        emailIntent.putExtra(Intent.EXTRA_SUBJECT, restockSubject);
-        emailIntent.putExtra(Intent.EXTRA_TEXT, restockMessage);
-        startActivity(Intent.createChooser(emailIntent, "Send Email"));
-    }
-     */
     private boolean isEmailValid(String supplierEmailString) {
         String expression = "^[\\w\\.-]+@([\\w\\-]+\\.)+[A-Z]{2,4}$";
         Pattern pattern = Pattern.compile(expression, Pattern.CASE_INSENSITIVE);
@@ -272,6 +146,15 @@ public class ProductSummary extends AppCompatActivity implements LoaderManager.L
             }
         }
     }
+    public void brandDetail(){
+        Intent intent = new Intent(ProductSummary.this, MyShoppingCart.class);
+        startActivity(intent);
+    }
+    public void orderGas(){
+        Intent intent = new Intent(ProductSummary.this, MyShoppingCart.class);
+        startActivity(intent);
+    }
+
     private Bitmap getBitmapFromUri(Uri uri) {
         if (uri == null || uri.toString().isEmpty())
             return null;
@@ -319,14 +202,14 @@ public class ProductSummary extends AppCompatActivity implements LoaderManager.L
     }
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
-        getMenuInflater().inflate(R.menu.menu_editor, menu);
+        getMenuInflater().inflate(R.menu.menu_orders_catalog, menu);
         return true;
     }
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
         switch (item.getItemId()) {
-            case R.id.action_save:
-                //saveProduct();
+            case R.id.action_cart:
+                orderGas();
                 return true;
             case R.id.action_delete:
                 showDeleteConfirmationDialog();
@@ -506,67 +389,4 @@ public class ProductSummary extends AppCompatActivity implements LoaderManager.L
         alertDialog.show();
     }
 
-    @Override
-    public Loader<Cursor> onCreateLoader(int id, Bundle args) {
-        String[] projection = {
-                brandsEntry._ID,
-                brandsEntry.COLUMN_NAME,
-                brandsEntry.COLUMN_PRICE,
-                brandsEntry.COLUMN_PRODUCT_QUANTITY,
-                brandsEntry.COLUMN_IMAGE,
-                brandsEntry.COLUMN_SIZE,
-                brandsEntry.COLUMN_SUPPLIER_EMAIL};
-
-        return new CursorLoader(this,
-                currentProductUri,
-                projection,
-                null,
-                null,
-                null);
-    }
-
-    @Override
-    public void onLoadFinished(Loader<Cursor> loader, Cursor cursor) {
-        if (cursor.moveToFirst()) {
-            int productNameColumnIndex = cursor.getColumnIndex(brandsEntry.COLUMN_NAME);
-            int productQuantityColumnIndex = cursor.getColumnIndex(brandsEntry.COLUMN_PRODUCT_QUANTITY);
-            int productPriceColumnIndex = cursor.getColumnIndex(brandsEntry.COLUMN_PRICE);
-            int productPhotoUriColumnIndex = cursor.getColumnIndex(brandsEntry.COLUMN_IMAGE);
-            int supplierColumnIndex = cursor.getColumnIndex(brandsEntry.COLUMN_SIZE);
-            int supplierEmailColumnIndex = cursor.getColumnIndex(brandsEntry.COLUMN_SUPPLIER_EMAIL);
-            String productName = cursor.getString(productNameColumnIndex);
-            int productQuantity = cursor.getInt(productQuantityColumnIndex);
-            float productPrice = cursor.getFloat(productPriceColumnIndex);
-            imageByteArray = cursor.getBlob(productPhotoUriColumnIndex);
-            Bitmap image = DbBitmapUtility.getImage(imageByteArray);
-            //String productPhotoUriString = cursor.getString(productPhotoUriColumnIndex);
-            String supplierName = cursor.getString(supplierColumnIndex);
-            String supplierEmail = cursor.getString(supplierEmailColumnIndex);
-            //productPhotoUri = Uri.parse(productPhotoUriString);
-            productPhotoView.setImageBitmap(image);
-            productNameEditText.setText(productName);
-            productQuantityEditText.setText(Integer.toString(productQuantity));
-            productPriceEditText.setText(Float.toString(productPrice));
-            supplierNameEditText.setText(supplierName);
-            //supplierEmailEditText.setText(supplierEmail);
-            /**
-             //if(productPhotoUriString.equals("no image")) {
-             //productPhotoView.setImageResource(R.drawable.safegas);
-             //} else {
-             //productPhotoView.setImageURI(productPhotoUri);
-             //}
-             */
-        }
-    }
-
-    @Override
-    public void onLoaderReset(Loader<Cursor> loader) {
-        productNameEditText.setText("");
-        productQuantityEditText.setText("");
-        productPriceEditText.setText("");
-        supplierNameEditText.setText("");
-        supplierEmailEditText.setText("");
-        productPhotoView.setImageResource(R.drawable.safegas);
-
-    }
 }

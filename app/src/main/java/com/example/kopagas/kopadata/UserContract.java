@@ -122,11 +122,14 @@ public class UserContract {
             public static final String COLUMN_PRODUCT_QUANTITY = "quantity";
             public static final String COLUMN_SUPPLIER_EMAIL = "supplier_mail";
             public static final String COLUMN_STATUS = "status";
+            public static final String COLUMN_CATEGORY = "category";
 
 
             public static final int BIG_CYLINDER = 12;
             public static final int MEDIUM_CYLINDER = 6;
             public static final int SMALL_CYLINDER = 3;
+
+
 
 
             //return false;
@@ -136,6 +139,20 @@ public class UserContract {
                 }
                 return false;
             }
+
+        public static final int KG3_REFILL = 01;
+        public static final int KG3_NEW = 02;
+        public static final int KG6_REFILL = 03;
+        public static final int KG6_NEW = 04;
+        public static final int KG13_REFILL = 05;
+        public static final int KG13_NEW = 06;
+
+        public static boolean isValidCat(int cat) {
+            if (cat == KG3_REFILL || cat == KG3_NEW || cat == KG6_REFILL ||cat == KG6_NEW||cat == KG13_REFILL|| cat == KG13_NEW) {
+                return true;
+            }
+            return false;
+        }
             private brandsEntry() {
             }
 

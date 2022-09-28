@@ -34,6 +34,7 @@ public class SignUp extends AppCompatActivity implements View.OnClickListener {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_sign_up);
+        SignUp.this.setTitle("User Register");
 
         buttonSignUp = (Button) findViewById(R.id.buttonSignUp);
 
@@ -41,6 +42,12 @@ public class SignUp extends AppCompatActivity implements View.OnClickListener {
         userName = (EditText) findViewById(R.id.cellphone);
         editTextPassword = (EditText) findViewById(R.id.editTextPassword);
         editTextPassword2 = (EditText) findViewById(R.id.editTextPassword2);
+
+        //if(password.equals(password2)){
+
+                    //Toast.makeText(getApplicationContext(), "Registered", Toast.LENGTH_SHORT).show();
+
+                //}
 
         //radioGender = (RadioGroup) findViewById(R.id.radioGender);
 
@@ -62,6 +69,20 @@ public class SignUp extends AppCompatActivity implements View.OnClickListener {
         String password2 = editTextPassword2.getText().toString().trim();
         //int username = Integer.parseInt(cell);
         //String gender = radioSex.getText().toString();
+        if (!username.matches("[0-9]")){
+            if(username.length()<10 || username.length()>10){
+                userName.setError("Please Enter Valid Phone");
+                userName.requestFocus();
+                Toast.makeText(getApplicationContext(), "Invalid Phone", Toast.LENGTH_SHORT).show();
+            }
+
+        }
+        if(!password.equals(password2)){
+
+            Toast.makeText(getApplicationContext(), "Pass Do Not Match", Toast.LENGTH_SHORT).show();
+
+        }
+
 
 
         //building retrofit object
@@ -119,7 +140,7 @@ public class SignUp extends AppCompatActivity implements View.OnClickListener {
 
                     if (response.isSuccessful()) {
                         //showResponse(response.body().toString());
-                        Log.i(TAG, "post submitted to API." + response.body());
+                        Log.i(TAG, "Successfully Registered to API." + response.body());
                         //starting profv v   ile activity
                         //ResObj resObj = response.body();
                         //Toast.makeText(getApplicationContext(), response.body().getResponse(), Toast.LENGTH_LONG).show();
@@ -127,15 +148,14 @@ public class SignUp extends AppCompatActivity implements View.OnClickListener {
                         //if there is no error
                         //if (response.body().getResponse()) {
                             Toast.makeText(getApplicationContext(), response.body().getResponse(), Toast.LENGTH_LONG).show();
-
-
-                            //starting profv v   ile activity
+                            //starting profile activity
                             //finish();
                             //SharedPrefManager.getInstance(getApplicationContext()).saveToken(response.body().getToken());
                         //SharedPrefManager.saveToken(ResObj.setToken);
                         String token = String.valueOf(response.body().getToken());
                         SharedPrefManager.getInstance(getApplicationContext()).saveToken("Token " +token);
                         SharedPrefManager.getInstance(getApplicationContext()).createUser(username);
+                        SharedPrefManager.getInstance(getApplicationContext()).isLoggedIn();
                         Log.e(TAG, "Post Submitted"+response.body());
                         Log.e(TAG, "Auth Token" +  token);
                             startActivity(new Intent(SignUp.this, LoginActivity.class));

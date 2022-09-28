@@ -3,61 +3,81 @@
     xmlns:tools="http://schemas.android.com/tools"
     style="@style/ScrollViewStyling">
     <LinearLayout style="@style/ProductDetailsHolderStyle">
+        <LinearLayout style="@style/HorizontalLayoutHoldersStyle">
+            <TextView
+                style="@style/SectionsTitleStyling"
+                android:text="@string/cust_order_details"/>
+
+        </LinearLayout>
+        <!-- Input field -->
+            <LinearLayout style="@style/HorizontalLayoutHoldersStyle">
+                <TextView
+                    style="@style/LabelsStyling"
+                    android:text="@string/product_cat_label" />
+                <!-- Input field -->
+                <LinearLayout
+                    android:layout_height="wrap_content"
+                    android:layout_width="0dp"
+                    android:layout_weight="2"
+                    android:orientation="vertical">
+
+                    <!-- Gender drop-down spinner -->
+                    <Spinner
+                        android:id="@+id/spinner_product_cat"
+                        android:layout_height="32dp"
+                        android:layout_width="match_parent"
+                        android:paddingRight="16dp"
+                        android:spinnerMode="dropdown"/>
+                </LinearLayout>
+            </LinearLayout>
+            <LinearLayout style="@style/HorizontalLayoutHoldersStyle"
+                android:layout_weight="2">
+                <TextView
+                    style="@style/LabelsStyling"
+                    android:text="@string/product_brand_label" />
+                <!-- Input field -->
+
+                    <!-- Gender drop-down spinner -->
+                    <EditText
+                        android:id="@+id/edit_product_brand"
+                        style="@style/EditProductNameStyling"
+                        android:imeOptions="flagNoExtractUi"/>
+            </LinearLayout>
+            <LinearLayout style="@style/HorizontalLayoutHoldersStyle">
+                <TextView
+                    style="@style/LabelsStyling"
+                    android:text="@string/product_weight_label" />
+                <!-- Input field -->
+                <LinearLayout
+                    android:layout_height="wrap_content"
+                    android:layout_width="0dp"
+                    android:layout_weight="2"
+                    android:orientation="vertical">
+
+                    <!-- Gender drop-down spinner -->
+                    <Spinner
+                        android:id="@+id/spinner_product_weight"
+                        android:layout_height="32dp"
+                        android:layout_width="match_parent"
+                        android:paddingRight="16dp"
+                        android:spinnerMode="dropdown"/>
+                </LinearLayout>
+            </LinearLayout>
+        <View style="@style/SeparatorStyling" />
+        <LinearLayout style="@style/HorizontalLayoutHoldersStyle">
+            <TextView
+                style="@style/SectionsTitleStyling"
+                android:text="@string/map_image"/>
+
+        </LinearLayout>
+        <!-- Input field -->
+        <View style="@style/SeparatorStyling" />
         <ImageView
             android:id="@+id/edit_product_photo"
-            style="@style/PhotoOfProduct" />
+            style="@style/PhotoOfMap" />
         <View style="@style/SeparatorStyling" />
-        <LinearLayout style="@style/LinearLayoutHoldersStyle">
-            <TextView
-                style="@style/LabelsStyling"
-                android:text="@string/product_name_label" />
-            <TextView
-                android:id="@+id/edit_product_name"
-                style="@style/LabelsStyling"
-                android:imeOptions="flagNoExtractUi"/>
-        </LinearLayout>
-        <LinearLayout style="@style/LinearLayoutHoldersStyle">
-            <TextView
-                style="@style/LabelsStyling"
-                android:text="@string/price_label" />
-            <TextView style="@style/LocalCurrencyEditPriceStyling" />
-            <TextView
-                android:id="@+id/edit_product_price"
-                style="@style/LabelsStyling"
-                android:imeOptions="flagNoExtractUi"/>
-        </LinearLayout>
-        <View style="@style/SeparatorStyling" />
-        <TextView style="@style/OrderedQuantityStyling" />
-        <RelativeLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content">
-            <Button
-                android:id="@+id/decrease_button"
-                style="@style/IncreaseDecreaseButtonsStyling"
-                android:text="-" />
-            <EditText
-                android:id="@+id/edit_product_quantity"
-                style="@style/EditQuantityStyling"
-                android:imeOptions="flagNoExtractUi"/>
-            <Button
-                android:id="@+id/increase_button"
-                style="@style/IncreaseDecreaseButtonsStyling"
-                android:layout_alignParentRight="true"
-                android:text="+" />
-        </RelativeLayout>
-        <View style="@style/SeparatorStyling" />
-        <LinearLayout style="@style/LinearLayoutHoldersStyle">
-            <TextView
-                style="@style/LabelsStyling"
-                android:text="@string/final_price" />
-            <TextView style="@style/LocalCurrencyEditPriceStyling" />
-            <EditText
-                android:id="@+id/final_price"
-                style="@style/EditPriceStyling"
-                android:imeOptions="flagNoExtractUi"/>
-        </LinearLayout>
         <Button
-            android:id="@+id/order_restock_button"
-            style="@style/RestockButtonStyling" />
+            android:id="@+id/order_item_button"
+            style="@style/OrderButtonStyling" />
     </LinearLayout>
 </ScrollView>
