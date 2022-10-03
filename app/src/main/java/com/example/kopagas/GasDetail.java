@@ -189,19 +189,19 @@ public class GasDetail extends AppCompatActivity {
         });
     }
     private void increaseQuantityByOne() {
-        String quantityFromInputString = productQuantityEditText.getText().toString();
+        String quantityFromInputString = unitsAvailable.getText().toString();
         int quantityFromInputInt;
         if (quantityFromInputString.isEmpty()) {
             quantityFromInputInt = 0;
         } else {
             quantityFromInputInt = Integer.parseInt(quantityFromInputString);
         }
-        productQuantityEditText.setText(String.valueOf(quantityFromInputInt + 1));
+        unitsAvailable.setText(String.valueOf(quantityFromInputInt + 1));
     }
 
     private void decreaseQuantityByOne() {
 
-        String quantityFromInputString = productQuantityEditText.getText().toString();
+        String quantityFromInputString = unitsAvailable.getText().toString();
         int quantityFromInputInt;
         if (quantityFromInputString.isEmpty()) {
             quantityFromInputInt = 0;
@@ -211,20 +211,20 @@ public class GasDetail extends AppCompatActivity {
             if (quantityFromInputInt == 0) {
                 Toast.makeText(this, getString(R.string.enter_positive_product_quantity), Toast.LENGTH_SHORT).show();
             } else {
-                productQuantityEditText.setText(String.valueOf(quantityFromInputInt - 1));
+                unitsAvailable.setText(String.valueOf(quantityFromInputInt - 1));
             }
         }
     }
 
     private void finalPrice() {
-        String price = productPriceEditText.getText().toString();
+        String price = etPrice.getText().toString();
         int fPrice;
         if (price.isEmpty()) {
             fPrice = 0;
         } else {
             fPrice = Integer.parseInt(price);
         }
-        productQuantityEditText.setText(String.valueOf(fPrice * 0.01));
+        etPrice.setText(String.valueOf(fPrice * 0.01));
     }
 
     private void selectImage() {
@@ -566,7 +566,7 @@ public class GasDetail extends AppCompatActivity {
         String brand = etBrandName.getText().toString().trim();
         //byte[] productImage = DbBitmapUtility.getImage(this, R.drawable.safegas);
         String prdImage = convertToString();
-        //String mPath = saveImage(bitmap);
+        String mPath = saveImage(bitmap);
         //Uri imgUri;
         //byte[] prdImage= convertToString();
         double price = Double.parseDouble(etPrice.getText().toString().trim());
@@ -611,7 +611,7 @@ public class GasDetail extends AppCompatActivity {
         MultipartBody.Part prodImage = null;
         ImageView productPhotoView=null;
         if (productPhotoView!=null) {
-            File image = new File(convertToString());
+            File image = new File(saveImage(bitmap));
             RequestBody requestFile = RequestBody.create(MediaType.parse("multipart/form-data"), image);
             prodImage = MultipartBody.Part.createFormData("image", image.getPath(), requestFile);
         }

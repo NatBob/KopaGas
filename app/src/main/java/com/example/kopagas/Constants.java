@@ -25,11 +25,11 @@ public class Constants {
     public static final String BASE_SAF_URL = "https://sandbox.safaricom.co.ke/";
 
     public static final String BUSINESS_SHORT_CODE = "5620659";
-    public static final String PASSKEY = "add_password";
+    public static final String PASSKEY = "Value: Basic cURscW9SOHFuV0ExaG1JZVBzSks1WVVkS2RyZjZCbWs6TUp0UEF2cTRWeFIyR3puNw==";
     public static final String TRANSACTION_TYPE = "CustomerPayBillOnline";
     public static final String PARTYB = "5620659"; //same as business shortcode above
     public static final String CALLBACKURL = "add_your_callback_url";
-    //public static final String CONSUMER_KEY = "qDlqoR8qnWA1hmIePsJK5YUdKdrf6Bmk";
+    public static final String ACCESS_TOKEN = "2LMO1VjMkbKUUNviG0VN6LKjvV3L";
 
     //You should get these values from the earlier post Part 1
 }

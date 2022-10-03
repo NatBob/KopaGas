@@ -338,12 +338,12 @@ public class ViewVendors extends AppCompatActivity {
         Log.i("Vendor Register","View to All Vendors");
     }
     private void vendorDash() {
-        Intent vendorIntent= new Intent(ViewVendors.this, VendorDash.class);
+        Intent vendorIntent= new Intent(ViewVendors.this, BrandEditor.class);
         startActivity(vendorIntent);
         Log.i("MainActivity","View Local Vendors");
     }
     private void Signin(){
-        Intent vendorIntent= new Intent(ViewVendors.this, ViewBrands.class);
+        Intent vendorIntent= new Intent(ViewVendors.this, BrandEditor.class);
         startActivity(vendorIntent);
         Log.i("MainActivity","Login to Homepage");
     }

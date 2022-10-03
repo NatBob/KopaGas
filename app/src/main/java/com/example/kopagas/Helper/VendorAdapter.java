@@ -21,7 +21,6 @@ import com.example.kopagas.model.Vendor;
 import com.example.kopagas.remote.ApiUtils;
 import com.example.kopagas.remote.UserService;
 
-import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -78,11 +77,12 @@ import retrofit2.converter.gson.GsonConverterFactory;
             holder.imageButtonMessage.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View view) {
+                    Vendor vendor = vendors.get(position);
                     Log.d(TAG, "onClick: clicked on: "+ vendors.get(position));
 
                     Intent intent = new Intent(mCtx, OrderDetail.class);
-                    intent.putExtra("textName", String.valueOf(vendors.get(position)));
-                    intent.putExtra("textLocation", (Serializable) vendors.get(position));
+                    intent.putExtra("textName", vendor.getShop_name());
+                    intent.putExtra("textLocation", vendor.getLocation());
                     mCtx.startActivity(intent);
 
 
@@ -132,7 +132,11 @@ import retrofit2.converter.gson.GsonConverterFactory;
 
                             if (position != RecyclerView.NO_POSITION) {
                                 listener.onItemClick(itemView, position);
-                                //Vendor vendor = vendors.get(position);
+                                Vendor vendor = vendors.get(position);
+                                Intent intent = new Intent(mCtx, OrderDetail.class);
+                                intent.putExtra("textName", vendor.getShop_name());
+                                intent.putExtra("textLocation", vendor.getLocation());
+                                mCtx.startActivity(intent);
                                 Toast.makeText(mCtx, textViewName.getText(), Toast.LENGTH_LONG).show();
                             }
                         }

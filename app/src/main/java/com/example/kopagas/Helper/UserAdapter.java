@@ -128,6 +128,11 @@ public class UserAdapter extends RecyclerView.Adapter<UserAdapter.ViewHolder> {
             if (position != RecyclerView.NO_POSITION) { // Check if an item was deleted, but the user clicked it before the UI removed it
                 User user = users.get(position);
                 // We can access the data within the views
+                //Vendor vendor = vendors.get(position);
+                //Intent intent = new Intent(mCtx, OrderDetail.class);
+                //intent.putExtra("textName", user.getUsername());
+                //intent.putExtra("textLocation", user.getUsername());
+                //mCtx.startActivity(intent);
                 Toast.makeText(mCtx, textViewName.getText(), Toast.LENGTH_SHORT).show();
             }
         }

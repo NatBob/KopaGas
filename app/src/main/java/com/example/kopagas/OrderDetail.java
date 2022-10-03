@@ -67,12 +67,16 @@ public class OrderDetail extends AppCompatActivity {
         //currentProductUri = intent.getData();
             setTitle(getString(R.string.order_detail));
 
-        productCatEdit = (Spinner) findViewById(R.id.spinner_product_cat);
-        productBrand = (EditText) findViewById(R.id.edit_product_brand);
-        productWeight = (Spinner) findViewById(R.id.spinner_product_weight);
-        productBrand.setOnTouchListener(mTouchListener);
-        productCatEdit.setOnTouchListener(mTouchListener);
-        productWeight.setOnTouchListener(mTouchListener);
+        //productCatEdit = (Spinner) findViewById(R.id.spinner_product_cat);
+        //productBrand = (EditText) findViewById(R.id.edit_product_brand);
+        //productWeight = (Spinner) findViewById(R.id.spinner_product_weight);
+
+        bName = (TextView) findViewById(R.id.view_product_brand);
+        weight = (TextView) findViewById(R.id.view_brand_weight);
+        //productWeight = (TextView) findViewById(R.id.spinner_product_weight);
+        //productBrand.setOnTouchListener(mTouchListener);
+        //productCatEdit.setOnTouchListener(mTouchListener);
+        //productWeight.setOnTouchListener(mTouchListener);
         //decreaseQuantityButton.setOnTouchListener(mTouchListener);
         //increaseQuantityButton.setOnClickListener(new View.OnClickListener()
         orderButton = (Button) findViewById(R.id.order_item_button);
@@ -85,8 +89,9 @@ public class OrderDetail extends AppCompatActivity {
             }
         });
 
-        setupCategorySpinner();
-        setupSpinner();
+        //setupCategorySpinner();
+        //setupSpinner();
+        getIncomingIntent();
     }
 
         private void getIncomingIntent(){
@@ -205,7 +210,7 @@ public class OrderDetail extends AppCompatActivity {
         genderSpinnerAdapter.setDropDownViewResource(android.R.layout.simple_dropdown_item_1line);
 
         // Apply the adapter to the spinner
-        productCatEdit.setAdapter(genderSpinnerAdapter);
+        //productCatEdit.setAdapter(genderSpinnerAdapter);
 
         // Set the integer mSelected to the constant values
         productCatEdit.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {

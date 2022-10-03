@@ -43,7 +43,6 @@ import java.util.HashMap;
 import java.util.Map;
 
 import okhttp3.MediaType;
-import okhttp3.MultipartBody;
 import okhttp3.RequestBody;
 import okhttp3.ResponseBody;
 import retrofit2.Call;
@@ -86,7 +85,7 @@ public class BrandEditor extends AppCompatActivity {
     TextView imgPath;
     ///ImageView image;
     Uri selectedImage;
-    String part_image;
+    String mPath;
 
     // Permissions for accessing the storage
     private static final int REQUEST_EXTERNAL_STORAGE = 1;
@@ -157,24 +156,24 @@ public class BrandEditor extends AppCompatActivity {
             public void onClick(View view) {
                 //orderRestockProduct();
                 //addProduct();
-                newBrand(view);
+                newBrand();
             }
         });
     }
     private void increaseQuantityByOne() {
-        String quantityFromInputString = productQuantityEditText.getText().toString();
+        String quantityFromInputString = unitsAvailable.getText().toString();
         int quantityFromInputInt;
         if (quantityFromInputString.isEmpty()) {
             quantityFromInputInt = 0;
         } else {
             quantityFromInputInt = Integer.parseInt(quantityFromInputString);
         }
-        productQuantityEditText.setText(String.valueOf(quantityFromInputInt + 1));
+        unitsAvailable.setText(String.valueOf(quantityFromInputInt + 1));
     }
 
     private void decreaseQuantityByOne() {
 
-        String quantityFromInputString = productQuantityEditText.getText().toString();
+        String quantityFromInputString = unitsAvailable.getText().toString();
         int quantityFromInputInt;
         if (quantityFromInputString.isEmpty()) {
             quantityFromInputInt = 0;
@@ -184,7 +183,7 @@ public class BrandEditor extends AppCompatActivity {
             if (quantityFromInputInt == 0) {
                 Toast.makeText(this, getString(R.string.enter_positive_product_quantity), Toast.LENGTH_SHORT).show();
             } else {
-                productQuantityEditText.setText(String.valueOf(quantityFromInputInt - 1));
+                unitsAvailable.setText(String.valueOf(quantityFromInputInt - 1));
             }
         }
     }
@@ -213,17 +212,20 @@ public class BrandEditor extends AppCompatActivity {
         super.onActivityResult(requestCode, resultCode, data);
         if(requestCode== PICK_IMAGE_REQUEST && resultCode==RESULT_OK && data!=null)
         {
-            Uri currentProductUri = data.getData();
+            //Uri productUri = data.getData();
+            currentProductUri = data.getData();
 
             try {
-                bitmap = MediaStore.Images.Media.getBitmap(getContentResolver(),currentProductUri);
+                bitmap = MediaStore.Images.Media.getBitmap(getContentResolver(), currentProductUri);
+
                 productPhotoView.setImageBitmap(bitmap);
                 //String mPath = saveImage(bitmap);
-                //String mPath = getRealPathFromURI(currentProductUri);
+                mPath = getRealPathFromURI(currentProductUri);
                 //SharedPrefManager.getInstance(getApplicationContext()).storeImage(saveImage(bitmap));
             } catch (IOException e) {
-                e.printStackTrace();
+                //e.printStackTrace();
             }
+            //newBrand(productUri);
         }
     }
 
@@ -306,16 +308,16 @@ public class BrandEditor extends AppCompatActivity {
         //Cursor cursor = getContentResolver().query(currentProductUri, proj, null, null, null);
         Cursor cursor = loader.loadInBackground();
         int column_index = cursor.getColumnIndexOrThrow(MediaStore.Images.Media.DATA);
-        int columnIndex = cursor.getColumnIndex(proj[0]);
-        String filePath = cursor.getString(columnIndex);
+        //int columnIndex = cursor.getColumnIndex(proj[0]);
+        //String filePath = cursor.getString(columnIndex);
         cursor.moveToFirst();
         String result = cursor.getString(column_index);
         cursor.close();
-        return filePath;
+        return result;
     }
 
     // Upload the image to the remote database
-    public void newBrand(View view) {
+    public void newBrand() {
         final ProgressDialog progressDialog = new ProgressDialog(BrandEditor.this);
         progressDialog.setMessage("Saving Brand...");
         //progressDialog.show();
@@ -328,15 +330,15 @@ public class BrandEditor extends AppCompatActivity {
         String brand = etBrandName.getText().toString().trim();
         //byte[] productImage = DbBitmapUtility.getImage(this, R.drawable.safegas);
         //String prdImage = convertToString();
-        //String prdImage = SharedPrefManager.fetchImage();
-        //Bitmap pImage = getBitmapFromUri(path);
+        String pathImage = getRealPathFromURI(currentProductUri);
+        String pImage = mPath;
         double price = Double.parseDouble(etPrice.getText().toString().trim());
         String description = etDescription.getText().toString().trim();
         //bitmap imageURL = etImageURL.getBlob().toString().trim();
         String weight = etWeight.getSelectedItem().toString().trim();
         //String weight = etWeight.getText().toString().trim();
         File mImage = new File(convertToString());
-        File pImage = new File(String.valueOf(path));
+        //File pImage = new File(String.valueOf(path));
         long units_Available = Long.parseLong(unitsAvailable.getText().toString().trim());
 
         Retrofit retrofit = new Retrofit.Builder()
@@ -353,13 +355,15 @@ public class BrandEditor extends AppCompatActivity {
         //String mToken = String.valueOf(RequestBody.create(MediaType.parse("multipart/form-data"), token));
         RequestBody mTitle = RequestBody.create(MediaType.parse("multipart/form-data"), title);
         RequestBody mBrand = RequestBody.create(MediaType.parse("multipart/form-data"), brand);
-        MultipartBody.Part image = null;
-        ImageView productPhotoView=null;
-        if (productPhotoView!=null) {
-            File file = new File(convertToString());
-            RequestBody requestFile = RequestBody.create(MediaType.parse("image/*"), mImage);
-            image = MultipartBody.Part.createFormData("image", file.getName(), requestFile);
-        }
+        //MultipartBody.Part image = null;
+        //ImageView productPhotoView=null;
+        //if (productPhotoView!=null) {
+            File pile = new File(pathImage);
+            //File file = new File(getRealPathFromURI(currentProductUri));
+            RequestBody requestFile = RequestBody.create(MediaType.parse(getContentResolver().getType(Uri.parse(pathImage))), pile);
+            //RequestBody requestFile = RequestBody.create(MediaType.parse("image/*"), mImage);
+            //image = MultipartBody.Part.createFormData("image", file.getName(), requestFile);
+        //}
         //RequestBody mImage = RequestBody.create(MediaType.parse(getContentResolver().getType(currentProductUri)), image);
         //RequestBody mImage = RequestBody.create(MediaType.parse("multipart/form-data"), image);
         RequestBody mPrice = RequestBody.create(MediaType.parse("multipart/form-data"), String.valueOf(price));
@@ -370,7 +374,7 @@ public class BrandEditor extends AppCompatActivity {
 
         //com.example.kopagas.model.Item item = new Item(mTitle, mBrand, productImage, mPrice, mDescription, mWeight, units_Available);
 
-        Call<ResponseBody> call = service.addBrand(header, mTitle, mBrand, image, mPrice, mDescription, mWeight, unitsAvailable);
+        Call<ResponseBody> call = service.addBrand(header, mTitle, mBrand, requestFile, mPrice, mDescription, mWeight, unitsAvailable);
 
         call.enqueue(new Callback<ResponseBody>() {
             @Override
@@ -379,7 +383,7 @@ public class BrandEditor extends AppCompatActivity {
                 try {
                     if (response.isSuccessful()) {
                     Toast.makeText(BrandEditor.this, "Image Uploaded", Toast.LENGTH_SHORT).show();
-                    Intent main = new Intent(BrandEditor.this, MainActivity.class);
+                    Intent main = new Intent(BrandEditor.this, ViewBrands.class);
                     main.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
                     startActivity(main);
 

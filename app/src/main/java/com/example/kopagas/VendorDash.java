@@ -60,7 +60,7 @@ public class VendorDash extends AppCompatActivity {
                                          }
                                      });
         Button moreOrders = (Button) findViewById(R.id.view_more_stats);
-        moreStats.setOnClickListener(new View.OnClickListener() {
+        moreOrders.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 //orderRestockProduct();
