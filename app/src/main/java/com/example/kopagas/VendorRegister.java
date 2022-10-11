@@ -141,7 +141,7 @@ public class VendorRegister extends AppCompatActivity implements View.OnClickLis
                     SharedPrefManager.getInstance(getApplicationContext()).saveToken(mToken);
                     //Log.e(TAG, "Imeshindwa kutuma API.");
                     Log.e(TAG, "Auth Token" +  mToken);
-                    startActivity(new Intent(VendorRegister.this, ViewVendors.class));
+                    startActivity(new Intent(VendorRegister.this, VendorDash.class));
                 } else {
                     //Toast.makeText(getApplicationContext(), response.body().getResponse(), Toast.LENGTH_LONG).show();
 

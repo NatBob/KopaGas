@@ -14,6 +14,7 @@ import com.example.kopagas.model.Vendor;
 import java.util.List;
 import java.util.Map;
 
+import okhttp3.MultipartBody;
 import okhttp3.RequestBody;
 import okhttp3.ResponseBody;
 import retrofit2.Call;
@@ -142,8 +143,8 @@ public interface UserService {
             @Part("title") RequestBody title,
             @Part("brand") RequestBody brand,
             //@Part MultipartBody.Part image,
-            //@Part MultipartBody.Part requestFile,
-            @Part("image") RequestBody image,
+            @Part MultipartBody.Part image,
+            //@Part("image") RequestBody image,
             @Part("price") RequestBody price,
             @Part("description") RequestBody description,
             @Part("weight") RequestBody weight,

@@ -623,7 +623,7 @@ public class GasDetail extends AppCompatActivity {
 
         //com.example.kopagas.model.Item item = new Item(mTitle, mBrand, productImage, mPrice, mDescription, mWeight, units_Available);
 
-        Call<ResponseBody> call = service.newBrand(header, mTitle, mBrand, mImage, mPrice, mDescription, mWeight, unitsAvailable);
+        Call<ResponseBody> call = service.newBrand(header, mTitle, mBrand, prodImage, mPrice, mDescription, mWeight, unitsAvailable);
 
         call.enqueue(new Callback<ResponseBody>() {
             @Override

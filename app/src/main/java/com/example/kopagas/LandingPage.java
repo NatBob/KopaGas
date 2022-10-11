@@ -83,9 +83,11 @@ public class LandingPage extends AppCompatActivity implements View.OnClickListen
     @Override
     public void onClick(View view) {
 
-        if (view == buy) {
+        if (view == buy && (pref.getInstance(this).isVendor())) {
 
             startActivity(new Intent(this, VendorDash.class));
+        } else if (view == buy && (!pref.getInstance(this).isVendor())){
+            startActivity(new Intent(this, VendorRegister.class));
 
         } else if (view == sell) {
 

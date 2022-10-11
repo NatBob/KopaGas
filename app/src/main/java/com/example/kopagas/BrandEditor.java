@@ -7,8 +7,10 @@ import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.database.Cursor;
 import android.graphics.Bitmap;
+import android.media.MediaScannerConnection;
 import android.net.Uri;
 import android.os.Bundle;
+import android.os.Environment;
 import android.provider.MediaStore;
 import android.text.TextUtils;
 import android.util.Base64;
@@ -38,7 +40,9 @@ import com.example.kopagas.remote.UserService;
 
 import java.io.ByteArrayOutputStream;
 import java.io.File;
+import java.io.FileOutputStream;
 import java.io.IOException;
+import java.util.Calendar;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -126,6 +130,7 @@ public class BrandEditor extends AppCompatActivity {
         //etTitle.setOnTouchListener(mTouchListener);
         increaseQuantityButton.setOnTouchListener(mTouchListener);
         decreaseQuantityButton.setOnTouchListener(mTouchListener);
+        //image = getRealPathFromURI(currentProductUri);
 
         setupSpinner();
         setupCategorySpinner();
@@ -219,8 +224,8 @@ public class BrandEditor extends AppCompatActivity {
                 bitmap = MediaStore.Images.Media.getBitmap(getContentResolver(), currentProductUri);
 
                 productPhotoView.setImageBitmap(bitmap);
-                //String mPath = saveImage(bitmap);
-                mPath = getRealPathFromURI(currentProductUri);
+                mPath = saveImage(bitmap);
+                //mPath = getRealPathFromURI(currentProductUri);
                 //SharedPrefManager.getInstance(getApplicationContext()).storeImage(saveImage(bitmap));
             } catch (IOException e) {
                 //e.printStackTrace();
@@ -265,6 +270,7 @@ public class BrandEditor extends AppCompatActivity {
             }
         }
     }
+    **/
     public String saveImage(Bitmap bitmap) {
         ByteArrayOutputStream bytes = new ByteArrayOutputStream();
         bitmap.compress(Bitmap.CompressFormat.JPEG, 90, bytes);
@@ -293,7 +299,7 @@ public class BrandEditor extends AppCompatActivity {
         }
         return "";
     }
-     **/
+
 
     /*
      * This method is fetching the absolute path of the image file
@@ -358,9 +364,9 @@ public class BrandEditor extends AppCompatActivity {
         //MultipartBody.Part image = null;
         //ImageView productPhotoView=null;
         //if (productPhotoView!=null) {
-            File pile = new File(pathImage);
+            File pile = new File(saveImage(bitmap));
             //File file = new File(getRealPathFromURI(currentProductUri));
-            RequestBody requestFile = RequestBody.create(MediaType.parse(getContentResolver().getType(Uri.parse(pathImage))), pile);
+            RequestBody requestFile = RequestBody.create(MediaType.parse(getContentResolver().getType(Uri.parse(pImage))), pile);
             //RequestBody requestFile = RequestBody.create(MediaType.parse("image/*"), mImage);
             //image = MultipartBody.Part.createFormData("image", file.getName(), requestFile);
         //}
