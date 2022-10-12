@@ -43,7 +43,7 @@ import retrofit2.converter.gson.GsonConverterFactory;
             this.mCtx = mCtx;
         }
 
-        public void setUser(List<Vendor> vendors) {
+        public void setVendors(List<Vendor> vendors) {
             this.vendors= vendors;
             notifyDataSetChanged();
         }

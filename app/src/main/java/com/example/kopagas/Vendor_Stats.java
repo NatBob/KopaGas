@@ -1,6 +1,7 @@
 package com.example.kopagas;
 
 import android.content.Intent;
+import android.graphics.Bitmap;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.Menu;
@@ -35,7 +36,7 @@ public class Vendor_Stats extends AppCompatActivity {
     private String title;
     private String weight;
     private double price;
-    private String item_image;
+    private Bitmap images;
     private String token = SharedPrefManager.fetchToken();
     private static final String TAG = "ViewBrand";
     private List<Vendor> vendors;
@@ -64,7 +65,7 @@ public class Vendor_Stats extends AppCompatActivity {
         UserService service = retrofit.create(UserService.class);
 
 
-        com.example.kopagas.model.Item item = new Item(token, title, item_image, price);
+        com.example.kopagas.model.Item item = new Item(token, title, images, price);
         //com.example.kopagas.model.Vendor vendor = new Vendor(token, shop_name, location);
         Call<List<Item>> call = service.getItems(
                 token,
@@ -72,7 +73,7 @@ public class Vendor_Stats extends AppCompatActivity {
                 //vendor.getLocation(),
                 //vendor.getDelivery()
                 item.getTitle(),
-                item.getImageUrl(),
+                item.getImage(),
                 item.getPrice()
 
         );

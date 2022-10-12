@@ -43,7 +43,7 @@ public class BrandAdapter extends RecyclerView.Adapter<BrandAdapter.ViewHolder> 
         this.items = items;
         this.mCtx = mCtx;
     }
-    public void setUser(List<Item> items) {
+    public void setItems(List<Item> items) {
         this.items= items;
         notifyDataSetChanged();
     }

@@ -472,8 +472,8 @@ public class MyStock extends AppCompatActivity {
                 brand,
                 image,
                 price,
-                weight,
                 description,
+                weight,
                 units_Available
                 //item.getTitle(),
                 //item.getBrand(),

@@ -47,6 +47,7 @@ import java.util.HashMap;
 import java.util.Map;
 
 import okhttp3.MediaType;
+import okhttp3.MultipartBody;
 import okhttp3.RequestBody;
 import okhttp3.ResponseBody;
 import retrofit2.Call;
@@ -165,6 +166,7 @@ public class BrandEditor extends AppCompatActivity {
             }
         });
     }
+
     private void increaseQuantityByOne() {
         String quantityFromInputString = unitsAvailable.getText().toString();
         int quantityFromInputInt;
@@ -202,10 +204,9 @@ public class BrandEditor extends AppCompatActivity {
         startActivityForResult(intent, PICK_IMAGE_REQUEST);
     }
 
-    private String convertToString()
-    {
+    private String convertToString() {
         ByteArrayOutputStream byteArrayOutputStream = new ByteArrayOutputStream();
-        bitmap.compress(Bitmap.CompressFormat.JPEG,100,byteArrayOutputStream);
+        bitmap.compress(Bitmap.CompressFormat.JPEG, 100, byteArrayOutputStream);
         byte[] imgByte = byteArrayOutputStream.toByteArray();
         return Base64.encodeToString(imgByte, Base64.DEFAULT);
         //return (imgByte);
@@ -215,8 +216,7 @@ public class BrandEditor extends AppCompatActivity {
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
-        if(requestCode== PICK_IMAGE_REQUEST && resultCode==RESULT_OK && data!=null)
-        {
+        if (requestCode == PICK_IMAGE_REQUEST && resultCode == RESULT_OK && data != null) {
             //Uri productUri = data.getData();
             currentProductUri = data.getData();
 
@@ -275,7 +275,7 @@ public class BrandEditor extends AppCompatActivity {
         ByteArrayOutputStream bytes = new ByteArrayOutputStream();
         bitmap.compress(Bitmap.CompressFormat.JPEG, 90, bytes);
         File wallpaperDirectory = new File(
-                Environment.getExternalStorageDirectory()+ "");
+                Environment.getExternalStorageDirectory() + "");
         // have the object build the directory structure, if needed.
         if (!wallpaperDirectory.exists()) {
             wallpaperDirectory.mkdirs();
@@ -307,7 +307,7 @@ public class BrandEditor extends AppCompatActivity {
      * you need to make changes on this method only
      * Rest part will be the same
      * */
-    
+
     private String getRealPathFromURI(Uri currentProductUri) {
         String[] proj = {MediaStore.Images.Media.DATA};
         CursorLoader loader = new CursorLoader(this, currentProductUri, proj, null, null, null);
@@ -327,7 +327,7 @@ public class BrandEditor extends AppCompatActivity {
         final ProgressDialog progressDialog = new ProgressDialog(BrandEditor.this);
         progressDialog.setMessage("Saving Brand...");
         //progressDialog.show();
-        if (progressDialog!=null && progressDialog.isShowing()) {
+        if (progressDialog != null && progressDialog.isShowing()) {
             progressDialog.cancel();
             //}else{
             //progressDialog.show();
@@ -356,45 +356,46 @@ public class BrandEditor extends AppCompatActivity {
 
         //Vendor vendor = new Vendor("Token "+SharedPrefManager.getInstance(getApplicationContext()).fetchToken(), shop_name, location, delivery);
 
-        Map<String, String> header = new HashMap<>(); header.put("Authorization", token);
+        Map<String, String> header = new HashMap<>();
+        header.put("Authorization", token);
         //RequestBody mToken = RequestBody.create(MediaType.parse("multipart/form-data"), String.valueOf(token));
         //String mToken = String.valueOf(RequestBody.create(MediaType.parse("multipart/form-data"), token));
         RequestBody mTitle = RequestBody.create(MediaType.parse("multipart/form-data"), title);
         RequestBody mBrand = RequestBody.create(MediaType.parse("multipart/form-data"), brand);
-        //MultipartBody.Part image = null;
-        //ImageView productPhotoView=null;
-        //if (productPhotoView!=null) {
-            File pile = new File(saveImage(bitmap));
+        MultipartBody.Part image = null;
+        productPhotoView = null;
+        if (productPhotoView != null) {
+            File file = new File(convertToString());
             //File file = new File(getRealPathFromURI(currentProductUri));
-            RequestBody requestFile = RequestBody.create(MediaType.parse(getContentResolver().getType(Uri.parse(pImage))), pile);
-            //RequestBody requestFile = RequestBody.create(MediaType.parse("image/*"), mImage);
-            //image = MultipartBody.Part.createFormData("image", file.getName(), requestFile);
-        //}
-        //RequestBody mImage = RequestBody.create(MediaType.parse(getContentResolver().getType(currentProductUri)), image);
-        //RequestBody mImage = RequestBody.create(MediaType.parse("multipart/form-data"), image);
-        RequestBody mPrice = RequestBody.create(MediaType.parse("multipart/form-data"), String.valueOf(price));
-        RequestBody mDescription = RequestBody.create(MediaType.parse("multipart/form-data"), description);
-        RequestBody mWeight = RequestBody.create(MediaType.parse("multipart/form-data"), weight);
-        RequestBody unitsAvailable = RequestBody.create(MediaType.parse("multipart/form-data"), String.valueOf(units_Available));
+            //RequestBody requestFile = RequestBody.create(MediaType.parse(getContentResolver().getType(Uri.parse(pImage))), file);
+            RequestBody requestFile = RequestBody.create(MediaType.parse("image/*"), file);
+            image = MultipartBody.Part.createFormData("image", file.getName(), requestFile);
+            }
+            //RequestBody mImage = RequestBody.create(MediaType.parse(getContentResolver().getType(currentProductUri)), image);
+            //RequestBody mImage = RequestBody.create(MediaType.parse("multipart/form-data"), image);
+            RequestBody mPrice = RequestBody.create(MediaType.parse("multipart/form-data"), String.valueOf(price));
+            RequestBody mDescription = RequestBody.create(MediaType.parse("multipart/form-data"), description);
+            RequestBody mWeight = RequestBody.create(MediaType.parse("multipart/form-data"), weight);
+            RequestBody unitsAvailable = RequestBody.create(MediaType.parse("multipart/form-data"), String.valueOf(units_Available));
 
 
-        //com.example.kopagas.model.Item item = new Item(mTitle, mBrand, productImage, mPrice, mDescription, mWeight, units_Available);
+            //com.example.kopagas.model.Item item = new Item(mTitle, mBrand, productImage, mPrice, mDescription, mWeight, units_Available);
 
-        Call<ResponseBody> call = service.addBrand(header, mTitle, mBrand, requestFile, mPrice, mDescription, mWeight, unitsAvailable);
+            Call<ResponseBody> call = service.addBrand(header, mTitle, mBrand, image, mPrice, mDescription, mWeight, unitsAvailable);
 
-        call.enqueue(new Callback<ResponseBody>() {
-            @Override
-            public void onResponse(Call<ResponseBody> call, Response<ResponseBody> response) {
-                progressDialog.dismiss();
-                try {
-                    if (response.isSuccessful()) {
-                    Toast.makeText(BrandEditor.this, "Image Uploaded", Toast.LENGTH_SHORT).show();
-                    Intent main = new Intent(BrandEditor.this, ViewBrands.class);
-                    main.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
-                    startActivity(main);
+            call.enqueue(new Callback<ResponseBody>() {
+                @Override
+                public void onResponse(Call<ResponseBody> call, Response<ResponseBody> response) {
+                    progressDialog.dismiss();
+                    try {
+                        if (response.isSuccessful()) {
+                            Toast.makeText(BrandEditor.this, "Image Uploaded", Toast.LENGTH_SHORT).show();
+                            Intent main = new Intent(BrandEditor.this, ViewBrands.class);
+                            main.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
+                            startActivity(main);
 
-                    //Toast.makeText(getApplicationContext(), (CharSequence) response.body().getResponse(), Toast.LENGTH_LONG).show();
-                    //if (!response.body().getResponse()) {
+                            //Toast.makeText(getApplicationContext(), (CharSequence) response.body().getResponse(), Toast.LENGTH_LONG).show();
+                            //if (!response.body().getResponse()) {
 
                             //Toast.makeText(getApplicationContext(), response.body().getSuccess(), Toast.LENGTH_LONG).show();
                             //SharedPrefManager.getInstance(getApplicationContext()).saveVendor(shop_name,location,delivery);
@@ -410,10 +411,10 @@ public class BrandEditor extends AppCompatActivity {
                             //Toast.makeText(getApplicationContext(), response.body().getResponse(), Toast.LENGTH_LONG).show();
                             //Log.e(TAG, "Imeshindwa kutuma API." + token);
                             //Log.e(TAG, "Not Registered." + mToken);
-                            Log.e(TAG, "response." +response.body());
+                            Log.e(TAG, "response." + response.body());
                             //sharedPrefManager.getInstance(getApplicationContext()).userLogin(response.body().getUser());
                             //startActivity(new Intent(getApplicationContext(), LogonActivity.class));
-                            switch (response.code()){
+                            switch (response.code()) {
                                 case 400:
                                     Toast.makeText(getApplicationContext(), "400-Bad Request", Toast.LENGTH_LONG).show();
                                     Log.e(TAG, "400-Bad Request");
@@ -585,152 +586,151 @@ public class BrandEditor extends AppCompatActivity {
                                     //reponseCode();
                             }
                         }
-                    }catch(Exception e){
+                    } catch (Exception e) {
                         e.printStackTrace();
                     }
                 }
 
-            @Override
-            public void onFailure(Call<ResponseBody> call, Throwable t) {
-                Toast.makeText(BrandEditor.this, "Request failed", Toast.LENGTH_SHORT).show();
-            }
-        });
-    }
-
-    public static void verifyStoragePermissions(Activity activity) {
-        // Check if we have write permission
-        int permission = ActivityCompat.checkSelfPermission(activity, Manifest.permission.WRITE_EXTERNAL_STORAGE);
-
-        if (permission != PackageManager.PERMISSION_GRANTED) {
-            // We don't have permission so prompt the user
-            ActivityCompat.requestPermissions(
-                    activity,
-                    PERMISSIONS_STORAGE,
-                    REQUEST_EXTERNAL_STORAGE
-            );
+                @Override
+                public void onFailure(Call<ResponseBody> call, Throwable t) {
+                    Toast.makeText(BrandEditor.this, "Request failed", Toast.LENGTH_SHORT).show();
+                }
+            });
         }
-    }
+
+        public static void verifyStoragePermissions (Activity activity){
+            // Check if we have write permission
+            int permission = ActivityCompat.checkSelfPermission(activity, Manifest.permission.WRITE_EXTERNAL_STORAGE);
+
+            if (permission != PackageManager.PERMISSION_GRANTED) {
+                // We don't have permission so prompt the user
+                ActivityCompat.requestPermissions(
+                        activity,
+                        PERMISSIONS_STORAGE,
+                        REQUEST_EXTERNAL_STORAGE
+                );
+            }
+        }
 
 
-    /**
-     * Setup the dropdown spinner that allows the user to select the size of the brand.
-     */
-    private void setupSpinner() {
-        // Create adapter for spinner. The list options are from the String array it will use
-        // the spinner will use the default layout
-        ArrayAdapter genderSpinnerAdapter = ArrayAdapter.createFromResource(this,
-                R.array.array_gender_options, android.R.layout.simple_spinner_item);
+        /**
+         * Setup the dropdown spinner that allows the user to select the size of the brand.
+         */
+        private void setupSpinner () {
+            // Create adapter for spinner. The list options are from the String array it will use
+            // the spinner will use the default layout
+            ArrayAdapter genderSpinnerAdapter = ArrayAdapter.createFromResource(this,
+                    R.array.array_gender_options, android.R.layout.simple_spinner_item);
 
-        // Specify dropdown layout style - simple list view with 1 item per line
-        genderSpinnerAdapter.setDropDownViewResource(android.R.layout.simple_dropdown_item_1line);
+            // Specify dropdown layout style - simple list view with 1 item per line
+            genderSpinnerAdapter.setDropDownViewResource(android.R.layout.simple_dropdown_item_1line);
 
-        // Apply the adapter to the spinner
-        etWeight.setAdapter(genderSpinnerAdapter);
+            // Apply the adapter to the spinner
+            etWeight.setAdapter(genderSpinnerAdapter);
 
-        // Set the integer mSelected to the constant values
-        etWeight.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
-            @Override
-            public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
-                String selection = (String) parent.getItemAtPosition(position);
-                if (!TextUtils.isEmpty(selection)) {
-                    if (selection.equals(getString(R.string.big_cylinder))) {
+            // Set the integer mSelected to the constant values
+            etWeight.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+                @Override
+                public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
+                    String selection = (String) parent.getItemAtPosition(position);
+                    if (!TextUtils.isEmpty(selection)) {
+                        if (selection.equals(getString(R.string.big_cylinder))) {
 
-                        mSize = UserContract.brandsEntry.BIG_CYLINDER; // 13kg
-                    } else if (selection.equals(getString(R.string.medium_cylinder))) {
-                        mSize = UserContract.brandsEntry.MEDIUM_CYLINDER; // 6kg
-                    } else {
-                        mSize = UserContract.brandsEntry.SMALL_CYLINDER; // 3kg
+                            mSize = UserContract.brandsEntry.BIG_CYLINDER; // 13kg
+                        } else if (selection.equals(getString(R.string.medium_cylinder))) {
+                            mSize = UserContract.brandsEntry.MEDIUM_CYLINDER; // 6kg
+                        } else {
+                            mSize = UserContract.brandsEntry.SMALL_CYLINDER; // 3kg
+                        }
                     }
                 }
-            }
 
-            // Because AdapterView is an abstract class, onNothingSelected must be defined
-            @Override
-            public void onNothingSelected(AdapterView<?> parent) {
-                mSize = 0; // Unknown
-            }
-        });
-    }
+                // Because AdapterView is an abstract class, onNothingSelected must be defined
+                @Override
+                public void onNothingSelected(AdapterView<?> parent) {
+                    mSize = 0; // Unknown
+                }
+            });
+        }
 
-    private void setupCategorySpinner() {
-        // Create adapter for spinner. The list options are from the String array it will use
-        // the spinner will use the default layout
-        ArrayAdapter genderSpinnerAdapter = ArrayAdapter.createFromResource(this,
-                R.array.array_prod_cat, android.R.layout.simple_spinner_item);
+        private void setupCategorySpinner () {
+            // Create adapter for spinner. The list options are from the String array it will use
+            // the spinner will use the default layout
+            ArrayAdapter genderSpinnerAdapter = ArrayAdapter.createFromResource(this,
+                    R.array.array_prod_cat, android.R.layout.simple_spinner_item);
 
-        // Specify dropdown layout style - simple list view with 1 item per line
-        genderSpinnerAdapter.setDropDownViewResource(android.R.layout.simple_dropdown_item_1line);
+            // Specify dropdown layout style - simple list view with 1 item per line
+            genderSpinnerAdapter.setDropDownViewResource(android.R.layout.simple_dropdown_item_1line);
 
-        // Apply the adapter to the spinner
-        etTitle.setAdapter(genderSpinnerAdapter);
+            // Apply the adapter to the spinner
+            etTitle.setAdapter(genderSpinnerAdapter);
 
-        // Set the integer mSelected to the constant values
-        etTitle.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
-            @Override
-            public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
-                String selection = (String) parent.getItemAtPosition(position);
-                if (!TextUtils.isEmpty(selection)) {
-                    if (selection.equals(getString(R.string.medium_refill))) {
+            // Set the integer mSelected to the constant values
+            etTitle.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+                @Override
+                public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
+                    String selection = (String) parent.getItemAtPosition(position);
+                    if (!TextUtils.isEmpty(selection)) {
+                        if (selection.equals(getString(R.string.medium_refill))) {
 
-                        mCat = UserContract.brandsEntry.KG6_REFILL; // 13kg
-                    } else if (selection.equals(getString(R.string.medium_new))) {
-                        mCat = UserContract.brandsEntry.KG6_NEW; // 6kg
-                    } else {
-                        mCat = UserContract.brandsEntry.KG13_REFILL; // 3kg
+                            mCat = UserContract.brandsEntry.KG6_REFILL; // 13kg
+                        } else if (selection.equals(getString(R.string.medium_new))) {
+                            mCat = UserContract.brandsEntry.KG6_NEW; // 6kg
+                        } else {
+                            mCat = UserContract.brandsEntry.KG13_REFILL; // 3kg
+                        }
                     }
                 }
-            }
 
-            // Because AdapterView is an abstract class, onNothingSelected must be defined
-            @Override
-            public void onNothingSelected(AdapterView<?> parent) {
-                mSize = 0; // Unknown
-            }
-        });
-    }
-
-
-    @Override
-    public boolean onCreateOptionsMenu(Menu menu) {
-        // Inflate the menu options from the res/menu/menu_editor.xml file.
-        // This adds menu items to the app bar.
-        getMenuInflater().inflate(R.menu.menu_editor, menu);
-        return true;
-    }
-
-    @Override
-    public boolean onOptionsItemSelected(MenuItem item) {
-        // User clicked on a menu option in the app bar overflow menu
-        switch (item.getItemId()) {
-            // Respond to a click on the "Save" menu option
-            case R.id.action_save:
-                // save new livestock into databaseinsertBrand();
-                //close editor and return to catalog activity
-                //insertAction();
-                //salePrice();
-                //displayBrands();
-                //newBrand();
-                //finish();
-                return true;
-            // Respond to a click on the "Delete" menu option
-            case R.id.action_delete:
-                // Do nothing for now
-                return true;
-            // Respond to a click on the "Up" arrow button in the app bar
-            case android.R.id.home:
-                // Navigate back to parent activity (CatalogActivity)
-                NavUtils.navigateUpFromSameTask(this);
-                return true;
+                // Because AdapterView is an abstract class, onNothingSelected must be defined
+                @Override
+                public void onNothingSelected(AdapterView<?> parent) {
+                    mSize = 0; // Unknown
+                }
+            });
         }
-        return super.onOptionsItemSelected(item);
+
+
+        @Override
+        public boolean onCreateOptionsMenu (Menu menu){
+            // Inflate the menu options from the res/menu/menu_editor.xml file.
+            // This adds menu items to the app bar.
+            getMenuInflater().inflate(R.menu.menu_editor, menu);
+            return true;
+        }
+
+        @Override
+        public boolean onOptionsItemSelected (MenuItem item){
+            // User clicked on a menu option in the app bar overflow menu
+            switch (item.getItemId()) {
+                // Respond to a click on the "Save" menu option
+                case R.id.action_save:
+                    // save new livestock into databaseinsertBrand();
+                    //close editor and return to catalog activity
+                    //insertAction();
+                    //salePrice();
+                    //displayBrands();
+                    //newBrand();
+                    //finish();
+                    return true;
+                // Respond to a click on the "Delete" menu option
+                case R.id.action_delete:
+                    // Do nothing for now
+                    return true;
+                // Respond to a click on the "Up" arrow button in the app bar
+                case android.R.id.home:
+                    // Navigate back to parent activity (CatalogActivity)
+                    NavUtils.navigateUpFromSameTask(this);
+                    return true;
+            }
+            return super.onOptionsItemSelected(item);
+        }
+
+        private void displayBrands () {
+            Intent vendorIntent = new Intent(BrandEditor.this, Brands.class);
+            startActivity(vendorIntent);
+            Log.i("MainActivity", "Login to OkoaGas");
+        }
+
+
     }
-
-    private void displayBrands(){
-        Intent vendorIntent= new Intent(BrandEditor.this, Brands.class);
-        startActivity(vendorIntent);
-        Log.i("MainActivity","Login to OkoaGas");
-    }
-
-
-
-}

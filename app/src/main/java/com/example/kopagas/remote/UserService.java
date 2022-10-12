@@ -1,5 +1,7 @@
 package com.example.kopagas.remote;
 
+import android.graphics.Bitmap;
+
 import com.example.kopagas.Helper.SharedPrefManager;
 import com.example.kopagas.model.BranRes;
 import com.example.kopagas.model.Item;
@@ -84,7 +86,7 @@ public interface UserService {
     Call<List<Item>> getItems(
             @Header("Authorization")String token,
             @Query("title")String title,
-            @Query("image")String item_image,
+            @Query("image") Bitmap images,
             @Query("price") double price
     );
 
@@ -127,12 +129,13 @@ public interface UserService {
             @HeaderMap Map<String, String> token,
             //@Part("token") RequestBody token,
             @Part("title") RequestBody title,
-            @Part("price") RequestBody price,
-            @Part("image") RequestBody requestFile,
-            @Part("weight") RequestBody weight,
-            @Part ("units_Available") RequestBody units_available,
-            @Part("brand") RequestBody brand,
-            @Part("description") RequestBody description
+            @Part("price") RequestBody brand,
+            @Part MultipartBody.Part item_image,
+            //@Part("image") RequestBody requestFile,
+            @Part("weight") RequestBody price,
+            @Part ("units_Available") RequestBody description,
+            @Part("brand") RequestBody weight,
+            @Part("description") RequestBody units_available
     );
 
     @Multipart
@@ -143,8 +146,8 @@ public interface UserService {
             @Part("title") RequestBody title,
             @Part("brand") RequestBody brand,
             //@Part MultipartBody.Part image,
-            @Part MultipartBody.Part image,
-            //@Part("image") RequestBody image,
+            //@Part MultipartBody.Part image,
+            @Part("item_image") RequestBody item_image,
             @Part("price") RequestBody price,
             @Part("description") RequestBody description,
             @Part("weight") RequestBody weight,
@@ -157,10 +160,10 @@ public interface UserService {
     Call<BranRes> newProduct(@Header("Authorization") String token,
                              @Field("title") String title,
                              @Field("brand") String brand,
-                             @Field("image") String image,
+                             @Field("item_image") String image,
                              @Field("price") double price,
-                             @Field("weight") String weight,
-                             @Field("description") String description,
-                             @Field("units_Available") long units_Available);
+                             @Field("weight") String description,
+                             @Field("description") String weight,
+                             @Field("units_available") long units_available);
 
 }

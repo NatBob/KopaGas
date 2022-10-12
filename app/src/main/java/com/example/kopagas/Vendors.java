@@ -1,5 +1,6 @@
 package com.example.kopagas;
 
+import android.graphics.Bitmap;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -28,7 +29,7 @@ public class Vendors extends android.app.Fragment {
     private RecyclerView recyclerViewUsers;
     private RecyclerView.Adapter adapter;
     private String token = SharedPrefManager.fetchToken();
-    private String shop_name;
+    private Bitmap images;
     private String location;
     private String delivery;
     private List<Item> brands;
@@ -71,7 +72,7 @@ public class Vendors extends android.app.Fragment {
                 vendor.getDelivery());
          */
 
-        com.example.kopagas.model.Item item = new Item(token, title, item_image, price);
+        com.example.kopagas.model.Item item = new Item(token, title, images, price);
         //com.example.kopagas.model.Vendor vendor = new Vendor(token, shop_name, location);
         Call<List<Item>> call = service.getItems(
                 token,
@@ -79,7 +80,7 @@ public class Vendors extends android.app.Fragment {
                 //vendor.getLocation(),
                 //vendor.getDelivery()
                 item.getTitle(),
-                item.getImageUrl(),
+                item.getImage(),
                 item.getPrice()
 
         );

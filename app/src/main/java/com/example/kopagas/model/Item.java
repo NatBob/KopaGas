@@ -69,6 +69,7 @@ public class Item {
      * @param units_available
      * @param id
      * @param brand
+     * @param image
      * @param token
      */
     public Item(Integer id, String token, String title, double price, long units_available, String description, String weight, String brand, String created, String modified, Integer shop) {
@@ -118,10 +119,10 @@ public class Item {
         this.shop = shop;
     }
 
-    public Item(String token, String title, String weight, double price){
+    public Item(String token, String title, Bitmap image, double price){
         this.token = token;
         this.title = title;
-        this.weight = weight;
+        this.image = image;
         this.price = price;
     }
 

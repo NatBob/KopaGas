@@ -157,12 +157,12 @@ public class VendorDash extends AppCompatActivity {
         startActivity(intent);
     }
     public void viewVendors(){
-        Intent vendorIntent= new Intent(VendorDash.this, ViewVendors.class);
+        Intent vendorIntent= new Intent(VendorDash.this, MyStock.class);
         startActivity(vendorIntent);
         Log.i("Vendor Register","View to All Vendors");
     }
     private void editBrand() {
-        Intent vendorIntent= new Intent(VendorDash.this, GasDetail.class);
+        Intent vendorIntent= new Intent(VendorDash.this, BrandEditor.class);
         startActivity(vendorIntent);
         Log.i("MainActivity","View Local Vendors");
     }

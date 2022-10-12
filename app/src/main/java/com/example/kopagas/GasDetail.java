@@ -54,7 +54,6 @@ import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
 import okhttp3.MediaType;
-import okhttp3.MultipartBody;
 import okhttp3.RequestBody;
 import okhttp3.ResponseBody;
 import retrofit2.Call;
@@ -608,13 +607,13 @@ public class GasDetail extends AppCompatActivity {
         RequestBody mTitle = RequestBody.create(MediaType.parse("multipart/form-data"), title);
         RequestBody mBrand = RequestBody.create(MediaType.parse("multipart/form-data"), brand);
         RequestBody mImage = RequestBody.create(MediaType.parse("multipart/form-data"), prdImage);
-        MultipartBody.Part prodImage = null;
-        ImageView productPhotoView=null;
-        if (productPhotoView!=null) {
-            File image = new File(saveImage(bitmap));
-            RequestBody requestFile = RequestBody.create(MediaType.parse("multipart/form-data"), image);
-            prodImage = MultipartBody.Part.createFormData("image", image.getPath(), requestFile);
-        }
+        //MultipartBody.Part prodImage = null;
+        //ImageView productPhotoView=null;
+        //if (productPhotoView!=null) {
+            //File image = new File(convertToString());
+            //RequestBody requestFile = RequestBody.create(MediaType.parse("multipart/form-data"), image);
+            //prodImage = MultipartBody.Part.createFormData("image", image.getPath(), requestFile);
+        //}
         RequestBody mPrice = RequestBody.create(MediaType.parse("multipart/form-data"), String.valueOf(price));
         RequestBody mDescription = RequestBody.create(MediaType.parse("multipart/form-data"), description);
         RequestBody mWeight = RequestBody.create(MediaType.parse("multipart/form-data"), weight);
@@ -623,7 +622,7 @@ public class GasDetail extends AppCompatActivity {
 
         //com.example.kopagas.model.Item item = new Item(mTitle, mBrand, productImage, mPrice, mDescription, mWeight, units_Available);
 
-        Call<ResponseBody> call = service.newBrand(header, mTitle, mBrand, prodImage, mPrice, mDescription, mWeight, unitsAvailable);
+        Call<ResponseBody> call = service.newBrand(header, mTitle, mBrand, mImage, mPrice, mDescription, mWeight, unitsAvailable);
 
         call.enqueue(new Callback<ResponseBody>() {
             @Override

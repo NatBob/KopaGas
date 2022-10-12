@@ -1,40 +1,41 @@
      package com.example.kopagas;
 
      import android.content.ContentUris;
-import android.content.ContentValues;
-import android.content.Intent;
-import android.database.Cursor;
-import android.net.Uri;
-import android.os.Bundle;
-import android.view.Menu;
-import android.view.MenuItem;
-import android.view.View;
-import android.widget.AdapterView;
-import android.widget.ListView;
-import android.widget.Toast;
+     import android.content.ContentValues;
+     import android.content.Intent;
+     import android.database.Cursor;
+     import android.graphics.Bitmap;
+     import android.net.Uri;
+     import android.os.Bundle;
+     import android.view.Menu;
+     import android.view.MenuItem;
+     import android.view.View;
+     import android.widget.AdapterView;
+     import android.widget.ListView;
+     import android.widget.Toast;
 
-import androidx.appcompat.app.AppCompatActivity;
-import androidx.loader.app.LoaderManager;
-import androidx.loader.content.CursorLoader;
-import androidx.loader.content.Loader;
+     import androidx.appcompat.app.AppCompatActivity;
+     import androidx.loader.app.LoaderManager;
+     import androidx.loader.content.CursorLoader;
+     import androidx.loader.content.Loader;
 
      import com.example.kopagas.Helper.SharedPrefManager;
      import com.example.kopagas.kopadata.GasAdapter;
-import com.example.kopagas.kopadata.GasDbHelper;
-import com.example.kopagas.model.Item;
-import com.example.kopagas.remote.ApiUtils;
-import com.example.kopagas.remote.UserService;
-import com.google.android.material.floatingactionbutton.FloatingActionButton;
+     import com.example.kopagas.kopadata.GasDbHelper;
+     import com.example.kopagas.model.Item;
+     import com.example.kopagas.remote.ApiUtils;
+     import com.example.kopagas.remote.UserService;
+     import com.google.android.material.floatingactionbutton.FloatingActionButton;
 
-import java.util.List;
+     import java.util.List;
 
-import retrofit2.Call;
-import retrofit2.Callback;
-import retrofit2.Response;
-import retrofit2.Retrofit;
-import retrofit2.converter.gson.GsonConverterFactory;
+     import retrofit2.Call;
+     import retrofit2.Callback;
+     import retrofit2.Response;
+     import retrofit2.Retrofit;
+     import retrofit2.converter.gson.GsonConverterFactory;
 
-import static com.example.kopagas.kopadata.UserContract.brandsEntry;
+     import static com.example.kopagas.kopadata.UserContract.brandsEntry;
 
 public class Brands extends AppCompatActivity implements LoaderManager.LoaderCallbacks<Cursor>{
     private GasDbHelper gasDbHelper;
@@ -42,7 +43,7 @@ public class Brands extends AppCompatActivity implements LoaderManager.LoaderCal
     GasAdapter mCursorAdaptor;
     private Uri newUri;
     private String title;
-    private String weight;
+    private Bitmap images;
     private double price;
     private String token = SharedPrefManager.fetchToken();
 
@@ -97,11 +98,11 @@ public class Brands extends AppCompatActivity implements LoaderManager.LoaderCal
         UserService service = retrofit.create(UserService.class);
 
 
-        com.example.kopagas.model.Item item = new Item(token, title, weight, price);
+        com.example.kopagas.model.Item item = new Item(token, title, images, price);
         Call<List<Item>> call = service.getItems(
                 token,
                 item.getTitle(),
-                item.getWeight(),
+                item.getImage(),
                 item.getPrice()
 
         );
