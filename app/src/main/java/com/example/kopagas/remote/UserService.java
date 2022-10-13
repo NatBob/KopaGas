@@ -16,7 +16,6 @@ import com.example.kopagas.model.Vendor;
 import java.util.List;
 import java.util.Map;
 
-import okhttp3.MultipartBody;
 import okhttp3.RequestBody;
 import okhttp3.ResponseBody;
 import retrofit2.Call;
@@ -86,8 +85,8 @@ public interface UserService {
     Call<List<Item>> getItems(
             @Header("Authorization")String token,
             @Query("title")String title,
-            @Query("image") Bitmap images,
-            @Query("price") double price
+            @Query("image") double price,
+            @Query("price") Bitmap images
     );
 
     //sending message
@@ -124,23 +123,23 @@ public interface UserService {
 
     @Multipart
     @POST("api/store/create_store_item")
-    Call<ResponseBody> addBrand(
+    Call<BranRes> addBrand(
             //@Header("Authorization") RequestBody mToken,
             @HeaderMap Map<String, String> token,
             //@Part("token") RequestBody token,
             @Part("title") RequestBody title,
-            @Part("price") RequestBody brand,
-            @Part MultipartBody.Part item_image,
-            //@Part("image") RequestBody requestFile,
-            @Part("weight") RequestBody price,
-            @Part ("units_Available") RequestBody description,
-            @Part("brand") RequestBody weight,
-            @Part("description") RequestBody units_available
+            @Part("brand") RequestBody brand,
+            //@Part MultipartBody.Part item_image,
+            @Part("item_image") RequestBody item_image,
+            @Part("price") RequestBody price,
+            @Part ("description") RequestBody description,
+            @Part("weight") RequestBody weight,
+            @Part("units_Available") RequestBody units_available
     );
 
     @Multipart
     @POST("api/store/create_store_item")
-    Call<ResponseBody> newBrand(
+    Call<BranRes> newBrand(
             @HeaderMap Map<String, String> token,
             //@Part("token") RequestBody token,
             @Part("title") RequestBody title,
@@ -162,8 +161,8 @@ public interface UserService {
                              @Field("brand") String brand,
                              @Field("item_image") String image,
                              @Field("price") double price,
-                             @Field("weight") String description,
-                             @Field("description") String weight,
+                             @Field("description") String description,
+                             @Field("weight") String weight,
                              @Field("units_available") long units_available);
 
 }

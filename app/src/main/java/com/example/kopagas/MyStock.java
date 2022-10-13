@@ -701,6 +701,8 @@ public class MyStock extends AppCompatActivity {
             @Override
             public void onFailure(Call<BranRes> call, Throwable t) {
                 Toast.makeText(MyStock.this, t.getMessage(), Toast.LENGTH_LONG).show();
+                Log.e(TAG, "Stocking Failed to save to API.");
+                t.printStackTrace();
             }
         });
 

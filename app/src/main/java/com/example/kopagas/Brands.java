@@ -102,8 +102,8 @@ public class Brands extends AppCompatActivity implements LoaderManager.LoaderCal
         Call<List<Item>> call = service.getItems(
                 token,
                 item.getTitle(),
-                item.getImage(),
-                item.getPrice()
+                item.getPrice(),
+                item.getImage()
 
         );
         call.enqueue(new Callback<List<Item>>() {

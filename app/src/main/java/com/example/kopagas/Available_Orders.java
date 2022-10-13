@@ -73,8 +73,8 @@ public class Available_Orders extends AppCompatActivity {
                 //vendor.getLocation(),
                 //vendor.getDelivery()
                 item.getTitle(),
-                item.getImage(),
-                item.getPrice()
+                item.getPrice(),
+                item.getImage()
 
         );
 

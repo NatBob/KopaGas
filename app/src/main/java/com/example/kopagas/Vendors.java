@@ -80,8 +80,8 @@ public class Vendors extends android.app.Fragment {
                 //vendor.getLocation(),
                 //vendor.getDelivery()
                 item.getTitle(),
-                item.getImage(),
-                item.getPrice()
+                item.getPrice(),
+                item.getImage()
 
         );
 

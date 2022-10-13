@@ -35,6 +35,7 @@ import androidx.loader.content.CursorLoader;
 
 import com.example.kopagas.Helper.SharedPrefManager;
 import com.example.kopagas.kopadata.UserContract;
+import com.example.kopagas.model.BranRes;
 import com.example.kopagas.remote.ApiUtils;
 import com.example.kopagas.remote.UserService;
 
@@ -49,7 +50,6 @@ import java.util.Map;
 import okhttp3.MediaType;
 import okhttp3.MultipartBody;
 import okhttp3.RequestBody;
-import okhttp3.ResponseBody;
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
@@ -335,7 +335,7 @@ public class BrandEditor extends AppCompatActivity {
         String title = etTitle.getSelectedItem().toString().trim();
         String brand = etBrandName.getText().toString().trim();
         //byte[] productImage = DbBitmapUtility.getImage(this, R.drawable.safegas);
-        //String prdImage = convertToString();
+        String prdImage = convertToString();
         String pathImage = getRealPathFromURI(currentProductUri);
         String pImage = mPath;
         double price = Double.parseDouble(etPrice.getText().toString().trim());
@@ -343,7 +343,7 @@ public class BrandEditor extends AppCompatActivity {
         //bitmap imageURL = etImageURL.getBlob().toString().trim();
         String weight = etWeight.getSelectedItem().toString().trim();
         //String weight = etWeight.getText().toString().trim();
-        File mImage = new File(convertToString());
+        //File mImage = new File(convertToString());
         //File pImage = new File(String.valueOf(path));
         long units_Available = Long.parseLong(unitsAvailable.getText().toString().trim());
 
@@ -363,16 +363,16 @@ public class BrandEditor extends AppCompatActivity {
         RequestBody mTitle = RequestBody.create(MediaType.parse("multipart/form-data"), title);
         RequestBody mBrand = RequestBody.create(MediaType.parse("multipart/form-data"), brand);
         MultipartBody.Part image = null;
-        productPhotoView = null;
-        if (productPhotoView != null) {
-            File file = new File(convertToString());
+        //productPhotoView = null;
+        //if (productPhotoView != null) {
+            //File file = new File(convertToString());
             //File file = new File(getRealPathFromURI(currentProductUri));
             //RequestBody requestFile = RequestBody.create(MediaType.parse(getContentResolver().getType(Uri.parse(pImage))), file);
-            RequestBody requestFile = RequestBody.create(MediaType.parse("image/*"), file);
-            image = MultipartBody.Part.createFormData("image", file.getName(), requestFile);
-            }
+            //RequestBody requestFile = RequestBody.create(MediaType.parse("image/*"), file);
+            //image = MultipartBody.Part.createFormData("image", file.getName(), requestFile);
+            //}
             //RequestBody mImage = RequestBody.create(MediaType.parse(getContentResolver().getType(currentProductUri)), image);
-            //RequestBody mImage = RequestBody.create(MediaType.parse("multipart/form-data"), image);
+            RequestBody mImage = RequestBody.create(MediaType.parse("multipart/form-data"), prdImage);
             RequestBody mPrice = RequestBody.create(MediaType.parse("multipart/form-data"), String.valueOf(price));
             RequestBody mDescription = RequestBody.create(MediaType.parse("multipart/form-data"), description);
             RequestBody mWeight = RequestBody.create(MediaType.parse("multipart/form-data"), weight);
@@ -381,11 +381,11 @@ public class BrandEditor extends AppCompatActivity {
 
             //com.example.kopagas.model.Item item = new Item(mTitle, mBrand, productImage, mPrice, mDescription, mWeight, units_Available);
 
-            Call<ResponseBody> call = service.addBrand(header, mTitle, mBrand, image, mPrice, mDescription, mWeight, unitsAvailable);
+            Call<BranRes> call = service.addBrand(header, mTitle, mBrand, mImage, mPrice, mDescription, mWeight, unitsAvailable);
 
-            call.enqueue(new Callback<ResponseBody>() {
+            call.enqueue(new Callback<BranRes>() {
                 @Override
-                public void onResponse(Call<ResponseBody> call, Response<ResponseBody> response) {
+                public void onResponse(Call<BranRes> call, Response<BranRes> response) {
                     progressDialog.dismiss();
                     try {
                         if (response.isSuccessful()) {
@@ -592,8 +592,10 @@ public class BrandEditor extends AppCompatActivity {
                 }
 
                 @Override
-                public void onFailure(Call<ResponseBody> call, Throwable t) {
+                public void onFailure(Call<BranRes> call, Throwable t) {
                     Toast.makeText(BrandEditor.this, "Request failed", Toast.LENGTH_SHORT).show();
+                    Log.e(TAG, "Branding Failed to Save to API."+header);
+                    t.printStackTrace();
                 }
             });
         }

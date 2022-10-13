@@ -73,8 +73,8 @@ public class Vendor_Stats extends AppCompatActivity {
                 //vendor.getLocation(),
                 //vendor.getDelivery()
                 item.getTitle(),
-                item.getImage(),
-                item.getPrice()
+                item.getPrice(),
+                item.getImage()
 
         );
 
