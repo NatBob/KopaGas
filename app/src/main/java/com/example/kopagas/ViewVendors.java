@@ -13,8 +13,7 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.kopagas.Helper.SharedPrefManager;
 import com.example.kopagas.Helper.VendorAdapter;
-  import com.example.kopagas.model.Item;
-  import com.example.kopagas.model.Vendor;
+import com.example.kopagas.model.Vendor;
 import com.example.kopagas.remote.ApiUtils;
 import com.example.kopagas.remote.UserService;
 
@@ -32,7 +31,6 @@ public class ViewVendors extends AppCompatActivity {
     private RecyclerView recyclerViewUsers;
     private RecyclerView.Adapter adapter;
     //private Users users;
-    private List<Item> brands;
     private List<Vendor> vendors;
     private String token = SharedPrefManager.fetchToken();
     private String shop_name;
@@ -57,6 +55,10 @@ public class ViewVendors extends AppCompatActivity {
         adapter = new VendorAdapter(vendors, ViewVendors.this);
         //adapter = new VendorAdapter(users, ViewVendors.this);
         //recyclerViewUsers.setAdapter(adapter);
+        Toast.makeText(ViewVendors.this, "Onania vendors"+vendors, Toast.LENGTH_SHORT).show();
+        Log.e(TAG, "Macokio = " + vendors);
+
+
 
 
         Retrofit retrofit = new Retrofit.Builder()
@@ -86,8 +88,8 @@ public class ViewVendors extends AppCompatActivity {
                     //adapter = new BrandAdapter(brands, ViewBrands.this);
                     //adapter = new VendorAdapter((List<Vendor>) response.body().getVendors(), ViewVendors.this);
                     //users = response.body();
-                    Log.e(TAG, "Response = " + vendors);
-                    Log.e(TAG, "post submitted to API. " + response.body());
+                    Log.e(TAG, "Vendor Response = " + vendors);
+                    Log.e(TAG, "post served from API. " + response.body());
                     Log.e(TAG, "Auth Token" +  token);
                     adapter = new VendorAdapter(vendors, ViewVendors.this);
                     //recyclerViewUsers.setAdapter(adapter);

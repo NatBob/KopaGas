@@ -1,7 +1,5 @@
 package com.example.kopagas.remote;
 
-import android.graphics.Bitmap;
-
 import com.example.kopagas.Helper.SharedPrefManager;
 import com.example.kopagas.model.BranRes;
 import com.example.kopagas.model.Item;
@@ -77,16 +75,16 @@ public interface UserService {
     @GET("api/account/vendors")
     Call<List<Vendor>> getVendors(
             @Header("Authorization") String token,
-            @Query ("shop_name")String shop_name,
+            @Query("shop_name")String shop_name,
             @Query("location")String location,
             @Query("delivery")String delivery);
 
     @GET("api/store/my_shop")
     Call<List<Item>> getItems(
             @Header("Authorization")String token,
-            @Query("title")String title,
-            @Query("image") double price,
-            @Query("price") Bitmap images
+            @Query("price")double price,
+            @Query("brand")String brand,
+            @Query("item_image")String item_image
     );
 
     //sending message

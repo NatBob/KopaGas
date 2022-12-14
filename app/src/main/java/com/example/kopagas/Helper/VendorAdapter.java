@@ -32,7 +32,7 @@ import retrofit2.converter.gson.GsonConverterFactory;
 
     public class VendorAdapter extends RecyclerView.Adapter<VendorAdapter.ViewHolder> {
 
-        private List<Vendor> vendors = new ArrayList<>();
+        private List<Vendor> vendors;
         private Context mCtx;
         private List<Images> images = new ArrayList<>();
         //private OnItemClickListener listener;

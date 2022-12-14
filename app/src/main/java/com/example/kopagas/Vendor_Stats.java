@@ -32,7 +32,7 @@ public class Vendor_Stats extends AppCompatActivity {
 
     private RecyclerView recyclerViewBrand;
     private RecyclerView.Adapter adapter;
-    private List<Item> brands;
+    private List<Item> item;
     private String title;
     private String weight;
     private double price;
@@ -40,8 +40,8 @@ public class Vendor_Stats extends AppCompatActivity {
     private String token = SharedPrefManager.fetchToken();
     private static final String TAG = "ViewBrand";
     private List<Vendor> vendors;
-    private String shop_name;
-    private String location;
+    private Item items;
+    private String item_image;
 
 
     @Override
@@ -50,11 +50,12 @@ public class Vendor_Stats extends AppCompatActivity {
         setContentView(R.layout.activity_vendor__stats);
         this.setTitle("Available Gas Test");
 
-        brands = new ArrayList<>();
+        item = new ArrayList<>();
+        //items = new Item();
         recyclerViewBrand = (RecyclerView) findViewById(R.id.recyclerViewUser);
         recyclerViewBrand.setHasFixedSize(true);
         recyclerViewBrand.setLayoutManager(new LinearLayoutManager(Vendor_Stats.this));
-        adapter = new BrandAdapter(brands, Vendor_Stats.this);
+        adapter = new BrandAdapter(item, Vendor_Stats.this);
 
 
         Retrofit retrofit = new Retrofit.Builder()
@@ -65,16 +66,16 @@ public class Vendor_Stats extends AppCompatActivity {
         UserService service = retrofit.create(UserService.class);
 
 
-        com.example.kopagas.model.Item item = new Item(token, title, images, price);
+        com.example.kopagas.model.Item items = new Item(token, price, title, item_image);
         //com.example.kopagas.model.Vendor vendor = new Vendor(token, shop_name, location);
         Call<List<Item>> call = service.getItems(
                 token,
                 //vendor.getShop_name(),
                 //vendor.getLocation(),
                 //vendor.getDelivery()
-                item.getTitle(),
-                item.getPrice(),
-                item.getImage()
+                items.getPrice(),
+                items.getTitle(),
+                items.getImageUrl()
 
         );
 
@@ -82,15 +83,15 @@ public class Vendor_Stats extends AppCompatActivity {
             @Override
             public void onResponse(Call<List<Item>> call, Response<List<Item>> response) {
                 if (response.isSuccessful()) {
-                    brands = (List<Item>) response.body();
+                    item = (List<Item>) response.body();
                     //users = (SharedPrefManager.getInstance(getApplicationContext()).fetchVendor());
                     //adapter = new BrandAdapter(brands, ViewBrands.this);
                     //adapter = new VendorAdapter((List<Vendor>) response.body().getVendors(), ViewVendors.this);
                     //users = response.body();
-                    Log.i(TAG, "Response = " + brands);
-                    Log.e(TAG, "Item Brand submitted to API. " + response.body());
+                    Log.i(TAG, "Response = " + item);
+                    Log.e(TAG, "Item Brand shown from API. " + response.body());
                     Log.e(TAG, "Auth Token" +  token);
-                    adapter = new BrandAdapter(brands, Vendor_Stats.this);
+                    adapter = new BrandAdapter(item, Vendor_Stats.this);
                     //recyclerViewUsers.setAdapter(adapter);
                     //adapter.setUser(users);
                     recyclerViewBrand.setAdapter(adapter);
@@ -100,7 +101,7 @@ public class Vendor_Stats extends AppCompatActivity {
 
                     //Toast.makeText(getApplicationContext(), response.body().getResponse(), Toast.LENGTH_LONG).show();
                     Log.e(TAG, "Imeshindwa kutuma Brand API."+ token);
-                    Log.e(TAG, "Failed Display = " + brands);
+                    Log.e(TAG, "Failed Display = " + item);
                     Log.e(TAG, "Failed to Display " + response.body());
                     //sharedPrefManager.getInstance(getApplicationContext()).userLogin(response.body().getUser());
                     //startActivity(new Intent(getApplicationContext(), LogonActivity.class));

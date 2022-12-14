@@ -65,7 +65,7 @@ public class BrandEditor extends AppCompatActivity {
     private static final String STATE_URI = "STATE_URI";
     private static final int EXISTING_PRODUCT_LOADER = 2;
     private static final int PICK_IMAGE_REQUEST = 0;
-    private static final String TAG = "kopauser";
+    private static final String TAG = "BrandEditor";
     float productPriceFloat;
     int productQuantityInt;
     String productPhotoString;
@@ -390,6 +390,9 @@ public class BrandEditor extends AppCompatActivity {
                     try {
                         if (response.isSuccessful()) {
                             Toast.makeText(BrandEditor.this, "Image Uploaded", Toast.LENGTH_SHORT).show();
+                            Log.e(TAG, "Brand Saved to Server." + response.body());
+                            Log.e(TAG, "Response = " + response.body());
+                            Log.e(TAG, "Item Brand saved to API. " + response.body());
                             Intent main = new Intent(BrandEditor.this, ViewBrands.class);
                             main.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
                             startActivity(main);
@@ -399,7 +402,7 @@ public class BrandEditor extends AppCompatActivity {
 
                             //Toast.makeText(getApplicationContext(), response.body().getSuccess(), Toast.LENGTH_LONG).show();
                             //SharedPrefManager.getInstance(getApplicationContext()).saveVendor(shop_name,location,delivery);
-                            Log.i(TAG, "Product Saved to Server." + response.body());
+                            Log.e(TAG, "Product Saved to Server." + response.body());
                             //String token = String.valueOf(response.body().getToken());
                             //SharedPrefManager.getInstance(getApplicationContext()).saveToken(mToken);
                             //Log.e(TAG, "Imeshindwa kutuma API.");

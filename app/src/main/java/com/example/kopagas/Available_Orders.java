@@ -15,7 +15,6 @@ import androidx.recyclerview.widget.RecyclerView;
 import com.example.kopagas.Helper.BrandAdapter;
 import com.example.kopagas.Helper.SharedPrefManager;
 import com.example.kopagas.model.Item;
-import com.example.kopagas.model.Vendor;
 import com.example.kopagas.remote.ApiUtils;
 import com.example.kopagas.remote.UserService;
 
@@ -32,14 +31,14 @@ public class Available_Orders extends AppCompatActivity {
 
     private RecyclerView recyclerViewBrand;
     private RecyclerView.Adapter adapter;
-    private List<Item> brands;
+    private List<Item> brand;
     private String title;
     private String weight;
     private double price;
     private String item_image;
     private String token = SharedPrefManager.fetchToken();
     private static final String TAG = "ViewBrand";
-    private List<Vendor> vendors;
+    private Item brands;
     private Bitmap images;
     private String location;
 
@@ -50,11 +49,12 @@ public class Available_Orders extends AppCompatActivity {
         setContentView(R.layout.activity_available__orders);
         this.setTitle("Available Gas Test");
 
-        brands = new ArrayList<>();
+        brand = new ArrayList<>();
+        //brand = new Item();
         recyclerViewBrand = (RecyclerView) findViewById(R.id.recyclerViewUser);
         recyclerViewBrand.setHasFixedSize(true);
         recyclerViewBrand.setLayoutManager(new LinearLayoutManager(Available_Orders.this));
-        adapter = new BrandAdapter(brands, Available_Orders.this);
+        adapter = new BrandAdapter(brand, Available_Orders.this);
 
 
         Retrofit retrofit = new Retrofit.Builder()
@@ -65,16 +65,16 @@ public class Available_Orders extends AppCompatActivity {
         UserService service = retrofit.create(UserService.class);
 
 
-        com.example.kopagas.model.Item item = new Item(token, title, images, price);
+        com.example.kopagas.model.Item item = new Item(token, price, title, item_image);
         //com.example.kopagas.model.Vendor vendor = new Vendor(token, shop_name, location);
-        Call<List<Item>> call = service.getItems(
+        Call<List<Item>> call = service.getItems    (
                 token,
                 //vendor.getShop_name(),
                 //vendor.getLocation(),
                 //vendor.getDelivery()
-                item.getTitle(),
                 item.getPrice(),
-                item.getImage()
+                item.getTitle(),
+                item.getImageUrl()
 
         );
 
@@ -82,18 +82,18 @@ public class Available_Orders extends AppCompatActivity {
             @Override
             public void onResponse(Call<List<Item>> call, Response<List<Item>> response) {
                 if (response.isSuccessful()) {
-                    brands = (List<Item>) response.body();
+                    //brand = (List<Item>)response.body();
                     //users = (SharedPrefManager.getInstance(getApplicationContext()).fetchVendor());
                     //adapter = new BrandAdapter(brands, ViewBrands.this);
                     //adapter = new VendorAdapter((List<Vendor>) response.body().getVendors(), ViewVendors.this);
                     //users = response.body();
-                    Log.i(TAG, "Response = " + brands);
+                    Log.i(TAG, "Response = " + brand);
                     Log.e(TAG, "Item Brand submitted to API. " + response.body());
                     Log.e(TAG, "Auth Token" +  token);
-                    adapter = new BrandAdapter(brands, Available_Orders.this);
+                    //adapter = new BrandAdapter(brand, Available_Orders.this);
                     //recyclerViewUsers.setAdapter(adapter);
                     //adapter.setUser(users);
-                    recyclerViewBrand.setAdapter(adapter);
+                    //recyclerViewBrand.setAdapter(adapter);
                     //Toast.makeText(getApplicationContext(), response.body().getResponse(), Toast.LENGTH_LONG).show();
                 } else {
                     //Toast.makeText(getApplicationContext(), response.body().getResponse(), Toast.LENGTH_LONG).show();

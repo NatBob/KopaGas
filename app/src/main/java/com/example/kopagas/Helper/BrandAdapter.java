@@ -16,12 +16,12 @@ import android.widget.Toast;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.kopagas.R;
+import com.example.kopagas.model.Images;
 import com.example.kopagas.model.Item;
 import com.example.kopagas.model.ResObj;
 import com.example.kopagas.remote.ApiUtils;
 import com.example.kopagas.remote.UserService;
 
-import java.util.ArrayList;
 import java.util.List;
 
 import retrofit2.Call;
@@ -32,7 +32,8 @@ import retrofit2.converter.gson.GsonConverterFactory;
 
 public class BrandAdapter extends RecyclerView.Adapter<BrandAdapter.ViewHolder> {
 
-    private List<Item> items = new ArrayList<>();
+    private List<Item> items;
+    private List<Images> images;
     private Context mCtx;
     private Item item;
     //private String title = item.getTitle();
@@ -41,6 +42,7 @@ public class BrandAdapter extends RecyclerView.Adapter<BrandAdapter.ViewHolder> 
 
     public BrandAdapter(List<Item> items, Context mCtx) {
         this.items = items;
+        //this.images = images;
         this.mCtx = mCtx;
     }
     public void setItems(List<Item> items) {
@@ -57,12 +59,16 @@ public class BrandAdapter extends RecyclerView.Adapter<BrandAdapter.ViewHolder> 
 
     @Override
     public void onBindViewHolder(BrandAdapter.ViewHolder holder, int position) {
-        final Item item = items.get(position);
-        holder.imageView.setImageBitmap(item.getImage());
-        holder.textViewTitle.setText(item.getTitle());
-        holder.textPrice.setText((int) item.getPrice());
+        Item item = items.get(position);
+        //final Images image = images.get(position);
+        //holder.txtPrice.setText(Double.toString(item.getPrice()));
+        holder.txtPrice.setText(Double.toString(item.getPrice()));
+        holder.textVwTitle.setText(item.getBrand());
+        holder.imgeView.setImageBitmap(item.getImage());
 
-        holder.imageView.setOnClickListener(new View.OnClickListener() {
+
+
+        holder.imgeView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
 
@@ -124,16 +130,16 @@ public class BrandAdapter extends RecyclerView.Adapter<BrandAdapter.ViewHolder> 
 
     public class ViewHolder extends RecyclerView.ViewHolder {
 
-        public TextView textViewTitle;
-        public TextView textPrice;
-        public ImageButton imageView;
+        public TextView textVwTitle;
+        public TextView txtPrice;
+        public ImageButton imgeView;
 
         public ViewHolder(View itemView) {
             super(itemView);
 
-            textViewTitle = (TextView) itemView.findViewById(R.id.textViewName);
-            textPrice = (TextView) itemView.findViewById(R.id.textShopLocation);
-            imageView = (ImageButton) itemView.findViewById(R.id.imageButtonMessage);
+            textVwTitle = (TextView) itemView.findViewById(R.id.textViewTitle);
+            txtPrice = (TextView) itemView.findViewById(R.id.textPrice);
+            imgeView = (ImageButton) itemView.findViewById(R.id.imageView);
         }
     }
 

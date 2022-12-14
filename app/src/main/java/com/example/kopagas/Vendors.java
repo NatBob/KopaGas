@@ -34,6 +34,7 @@ public class Vendors extends android.app.Fragment {
     private String delivery;
     private List<Item> brands;
     private String title;
+    private Item item;
     private String item_image;
     private double price;
 
@@ -72,16 +73,16 @@ public class Vendors extends android.app.Fragment {
                 vendor.getDelivery());
          */
 
-        com.example.kopagas.model.Item item = new Item(token, title, images, price);
+        com.example.kopagas.model.Item item = new Item(token, price, title, item_image);
         //com.example.kopagas.model.Vendor vendor = new Vendor(token, shop_name, location);
         Call<List<Item>> call = service.getItems(
                 token,
                 //vendor.getShop_name(),
                 //vendor.getLocation(),
                 //vendor.getDelivery()
-                item.getTitle(),
                 item.getPrice(),
-                item.getImage()
+                item.getTitle(),
+                item.getImageUrl()
 
         );
 
@@ -90,7 +91,7 @@ public class Vendors extends android.app.Fragment {
         call.enqueue(new Callback<List<Item>>() {
             @Override
             public void onResponse(Call<List<Item>> call, Response<List<Item>> response) {
-                brands = (List<Item>) response.body();
+                brands = (List<Item>)response.body();
                 //adapter = new VendorAdapter(brands, Vendors);
                 recyclerViewUsers.setAdapter(adapter);
             }

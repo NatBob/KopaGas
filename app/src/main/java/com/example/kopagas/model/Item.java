@@ -46,9 +46,9 @@ public class Item {
     @SerializedName("token")
     @Expose
     private String token;
-    @SerializedName("ResObj")
+    @SerializedName("BranRes")
     @Expose
-    private ResObj resObj;
+    private ResObj BranRes;
 
     /**
      * No args constructor for use in serialization
@@ -69,7 +69,6 @@ public class Item {
      * @param units_available
      * @param id
      * @param brand
-     * @param image
      * @param token
      */
     public Item(Integer id, String token, String title, double price, long units_available, String description, String weight, String brand, String created, String modified, Integer shop) {
@@ -119,10 +118,10 @@ public class Item {
         this.shop = shop;
     }
 
-    public Item(String token, String title, Bitmap image, double price){
+    public Item(String token, double price, String brand, String imageUrl){
         this.token = token;
-        this.title = title;
-        this.image = image;
+        this.brand = brand;
+        this.imageUrl = imageUrl;
         this.price = price;
     }
 

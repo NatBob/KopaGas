@@ -15,7 +15,6 @@ import androidx.recyclerview.widget.RecyclerView;
 import com.example.kopagas.Helper.BrandAdapter;
 import com.example.kopagas.Helper.SharedPrefManager;
 import com.example.kopagas.model.Item;
-import com.example.kopagas.model.Vendor;
 import com.example.kopagas.remote.ApiUtils;
 import com.example.kopagas.remote.UserService;
 
@@ -29,16 +28,18 @@ import retrofit2.Retrofit;
 import retrofit2.converter.gson.GsonConverterFactory;
 
 public class ViewBrands extends AppCompatActivity {
+    private static final String TAG = "ViewBrands";
     private RecyclerView recyclerViewBrand;
-    private RecyclerView.Adapter adapter;
+    private RecyclerView.Adapter mAdapter;
     private List<Item> items;
     private String title;
-    private String weight;
+    private String brand;
+    private String id;
     private double price;
-    private String image;
+    private String item_image;
     private String token = SharedPrefManager.fetchToken();
-    private static final String TAG = "ViewBrand";
-    private List<Vendor> vendors;
+    //private static final String TAG = "ViewBrand";
+    private Item item;
     private Bitmap images;
     private String location;
 
@@ -46,15 +47,19 @@ public class ViewBrands extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_view_vendors);
-        this.setTitle("Available Gas Test");
+        setContentView(R.layout.activity_view_brands);
+        this.setTitle("Available Gas");
 
+        //item = new Item();
         items = new ArrayList<>();
-        recyclerViewBrand = (RecyclerView) findViewById(R.id.recyclerViewUser);
+        recyclerViewBrand = (RecyclerView) findViewById(R.id.recyclerViewBrands);
         recyclerViewBrand.setHasFixedSize(true);
-        adapter = new BrandAdapter(items, ViewBrands.this);
+        //mAdapter = new BrandAdapter(item, ViewBrands.this);
         recyclerViewBrand.setLayoutManager(new LinearLayoutManager(ViewBrands.this));
-        //adapter = new BrandAdapter(items, ViewBrands.this);
+        mAdapter = new BrandAdapter(items, ViewBrands.this);
+        Toast.makeText(ViewBrands.this, "Onania Brands"+items, Toast.LENGTH_SHORT).show();
+        Log.e(TAG, "Macokio = " + items);
+
 
 
         Retrofit retrofit = new Retrofit.Builder()
@@ -65,16 +70,16 @@ public class ViewBrands extends AppCompatActivity {
         UserService service = retrofit.create(UserService.class);
 
 
-        com.example.kopagas.model.Item item = new Item(token, title, images, price);
+        Item item = new Item(token, price, brand, item_image);
         //com.example.kopagas.model.Vendor vendor = new Vendor(token, shop_name, location);
         Call<List<Item>> call = service.getItems(
                 token,
                 //vendor.getShop_name(),
                 //vendor.getLocation(),
                 //vendor.getDelivery()
-                item.getTitle(),
                 item.getPrice(),
-                item.getImage()
+                item.getBrand(),
+                item.getImageUrl()
 
         );
 
@@ -82,18 +87,20 @@ public class ViewBrands extends AppCompatActivity {
             @Override
             public void onResponse(Call<List<Item>> call, Response<List<Item>> response) {
                 if (response.isSuccessful()) {
+                    //items = (List<Item>) response.body();
                     items = (List<Item>) response.body();
                     //users = (SharedPrefManager.getInstance(getApplicationContext()).fetchVendor());
                     //adapter = new BrandAdapter(brands, ViewBrands.this);
                     //adapter = new VendorAdapter((List<Vendor>) response.body().getVendors(), ViewVendors.this);
                     //users = response.body();
-                    Log.i(TAG, "Response = " + items);
-                    Log.e(TAG, "Item Brand submitted to API. " + response.body());
+                    Toast.makeText(ViewBrands.this, "Display Brands", Toast.LENGTH_SHORT).show();
+                    Log.e(TAG, "Brand Response = " + items);
+                    Log.e(TAG, "Item Brand Displayed from API. " + response.body());
                     Log.e(TAG, "Auth Token" +  token);
-                    adapter = new BrandAdapter(items, ViewBrands.this);
+                    mAdapter = new BrandAdapter(items, ViewBrands.this);
                     //recyclerViewUsers.setAdapter(adapter);
-                    //adapter.setUser(users);
-                    recyclerViewBrand.setAdapter(adapter);
+                    //((BrandAdapter) mAdapter).setItems(items);
+                    recyclerViewBrand.setAdapter(mAdapter);
                     //Toast.makeText(getApplicationContext(), response.body().getResponse(), Toast.LENGTH_LONG).show();
                 } else {
                     //Toast.makeText(getApplicationContext(), response.body().getResponse(), Toast.LENGTH_LONG).show();
@@ -281,6 +288,9 @@ public class ViewBrands extends AppCompatActivity {
 
             @Override
             public void onFailure(Call<List<Item>> call, Throwable t) {
+                //progressDialog.dismiss();
+                Toast.makeText(getApplicationContext(), t.getMessage(), Toast.LENGTH_LONG).show();
+                Log.e(TAG, "Failed to Display Item from API.");
 
             }
         });
