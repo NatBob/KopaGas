@@ -11,6 +11,7 @@ import com.example.kopagas.model.SafaricomToken;
 import com.example.kopagas.model.ServerRequest;
 import com.example.kopagas.model.Vendor;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 
@@ -80,7 +81,17 @@ public interface UserService {
             @Query("delivery")String delivery);
 
     @GET("api/store/my_shop")
-    Call<List<Item>> getItems(
+    Call<Item> getItems(
+            @Header("Authorization")String token,
+            @Query("price")double price,
+            @Query("brand")String brand,
+            @Query("item_image")String item_image
+    );
+
+    @GET("api/store/my_shop")
+    Call<String> getString(@Header("Authorization")String token);
+    @GET("api/store/my_shop")
+    Call<ArrayList<Item>> getItem(
             @Header("Authorization")String token,
             @Query("price")double price,
             @Query("brand")String brand,

@@ -12,10 +12,11 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.kopagas.Helper.SharedPrefManager;
 import com.example.kopagas.model.Item;
+import com.example.kopagas.model.Items;
 import com.example.kopagas.remote.ApiUtils;
 import com.example.kopagas.remote.UserService;
 
-import java.util.List;
+import java.util.ArrayList;
 
 import retrofit2.Call;
 import retrofit2.Callback;
@@ -32,9 +33,9 @@ public class Vendors extends android.app.Fragment {
     private Bitmap images;
     private String location;
     private String delivery;
-    private List<Item> brands;
+    private ArrayList<Item> brands;
     private String title;
-    private Item item;
+    private Items item;
     private String item_image;
     private double price;
 
@@ -75,7 +76,7 @@ public class Vendors extends android.app.Fragment {
 
         com.example.kopagas.model.Item item = new Item(token, price, title, item_image);
         //com.example.kopagas.model.Vendor vendor = new Vendor(token, shop_name, location);
-        Call<List<Item>> call = service.getItems(
+        Call<ArrayList<Item>> call = service.getItem(
                 token,
                 //vendor.getShop_name(),
                 //vendor.getLocation(),
@@ -88,16 +89,16 @@ public class Vendors extends android.app.Fragment {
 
 
 
-        call.enqueue(new Callback<List<Item>>() {
+        call.enqueue(new Callback<ArrayList<Item>>() {
             @Override
-            public void onResponse(Call<List<Item>> call, Response<List<Item>> response) {
-                brands = (List<Item>)response.body();
+            public void onResponse(Call<ArrayList<Item>> call, Response<ArrayList<Item>> response) {
+                brands = (ArrayList<Item>)response.body();
                 //adapter = new VendorAdapter(brands, Vendors);
                 recyclerViewUsers.setAdapter(adapter);
             }
 
             @Override
-            public void onFailure(Call<List<Item>> call, Throwable t) {
+            public void onFailure(Call<ArrayList<Item>> call, Throwable t) {
 
             }
         });

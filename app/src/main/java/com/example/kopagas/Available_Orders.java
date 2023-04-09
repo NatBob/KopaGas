@@ -12,14 +12,14 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
-import com.example.kopagas.Helper.BrandAdapter;
+import com.example.kopagas.Helper.ItemAdapter;
 import com.example.kopagas.Helper.SharedPrefManager;
 import com.example.kopagas.model.Item;
+import com.example.kopagas.model.Items;
 import com.example.kopagas.remote.ApiUtils;
 import com.example.kopagas.remote.UserService;
 
 import java.util.ArrayList;
-import java.util.List;
 
 import retrofit2.Call;
 import retrofit2.Callback;
@@ -31,14 +31,14 @@ public class Available_Orders extends AppCompatActivity {
 
     private RecyclerView recyclerViewBrand;
     private RecyclerView.Adapter adapter;
-    private List<Item> brand;
+    private ArrayList<Item> brand;
     private String title;
     private String weight;
     private double price;
     private String item_image;
     private String token = SharedPrefManager.fetchToken();
     private static final String TAG = "ViewBrand";
-    private Item brands;
+    private Items brands;
     private Bitmap images;
     private String location;
 
@@ -50,11 +50,11 @@ public class Available_Orders extends AppCompatActivity {
         this.setTitle("Available Gas Test");
 
         brand = new ArrayList<>();
-        //brand = new Item();
+        //brand = new Items();
         recyclerViewBrand = (RecyclerView) findViewById(R.id.recyclerViewUser);
         recyclerViewBrand.setHasFixedSize(true);
         recyclerViewBrand.setLayoutManager(new LinearLayoutManager(Available_Orders.this));
-        adapter = new BrandAdapter(brand, Available_Orders.this);
+        adapter = new ItemAdapter(brand, Available_Orders.this);
 
 
         Retrofit retrofit = new Retrofit.Builder()
@@ -67,7 +67,7 @@ public class Available_Orders extends AppCompatActivity {
 
         com.example.kopagas.model.Item item = new Item(token, price, title, item_image);
         //com.example.kopagas.model.Vendor vendor = new Vendor(token, shop_name, location);
-        Call<List<Item>> call = service.getItems    (
+        Call<ArrayList<Item>> call = service.getItem    (
                 token,
                 //vendor.getShop_name(),
                 //vendor.getLocation(),
@@ -78,11 +78,11 @@ public class Available_Orders extends AppCompatActivity {
 
         );
 
-        call.enqueue(new Callback<List<Item>>() {
+        call.enqueue(new Callback<ArrayList<Item>>() {
             @Override
-            public void onResponse(Call<List<Item>> call, Response<List<Item>> response) {
+            public void onResponse(Call<ArrayList<Item>> call, Response<ArrayList<Item>> response) {
                 if (response.isSuccessful()) {
-                    //brand = (List<Item>)response.body();
+                    brand = (ArrayList<Item>)response.body();
                     //users = (SharedPrefManager.getInstance(getApplicationContext()).fetchVendor());
                     //adapter = new BrandAdapter(brands, ViewBrands.this);
                     //adapter = new VendorAdapter((List<Vendor>) response.body().getVendors(), ViewVendors.this);
@@ -280,7 +280,7 @@ public class Available_Orders extends AppCompatActivity {
             }
 
             @Override
-            public void onFailure(Call<List<Item>> call, Throwable t) {
+            public void onFailure(Call<ArrayList<Item>> call, Throwable t) {
 
             }
         });

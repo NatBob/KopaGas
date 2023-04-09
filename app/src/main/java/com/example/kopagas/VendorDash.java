@@ -33,11 +33,11 @@ public class VendorDash extends AppCompatActivity {
     private RecyclerView recyclerViewUsers;
     private RecyclerView.Adapter adapter;
     private List<Item> brands;
-    private String token = SharedPrefManager.fetchToken();
+    //private String token = SharedPrefManager.fetchToken();
     private String shop_name;
     private String location;
     private String delivery;
-    private String vendor = SharedPrefManager.fetchVendor();
+    private String token = SharedPrefManager.fetchVendor();
     private Button moreStats;
     private Button moreOrders;
 
@@ -45,7 +45,7 @@ public class VendorDash extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_vendor_dash);
-        this.setTitle("Karibu "+vendor);
+        this.setTitle("Karibu "+token);
 
         //recyclerViewUsers = (RecyclerView) findViewById(R.id.recyclerViewUsers);
         //recyclerViewUsers.setHasFixedSize(true);
@@ -105,12 +105,12 @@ public class VendorDash extends AppCompatActivity {
         });
     }
     private void viewAllOrders(){
-        Intent vendorIntent= new Intent(VendorDash.this, ViewVendors.class);
+        Intent vendorIntent= new Intent(VendorDash.this, ViewBrands.class);
         startActivity(vendorIntent);
         Log.i("MainActivity","Login to OkoaGas");
     }
     private void viewAllStats(){
-        Intent vendorIntent= new Intent(VendorDash.this, ViewVendors.class);
+        Intent vendorIntent= new Intent(VendorDash.this, Brands.class);
         startActivity(vendorIntent);
         Log.i("MainActivity","Login to OkoaGas");
     }

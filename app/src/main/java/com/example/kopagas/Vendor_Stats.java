@@ -12,9 +12,10 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
-import com.example.kopagas.Helper.BrandAdapter;
+import com.example.kopagas.Helper.ItemAdapter;
 import com.example.kopagas.Helper.SharedPrefManager;
 import com.example.kopagas.model.Item;
+import com.example.kopagas.model.Items;
 import com.example.kopagas.model.Vendor;
 import com.example.kopagas.remote.ApiUtils;
 import com.example.kopagas.remote.UserService;
@@ -32,7 +33,7 @@ public class Vendor_Stats extends AppCompatActivity {
 
     private RecyclerView recyclerViewBrand;
     private RecyclerView.Adapter adapter;
-    private List<Item> item;
+    private ArrayList<Item> items;
     private String title;
     private String weight;
     private double price;
@@ -40,7 +41,7 @@ public class Vendor_Stats extends AppCompatActivity {
     private String token = SharedPrefManager.fetchToken();
     private static final String TAG = "ViewBrand";
     private List<Vendor> vendors;
-    private Item items;
+    private Items item;
     private String item_image;
 
 
@@ -50,12 +51,12 @@ public class Vendor_Stats extends AppCompatActivity {
         setContentView(R.layout.activity_vendor__stats);
         this.setTitle("Available Gas Test");
 
-        item = new ArrayList<>();
-        //items = new Item();
+        items = new ArrayList<>();
+        //items = new Items();
         recyclerViewBrand = (RecyclerView) findViewById(R.id.recyclerViewUser);
         recyclerViewBrand.setHasFixedSize(true);
         recyclerViewBrand.setLayoutManager(new LinearLayoutManager(Vendor_Stats.this));
-        adapter = new BrandAdapter(item, Vendor_Stats.this);
+        adapter = new ItemAdapter(items, Vendor_Stats.this);
 
 
         Retrofit retrofit = new Retrofit.Builder()
@@ -66,32 +67,32 @@ public class Vendor_Stats extends AppCompatActivity {
         UserService service = retrofit.create(UserService.class);
 
 
-        com.example.kopagas.model.Item items = new Item(token, price, title, item_image);
+        com.example.kopagas.model.Item item = new Item(token, price, title, item_image);
         //com.example.kopagas.model.Vendor vendor = new Vendor(token, shop_name, location);
-        Call<List<Item>> call = service.getItems(
+        Call<ArrayList<Item>> call = service.getItem(
                 token,
                 //vendor.getShop_name(),
                 //vendor.getLocation(),
                 //vendor.getDelivery()
-                items.getPrice(),
-                items.getTitle(),
-                items.getImageUrl()
+                item.getPrice(),
+                item.getTitle(),
+                item.getImageUrl()
 
         );
 
-        call.enqueue(new Callback<List<Item>>() {
+        call.enqueue(new Callback<ArrayList<Item>>() {
             @Override
-            public void onResponse(Call<List<Item>> call, Response<List<Item>> response) {
+            public void onResponse(Call<ArrayList<Item>> call, Response<ArrayList<Item>> response) {
                 if (response.isSuccessful()) {
-                    item = (List<Item>) response.body();
+                    items = (ArrayList<Item>) response.body();
                     //users = (SharedPrefManager.getInstance(getApplicationContext()).fetchVendor());
                     //adapter = new BrandAdapter(brands, ViewBrands.this);
                     //adapter = new VendorAdapter((List<Vendor>) response.body().getVendors(), ViewVendors.this);
                     //users = response.body();
-                    Log.i(TAG, "Response = " + item);
+                    Log.i(TAG, "Response = " + items);
                     Log.e(TAG, "Item Brand shown from API. " + response.body());
                     Log.e(TAG, "Auth Token" +  token);
-                    adapter = new BrandAdapter(item, Vendor_Stats.this);
+                    adapter = new ItemAdapter(items, Vendor_Stats.this);
                     //recyclerViewUsers.setAdapter(adapter);
                     //adapter.setUser(users);
                     recyclerViewBrand.setAdapter(adapter);
@@ -101,7 +102,7 @@ public class Vendor_Stats extends AppCompatActivity {
 
                     //Toast.makeText(getApplicationContext(), response.body().getResponse(), Toast.LENGTH_LONG).show();
                     Log.e(TAG, "Imeshindwa kutuma Brand API."+ token);
-                    Log.e(TAG, "Failed Display = " + item);
+                    Log.e(TAG, "Failed Display = " + items);
                     Log.e(TAG, "Failed to Display " + response.body());
                     //sharedPrefManager.getInstance(getApplicationContext()).userLogin(response.body().getUser());
                     //startActivity(new Intent(getApplicationContext(), LogonActivity.class));
@@ -281,7 +282,7 @@ public class Vendor_Stats extends AppCompatActivity {
             }
 
             @Override
-            public void onFailure(Call<List<Item>> call, Throwable t) {
+            public void onFailure(Call<ArrayList<Item>> call, Throwable t) {
 
             }
         });

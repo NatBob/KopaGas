@@ -1,52 +1,54 @@
      package com.example.kopagas;
 
-     import android.content.ContentUris;
-import android.content.ContentValues;
-import android.content.Intent;
-import android.database.Cursor;
-import android.net.Uri;
-import android.os.Bundle;
-import android.view.Menu;
-import android.view.MenuItem;
-import android.view.View;
-import android.widget.AdapterView;
-import android.widget.ListView;
-import android.widget.Toast;
+     import android.content.Intent;
+     import android.net.Uri;
+     import android.os.Bundle;
+     import android.util.Log;
+     import android.view.Menu;
+     import android.view.MenuItem;
+     import android.view.View;
+     import android.widget.Toast;
 
-import androidx.appcompat.app.AppCompatActivity;
-import androidx.loader.app.LoaderManager;
-import androidx.loader.content.CursorLoader;
-import androidx.loader.content.Loader;
+     import androidx.appcompat.app.AppCompatActivity;
+     import androidx.recyclerview.widget.LinearLayoutManager;
+     import androidx.recyclerview.widget.RecyclerView;
 
-import com.example.kopagas.Helper.SharedPrefManager;
-import com.example.kopagas.kopadata.GasAdapter;
-import com.example.kopagas.kopadata.GasDbHelper;
-import com.example.kopagas.model.Item;
-import com.example.kopagas.model.Items;
-import com.example.kopagas.remote.ApiUtils;
-import com.example.kopagas.remote.UserService;
-import com.google.android.material.floatingactionbutton.FloatingActionButton;
+     import com.example.kopagas.Helper.ItemAdapter;
+     import com.example.kopagas.Helper.SharedPrefManager;
+     import com.example.kopagas.kopadata.GasAdapter;
+     import com.example.kopagas.kopadata.GasDbHelper;
+     import com.example.kopagas.model.Images;
+     import com.example.kopagas.model.Item;
+     import com.example.kopagas.model.Items;
+     import com.example.kopagas.remote.ApiUtils;
+     import com.example.kopagas.remote.UserService;
+     import com.google.android.material.floatingactionbutton.FloatingActionButton;
 
-import java.util.List;
+     import org.json.JSONArray;
+     import org.json.JSONException;
+     import org.json.JSONObject;
 
-import retrofit2.Call;
-import retrofit2.Callback;
-import retrofit2.Response;
-import retrofit2.Retrofit;
-import retrofit2.converter.gson.GsonConverterFactory;
+     import java.util.ArrayList;
 
-import static com.example.kopagas.kopadata.UserContract.brandsEntry;
+     import retrofit2.Call;
+     import retrofit2.Callback;
+     import retrofit2.Response;
+     import retrofit2.Retrofit;
+     import retrofit2.converter.gson.GsonConverterFactory;
 
-public class Brands extends AppCompatActivity implements LoaderManager.LoaderCallbacks<Cursor>{
+public class Brands extends AppCompatActivity {
     private GasDbHelper gasDbHelper;
     private static final int STOCK_LOADER=0;
     GasAdapter mCursorAdaptor;
     private Uri newUri;
     private String title;
-    private String images;
+    private String item_image;
+    private ArrayList<Images> images;
     private double price;
     private Items item;
     private String token = SharedPrefManager.fetchToken();
+    private RecyclerView recyclerViewBrand;
+    private RecyclerView.Adapter mAdapter;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -61,7 +63,7 @@ public class Brands extends AppCompatActivity implements LoaderManager.LoaderCal
             @Override
             public void onClick(View view) {
                 if (gasDbHelper.addToCart(bundle.getInt("._ID"), "1")) {
-                    Intent intent = new Intent(Brands.this, ProductSummary.class);
+                    Intent intent = new Intent(Brands.this, OrderDetail.class);
                     intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
                     startActivity(intent);
 
@@ -73,90 +75,95 @@ public class Brands extends AppCompatActivity implements LoaderManager.LoaderCal
             }
 
         });
-                // Find the ListView which will be populated with the pet data
-        ListView listview = (ListView) findViewById(R.id.list);
 
-        // Find and set empty view on the ListView, so that it only shows when the list has 0 items.
-        View emptyView = findViewById(R.id.empty_view);
-        listview.setEmptyView(emptyView);
-        //displayDatabaseInfo();
-        /**
-        gasDbHelper = new GasDbHelper(this);
-        try {
-            gasDbHelper.open();
-        } catch (SQLException e) {
-            e.printStackTrace();
-        }
-        mCursorAdaptor = new GasAdapter(this, null);
-         */
+        recyclerViewBrand = findViewById(R.id.recyclerViewBrands);
+        fetchJSON();
+    }
 
-        listview.setAdapter(mCursorAdaptor);
-        Retrofit retrofit = new Retrofit.Builder()
-                .baseUrl(ApiUtils.BASE_URL)
-                .addConverterFactory(GsonConverterFactory.create())
-                .build();
+        private void fetchJSON(){
 
-        UserService service = retrofit.create(UserService.class);
+            Retrofit retrofit = new Retrofit.Builder()
+                    .baseUrl(ApiUtils.BASE_URL)
+                    .addConverterFactory(GsonConverterFactory.create())
+                    .build();
 
+            UserService service = retrofit.create(UserService.class);
+            //RecyclerInterface api = retrofit.create(RecyclerInterface.class);
 
-        com.example.kopagas.model.Item item = new Item(token, price, title, images);
-        Call<List<Item>> call = service.getItems(
-                token,
-                item.getPrice(),
-                item.getTitle(),
-                item.getImageUrl()
+            //Call<String> call = api.getString();
+            //com.example.kopagas.model.Item item = new Item(token, price, title, item_image);
+            Call<String> call = service.getString(token);
 
-        );
-        call.enqueue(new Callback<List<Item>>() {
-            @Override
-            public void onResponse(Call<List<Item>> call, Response<List<Item>> response) {
-                //mCursorAdaptor = new GasAdapter(response.body().getUsers(), getApplicationContext());
-                listview.setAdapter(mCursorAdaptor);
-            }
+            call.enqueue(new Callback<String>() {
+                @Override
+                public void onResponse(Call<String> call, Response<String> response) {
+                    Log.i("Responsestring", response.body().toString());
+                    //Toast.makeText()
+                    if (response.isSuccessful()) {
+                        if (response.body() != null) {
+                            Log.i("onSuccess", response.body().toString());
 
-            @Override
-            public void onFailure(Call<List<Item>> call, Throwable t) {
+                            String jsonresponse = response.body().toString();
+                            writeRecycler(jsonresponse);
 
-            }
-        });
-
-        listview.setOnItemClickListener(new AdapterView.OnItemClickListener() {
-            @Override
-            public void onItemClick(AdapterView<?> parent, View view,
-                                    int position, long id) {
-
-                //if (gasDbHelper.addToCart(bundle.getInt("brand_name"), "1")){
-                Intent mIntent = new Intent(Brands.this, OrderDetail.class);
-                Uri currentUri = ContentUris.withAppendedId(brandsEntry.CONTENT_URI, id);
-                mIntent.setData(currentUri);
-                mIntent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
-                startActivity(mIntent);
-
-                //finish();
-                        //Toast.makeText(Brands.this, "Successfully added to shopping cart", Toast.LENGTH_SHORT).show();
-                    //} else {
-                        //Toast.makeText(Brands.this, "Oops! Something went wrong. Please try again.", Toast.LENGTH_SHORT).show();
-                    //}
+                        } else {
+                            Log.i("onEmptyResponse", "Returned empty response");//Toast.makeText(getContext(),"Nothing returned",Toast.LENGTH_LONG).show();
+                        }
+                    }
+                }
+                @Override
+                public void onFailure(Call<String> call, Throwable t) {
 
                 }
-        });
+            });
+        }
 
+        private void writeRecycler(String response){
 
-        getSupportLoaderManager().initLoader(STOCK_LOADER, null, this);
-        // Setup order button to open Detail Activity
-        /**
-        Button orderButton = (Button) findViewById(R.id.orderButton);
-        orderButton.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                Intent intent = new Intent(Brands.this, BrandDetail.class);
-                startActivity(intent);
+            try {
+                //getting the whole json object from the response
+                JSONObject obj = new JSONObject(response);
+                if(obj.optString("status").equals("true")){
+
+                    ArrayList<Item> itemArrayList = new ArrayList<>();
+                    JSONArray dataArray  = obj.getJSONArray("item");
+
+                    for (int i = 0; i < dataArray.length(); i++) {
+
+                        Item item = new Item();
+                        JSONObject dataobj = dataArray.getJSONObject(i);
+
+                        item.setImage(dataobj.getString("imageURL"));
+                        item.setTitle(dataobj.getString("title"));
+                        item.setPrice(Double.parseDouble(dataobj.getString("price")));
+                        //item.setCity(dataobj.getString("city"));
+
+                        itemArrayList.add(item);
+
+                    }
+
+                    recyclerViewBrand.setHasFixedSize(true);
+                    //mAdapter = new BrandAdapter(item, ViewBrands.this);
+                    //recyclerViewBrand.setLayoutManager(new LinearLayoutManager(ViewBrands.this));
+                    //mAdapter = new BrandAdapter(items, ViewBrands.this);
+
+                    mAdapter = new ItemAdapter(itemArrayList, this);
+                    recyclerViewBrand.setAdapter(mAdapter);
+                    recyclerViewBrand.setLayoutManager(new LinearLayoutManager(getApplicationContext(), LinearLayoutManager.VERTICAL, false));
+
+                }else {
+                    Toast.makeText(Brands.this, obj.optString("message")+"", Toast.LENGTH_SHORT).show();
+                }
+
+            } catch (JSONException e) {
+                e.printStackTrace();
             }
-        });
-         */
-        //brandDetail();
 
-    }
+        }
+
+
+
+
 
 
     public void brandDetail(){
@@ -174,23 +181,7 @@ public class Brands extends AppCompatActivity implements LoaderManager.LoaderCal
 
 
 
-    private void insertBrand () {
-        //SQLiteDatabase db = mDbReader.getWritableDatabase();
-        byte[] bitMapData = DbBitmapUtility.getImage(this, R.drawable.safegas);
-        ContentValues values = new ContentValues(4);
-        //values.put(UserContract.brandsEntry._ID, "");
-        // Dummy Image
-        values.put(brandsEntry.COLUMN_NAME, "O_Gas");
-        values.put(brandsEntry.VENDOR_OUTLET, "OkoaGas");
-        values.put(brandsEntry.COLUMN_SIZE, brandsEntry.MEDIUM_CYLINDER);
-        values.put(brandsEntry.COLUMN_PRICE, "900");
-        values.put(brandsEntry.COLUMN_IMAGE, bitMapData);
 
-
-        //Long newRowId = db.insert(dairyEntry.TABLE_NAME, null, values);
-        newUri = getContentResolver().insert(brandsEntry.CONTENT_URI, values);
-    }
-    ;
 
 
 
@@ -209,7 +200,7 @@ public class Brands extends AppCompatActivity implements LoaderManager.LoaderCal
             // Respond to a click on the "Insert dummy data" menu option
             case R.id.action_insert_dummy_data:
                 // Do nothing for now
-                insertBrand();
+                //insertBrand();
                 finish();
                 //displayDatabaseInfo();
                 return true;
@@ -219,39 +210,6 @@ public class Brands extends AppCompatActivity implements LoaderManager.LoaderCal
                 return true;
         }
         return super.onOptionsItemSelected(item);
-    }
-
-
-    @Override
-    public Loader<Cursor> onCreateLoader(int id, Bundle args) {
-        // Perform this raw SQL query "SELECT * FROM pets"
-        // to get a Cursor that contains all rows from the pets table.
-        String[] projection = {
-                brandsEntry._ID,
-                brandsEntry.COLUMN_NAME,
-                brandsEntry.VENDOR_OUTLET,
-                brandsEntry.COLUMN_SIZE,
-                brandsEntry.COLUMN_PRICE,
-                brandsEntry.COLUMN_STATUS,
-                brandsEntry.COLUMN_IMAGE,
-
-        };
-        //String selection = null;
-        //String[] selectionArgs = new String [] {null};
-
-        return new CursorLoader(this, brandsEntry.CONTENT_URI, projection, null, null, null);
-
-    }
-
-    @Override
-    public void onLoadFinished(Loader<Cursor> loader, Cursor data) {
-        mCursorAdaptor.swapCursor(data);
-    }
-
-    @Override
-    public void onLoaderReset(Loader<Cursor> loader) {
-        mCursorAdaptor.swapCursor(null);
-
     }
 
 

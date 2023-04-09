@@ -1,7 +1,7 @@
 package com.example.kopagas;
 
+
 import android.content.Intent;
-import android.graphics.Bitmap;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.Menu;
@@ -14,12 +14,12 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.kopagas.Helper.BrandAdapter;
 import com.example.kopagas.Helper.SharedPrefManager;
+import com.example.kopagas.model.Images;
 import com.example.kopagas.model.Item;
 import com.example.kopagas.remote.ApiUtils;
 import com.example.kopagas.remote.UserService;
 
 import java.util.ArrayList;
-import java.util.List;
 
 import retrofit2.Call;
 import retrofit2.Callback;
@@ -27,11 +27,11 @@ import retrofit2.Response;
 import retrofit2.Retrofit;
 import retrofit2.converter.gson.GsonConverterFactory;
 
-public class ViewBrands extends AppCompatActivity {
+public class  ViewBrands extends AppCompatActivity {
     private static final String TAG = "ViewBrands";
     private RecyclerView recyclerViewBrand;
     private RecyclerView.Adapter mAdapter;
-    private List<Item> items;
+    private ArrayList<Item> item;
     private String title;
     private String brand;
     private String id;
@@ -39,8 +39,8 @@ public class ViewBrands extends AppCompatActivity {
     private String item_image;
     private String token = SharedPrefManager.fetchToken();
     //private static final String TAG = "ViewBrand";
-    private Item item;
-    private Bitmap images;
+    private Item items;
+    private Images images;
     private String location;
 
 
@@ -50,8 +50,8 @@ public class ViewBrands extends AppCompatActivity {
         setContentView(R.layout.activity_view_brands);
         this.setTitle("Available Gas");
 
-        //item = new Item();
-        items = new ArrayList<>();
+        items = new Item();
+        item = new ArrayList<>();
         recyclerViewBrand = (RecyclerView) findViewById(R.id.recyclerViewBrands);
         recyclerViewBrand.setHasFixedSize(true);
         //mAdapter = new BrandAdapter(item, ViewBrands.this);
@@ -70,9 +70,9 @@ public class ViewBrands extends AppCompatActivity {
         UserService service = retrofit.create(UserService.class);
 
 
-        Item item = new Item(token, price, brand, item_image);
+        Item item = new Item(token, price, brand, images);
         //com.example.kopagas.model.Vendor vendor = new Vendor(token, shop_name, location);
-        Call<List<Item>> call = service.getItems(
+        Call<Item> call = service.getItems(
                 token,
                 //vendor.getShop_name(),
                 //vendor.getLocation(),
@@ -83,19 +83,23 @@ public class ViewBrands extends AppCompatActivity {
 
         );
 
-        call.enqueue(new Callback<List<Item>>() {
+        call.enqueue(new Callback<Item>() {
             @Override
-            public void onResponse(Call<List<Item>> call, Response<List<Item>> response) {
+            public void onResponse(Call<Item> call, Response<Item> response) {
                 if (response.isSuccessful()) {
-                    //items = (List<Item>) response.body();
-                    items = (List<Item>) response.body();
+                    //item = response.body().getItems();
+                    items = (Item) response.body();
                     //users = (SharedPrefManager.getInstance(getApplicationContext()).fetchVendor());
                     //adapter = new BrandAdapter(brands, ViewBrands.this);
                     //adapter = new VendorAdapter((List<Vendor>) response.body().getVendors(), ViewVendors.this);
-                    //users = response.body();
+                    //Items [] values = {
+                            //response.body().item.getPrice(),
+                            //response.body().item.getBrand(),
+                            //response.body().item.getImageU(),
+                    //};
                     Toast.makeText(ViewBrands.this, "Display Brands", Toast.LENGTH_SHORT).show();
-                    Log.e(TAG, "Brand Response = " + items);
-                    Log.e(TAG, "Item Brand Displayed from API. " + response.body());
+                    Log.e(TAG, "Brand Response = " + items+price+brand);
+                    Log.e(TAG, "Item Brand Displayed from API. " + response.body() + price + brand);
                     Log.e(TAG, "Auth Token" +  token);
                     mAdapter = new BrandAdapter(items, ViewBrands.this);
                     //recyclerViewUsers.setAdapter(adapter);
@@ -287,7 +291,7 @@ public class ViewBrands extends AppCompatActivity {
             }
 
             @Override
-            public void onFailure(Call<List<Item>> call, Throwable t) {
+            public void onFailure(Call<Item> call, Throwable t) {
                 //progressDialog.dismiss();
                 Toast.makeText(getApplicationContext(), t.getMessage(), Toast.LENGTH_LONG).show();
                 Log.e(TAG, "Failed to Display Item from API.");

@@ -11,7 +11,7 @@ public class Images {
     @SerializedName("store_item_id")
     @Expose
     private Integer storeItemId;
-    @SerializedName("image")
+    @SerializedName("item_image")
     @Expose
     private String image;
     @SerializedName("store_item_ct")

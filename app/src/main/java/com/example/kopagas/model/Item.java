@@ -5,6 +5,8 @@ import android.graphics.Bitmap;
 import com.google.gson.annotations.Expose;
 import com.google.gson.annotations.SerializedName;
 
+import java.util.ArrayList;
+
 public class Item {
 
     @SerializedName("id")
@@ -16,7 +18,7 @@ public class Item {
     @SerializedName("brand")
     @Expose
     private String brand;
-    @SerializedName("imageUrl")
+    @SerializedName("item_image")
     @Expose
     private String imageUrl;
     @SerializedName("image")
@@ -49,6 +51,12 @@ public class Item {
     @SerializedName("BranRes")
     @Expose
     private ResObj BranRes;
+    @SerializedName("Images")
+    @Expose
+    private Images mImage;
+    @SerializedName("ArrayList<Images>")
+    @Expose
+    private ArrayList<Images> images;
 
     /**
      * No args constructor for use in serialization
@@ -118,12 +126,20 @@ public class Item {
         this.shop = shop;
     }
 
-    public Item(String token, double price, String brand, String imageUrl){
+    public Item(String token, double price, String brand, Images mImage){
         this.token = token;
         this.brand = brand;
+        this.mImage = mImage;
+        this.price = price;
+    }
+
+    public Item(String token, double price, String title, String imageUrl){
+        this.token = token;
+        this.title = title;
         this.imageUrl = imageUrl;
         this.price = price;
     }
+
 
     public Integer getId() {
         return id;
@@ -148,10 +164,10 @@ public class Item {
     }
     public String getImageUrl() { return imageUrl; }
 
-    public void setImageUrl(String imageUrl) {
+    public void setImage(String imageUrl) {
         this.imageUrl = imageUrl;
     }
-    public Bitmap getImage() { return image; }
+    public Bitmap getImageU() { return image; }
 
     public void setImage(Bitmap image) {
         this.image = image;
@@ -212,6 +228,14 @@ public class Item {
 
     public void setShop(Integer shop) {
         this.shop = shop;
+    }
+
+    public ArrayList<Images> getImages() {
+        return images;
+    }
+
+    public void setImages(ArrayList<Images> images) {
+        this.images = images;
     }
 
 }

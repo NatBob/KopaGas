@@ -18,6 +18,7 @@ import androidx.recyclerview.widget.RecyclerView;
 import com.example.kopagas.R;
 import com.example.kopagas.model.Images;
 import com.example.kopagas.model.Item;
+import com.example.kopagas.model.Items;
 import com.example.kopagas.model.ResObj;
 import com.example.kopagas.remote.ApiUtils;
 import com.example.kopagas.remote.UserService;
@@ -32,23 +33,22 @@ import retrofit2.Response;
 import retrofit2.Retrofit;
 import retrofit2.converter.gson.GsonConverterFactory;
 
-public class BrandAdapter extends RecyclerView.Adapter<BrandAdapter.ViewHolder> {
-
+public class ItemAdapter extends RecyclerView.Adapter<ItemAdapter.ViewHolder> {
     private List<Item> item;
-    private ArrayList<Item> mItem;
+    private ArrayList<Item> items;
     private List<Images> images;
     private Context mCtx;
-    private Item items;
+    private Items mItem;
     //private String title = item.getTitle();
     //private String weight = item.getWeight();
     //private String price = String.valueOf(item.getPrice());
 
-    public BrandAdapter(Item items, Context mCtx) {
+    public ItemAdapter(ArrayList<Item> items, Context mCtx) {
         this.items = items;
         //this.images = images;
         this.mCtx = mCtx;
     }
-    public void setItems(Item items) {
+    public void setItems(ArrayList<Item> items) {
         this.items= items;
         notifyDataSetChanged();
     }
@@ -57,22 +57,22 @@ public class BrandAdapter extends RecyclerView.Adapter<BrandAdapter.ViewHolder> 
         void onItemClick(View itemView, int position);
     }
 
-    private BrandAdapter.OnItemClickListener listener;
+    private ItemAdapter.OnItemClickListener listener;
 
-    public void setOnItemClickListener(BrandAdapter.OnItemClickListener listener) {
+    public void setOnItemClickListener(ItemAdapter.OnItemClickListener listener) {
         this.listener=listener;
     }
 
     @Override
-    public ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
+    public ItemAdapter.ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
         View v = LayoutInflater.from(parent.getContext())
                 .inflate(R.layout.brand_list_view, parent, false);
-        return new ViewHolder(v);
+        return new ItemAdapter.ViewHolder(v);
     }
 
     @Override
-    public void onBindViewHolder(BrandAdapter.ViewHolder holder, int position) {
-        Item item = null;
+    public void onBindViewHolder(ItemAdapter.ViewHolder holder, int position) {
+        Item item = items.get(position);
         //final Images image = images.get(position);
         //holder.txtPrice.setText(Double.toString(item.getPrice()));
         holder.txtPrice.setText(Double.toString(item.getPrice()));
@@ -131,7 +131,7 @@ public class BrandAdapter extends RecyclerView.Adapter<BrandAdapter.ViewHolder> 
 
     //@Override
     //public int getItemCount() {
-        //return brands.size();
+    //return brands.size();
     //}
     @Override
     public int getItemCount() {
@@ -193,4 +193,3 @@ public class BrandAdapter extends RecyclerView.Adapter<BrandAdapter.ViewHolder> 
         });
     }
 }
-
